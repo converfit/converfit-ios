@@ -148,9 +148,11 @@
                     <connections>
                         <outlet property="emailTxt" destination="EhX-W5-EcG" id="AmD-jq-aG7"/>
                         <outlet property="loginButton" destination="5G5-kZ-8hV" id="FiL-cf-I3h"/>
+                        <outlet property="logoConverfitLogin" destination="ZZg-xK-cAF" id="JWo-2h-XiK"/>
                         <outlet property="lostPasswordLabel" destination="rpY-P3-l9V" id="1Hx-ds-45s"/>
                         <outlet property="passwordTxt" destination="Y2q-Ac-h6J" id="gwD-1C-C03"/>
                         <outlet property="singUpLabel" destination="9HY-bF-qqR" id="Ckz-3G-kRD"/>
+                        <outlet property="versionLabelLogin" destination="lwZ-bJ-GDs" id="Jsz-0z-Ehf"/>
                         <outlet property="viewEmailPassword" destination="KAG-gg-Pag" id="fRk-sR-eyn"/>
                         <segue destination="KPo-cc-LLy" kind="presentation" identifier="loginSegue" id="V6G-m3-OtY"/>
                     </connections>

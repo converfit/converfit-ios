@@ -13,6 +13,7 @@ var device_key = "dont_allow"
 //let sistema = "ios"
 let sistema = "android"
 let app = "converfit"
+var ocultarLogIn = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        comprobarCheckSession()
         return true
     }
 
@@ -47,6 +49,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    //MARK: - Comprobar checkSession
+    func comprobarCheckSession(){
+        let sessionKey = Utils.getSessionKey()
+        let lastUpdate = Utils.getLastUpdate()
+        let params = "action=check_session&session_key=\(sessionKey)&device_key=\(device_key)&last_update=\(lastUpdate)&system=\(sistema)&app_version=\(appVersion)&app=\(app)"
+        let urlServidor = Utils.returnUrlWS("access")
+        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
+        let session = NSURLSession.sharedSession()
+        request.HTTPMethod = "POST"
+        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        let semaphore = dispatch_semaphore_create(0)
+        let checkSessionTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            guard data != nil else {
+                print("no data found: \(error)")
+                return
+            }
+            
+            do {
+                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
+                    if let resultCode = json.objectForKey("result") as? Int{
+                        if(resultCode == 1){
+                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
+                                if let lastUpdate = dataResultado.objectForKey("last_update") as? String{
+                                    Utils.saveLastUpdate(lastUpdate)
+                                    ocultarLogIn = true
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch{
+                
+            }
+            dispatch_semaphore_signal(semaphore)
+        }
+        checkSessionTask.resume()
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+    }
 
 }
 

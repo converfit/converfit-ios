@@ -57,6 +57,7 @@ class AjustesViewController: UIViewController, UITableViewDataSource, UITableVie
         }else{
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 Utils.desLoguear()
+                ocultarLogIn = false
                 self.dismissViewControllerAnimated(true, completion: nil)
             })
             LogOut.desLoguear()

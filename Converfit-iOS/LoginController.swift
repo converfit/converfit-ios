@@ -22,6 +22,8 @@ class LoginController: UIViewController {
     @IBOutlet weak var singUpLabel: UILabel!
     @IBOutlet weak var emailTxt: UITextField!
     @IBOutlet weak var passwordTxt: UITextField!
+    @IBOutlet weak var versionLabelLogin: UILabel!
+    @IBOutlet weak var logoConverfitLogin: UIImageView!
     
     //MARK: - Actions
     @IBAction func viewContainerTap(sender: AnyObject) {
@@ -42,6 +44,11 @@ class LoginController: UIViewController {
         super.viewDidLoad()
         roundViews()
         addTapActions()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        ocultar(ocultarLogIn)
     }
     
     //MARK: - KeyBoard
@@ -199,6 +206,23 @@ class LoginController: UIViewController {
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.Portrait
+    }
+    
+    //MARK: - Ocultar login
+    func ocultar(ocultar:Bool){
+        dispatch_async(dispatch_get_main_queue()) {
+            self.viewEmailPassword.hidden = ocultar
+            self.emailTxt.hidden = ocultar
+            self.passwordTxt.hidden = ocultar
+            self.loginButton.hidden = ocultar
+            self.lostPasswordLabel.hidden = ocultar
+            self.singUpLabel.hidden = ocultar
+            self.versionLabelLogin.hidden = ocultar
+            self.logoConverfitLogin.hidden = ocultar
+            if(ocultar){
+                self.performSegueWithIdentifier("loginSegue", sender: self)
+            }
+        }
     }
 
 }

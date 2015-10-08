@@ -35,7 +35,7 @@ class LogOut {
                 } catch{
                     
                 }
-            }
-            logOutTask.resume()
         }
+        logOutTask.resume()
+    }
 }
