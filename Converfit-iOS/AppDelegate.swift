@@ -50,3 +50,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension UINavigationController {//Necesario si esta incluido dentro de un NavigationController
+    override public func shouldAutorotate() -> Bool {
+        return visibleViewController!.shouldAutorotate()
+    }
+    
+    public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return visibleViewController!.supportedInterfaceOrientations()
+    }
+}
+
+extension UITabBarController{
+    public override func shouldAutorotate() -> Bool {
+        return selectedViewController!.shouldAutorotate()
+    }
+    
+    public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return selectedViewController!.supportedInterfaceOrientations()
+    }
+}
+
+

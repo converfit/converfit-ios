@@ -184,4 +184,22 @@ class LoginController: UIViewController {
             tabBar?.selectedIndex = 2
         }
     }
+    
+    //MARK: - Rotar Dispositivo
+    override func shouldAutorotate() -> Bool {
+        if (UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait ||
+            UIDevice.currentDevice().orientation == UIDeviceOrientation.PortraitUpsideDown ||
+            UIDevice.currentDevice().orientation == UIDeviceOrientation.Unknown) {
+                return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
+
 }
+
