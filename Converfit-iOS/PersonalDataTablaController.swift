@@ -39,6 +39,7 @@ class PersonalDataTablaController: UITableViewController {
     
     //MARK: - Utils
     func modificarUI(){
+        self.tabBarController?.tabBar.hidden = true
         //Creamos un footer con un UIView para eliminar los separator extras
         miTablaPersonalizada.tableFooterView = UIView()
         crearBotonesBarraNavegacion()

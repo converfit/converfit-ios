@@ -1,5 +1,5 @@
 //
-//  ProfileMenuController.swift
+//  PasswordMenuController.swift
 //  Citious_IOs
 //
 //  Created by Manuel Citious on 7/4/15.
@@ -8,25 +8,20 @@
 
 import UIKit
 
-class ProfileMenuController: UIViewController,UITableViewDataSource, UITableViewDelegate {
+class PasswordMenuController: UIViewController {
     
     //MARK: - Variables
-    let cellId = "CeldaUserSettings"
-
+    let cellId = "CeldaPasswordMenu"
+    
     //MARK: - Outlets
     @IBOutlet weak var miTablaPersonalizada: UITableView!
     
+    
+    //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         modificarUI()
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.tabBarController?.tabBar.hidden = false
-    }
-    
-    //MARK: - Utils
+    }    
     
     func modificarUI(){
         self.tabBarController?.tabBar.hidden = true
@@ -49,20 +44,20 @@ class ProfileMenuController: UIViewController,UITableViewDataSource, UITableView
         }
         //Como solo tendremos dos filas ponemos a cada uno el titulo que le corresponda
         if(indexPath.row == 0){
-            textoCelda = "Datos personales"
+            textoCelda = "Cambiar contraseña"
         }else{
-            textoCelda = "Contraseña"
+            textoCelda = "Recuperar contraseña"
         }
         cell?.textLabel?.text = textoCelda
         return cell!
     }
     
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.row == 0){
-            performSegueWithIdentifier("personalDataSegue", sender: self)
+            //let destinationVC = self.storyboard?.instantiateViewControllerWithIdentifier("ChangePassword") as! ChangePasswordTableController
+            //self.navigationController?.pushViewController(destinationVC, animated: true)
         }else{
-            performSegueWithIdentifier("passwordMenuSegue", sender: self)
+            performSegueWithIdentifier("recuPassSegue", sender: self)
         }
     }
 }
