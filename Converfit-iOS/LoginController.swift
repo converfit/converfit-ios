@@ -136,11 +136,6 @@ class LoginController: UIViewController {
                 if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
                     if let resultCode = json.objectForKey("result") as? Int{
                         if(resultCode == 1){
-                            /*
-                            JSONObject data = datos.getJSONObject("data");
-                            String sessionKey = data.getString("session_key");
-                            String  lastUpdate = data.getString("last_update");
-                            */
                             if let dataJSON = json.objectForKey("data") as? NSDictionary{
                                 if let sessionKey = dataJSON.objectForKey("session_key") as? String{
                                     Utils.saveSessionKey(sessionKey)
@@ -148,6 +143,14 @@ class LoginController: UIViewController {
                                 if let lastUpdate = dataJSON.objectForKey("last_update") as? String{
                                     Utils.saveLastUpdate(lastUpdate)
                                 }
+                    
+                                //Show the tabBar
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    //Borramos los datos que tuvieramos introducimos
+                                    self.emailTxt.text = ""
+                                    self.passwordTxt.text = ""
+                                    self.performSegueWithIdentifier("loginSegue", sender: self)
+                                })
                             }
                         }else{
                             if let errorCode = json.objectForKey("error_code") as? String{
@@ -172,5 +175,13 @@ class LoginController: UIViewController {
             }
         }
         loginTask.resume()
+    }
+    
+    //MARK: - PrepareForSegue
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "loginSegue"){
+            let tabBar = segue.destinationViewController as? UITabBarController
+            tabBar?.selectedIndex = 2
+        }
     }
 }
