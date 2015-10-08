@@ -281,4 +281,23 @@ class Utils {
         defaults.removeObjectForKey("last_update_favorito")
         defaults.removeObjectForKey("conversations_last_update")
     }
+    
+    //MARK: - Strings
+    static func removerEspaciosBlanco(textoConEspacios:String) ->String{
+        var cadena = textoConEspacios
+        cadena = textoConEspacios.stringByReplacingOccurrencesOfString(" ", withString: "+", options: [], range: nil)
+        return cadena
+    }
+    
+    static func quitarEspacios(textoConEspacios:String) ->String{
+        var cadena = textoConEspacios
+        cadena = textoConEspacios.stringByReplacingOccurrencesOfString(" ", withString: "", options: [], range: nil)
+        return cadena
+    }
+    
+    static func quitarSaltosdeLinea(textoConEspacios:String) ->String{
+        var cadena = textoConEspacios
+        cadena = textoConEspacios.stringByReplacingOccurrencesOfString("\n", withString: "", options: [], range: nil)
+        return cadena
+    }
 }

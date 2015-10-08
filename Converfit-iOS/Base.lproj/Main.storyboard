@@ -420,8 +420,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="yUl-Xm-Cup">
-                                <rect key="frame" x="0.0" y="20" width="600" height="572"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="yUl-Xm-Cup">
+                                <rect key="frame" x="0.0" y="20" width="600" height="523"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -470,11 +470,100 @@
                     <navigationItem key="navigationItem" title="Perfil" id="bAb-lj-HjK"/>
                     <connections>
                         <outlet property="miTablaPersonalizada" destination="yUl-Xm-Cup" id="cmT-3K-okF"/>
+                        <segue destination="RP2-IA-dqc" kind="show" identifier="personalDataSegue" id="9u5-JT-Aq3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YMr-Ia-q8V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3346" y="1383"/>
+        </scene>
+        <!--Personal Data Tabla Controller-->
+        <scene sceneID="4YL-ov-GES">
+            <objects>
+                <tableViewController storyboardIdentifier="PersonalData" id="RP2-IA-dqc" customClass="PersonalDataTablaController" customModule="Converfit_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="46" sectionHeaderHeight="1" sectionFooterHeight="1" id="bG4-xh-buW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <sections>
+                            <tableViewSection id="St4-U1-eYr">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="hsT-8s-g9H">
+                                        <rect key="frame" x="0.0" y="64" width="600" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hsT-8s-g9H" id="aFf-zR-pPs">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="45.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nombre" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="acV-uq-hXJ">
+                                                    <rect key="frame" x="8" y="8" width="584" height="29"/>
+                                                    <animations/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
+                                                    <connections>
+                                                        <action selector="btnCambioNombre:" destination="RP2-IA-dqc" eventType="editingChanged" id="TYK-TX-j1k"/>
+                                                        <outlet property="delegate" destination="RP2-IA-dqc" id="CkQ-6j-p1K"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="acV-uq-hXJ" firstAttribute="top" secondItem="aFf-zR-pPs" secondAttribute="top" constant="8" id="3SE-d1-usz"/>
+                                                <constraint firstAttribute="trailing" secondItem="acV-uq-hXJ" secondAttribute="trailing" constant="8" id="IXC-q1-Hev"/>
+                                                <constraint firstItem="acV-uq-hXJ" firstAttribute="leading" secondItem="aFf-zR-pPs" secondAttribute="leading" constant="8" id="VPJ-Tg-UtU"/>
+                                                <constraint firstAttribute="bottom" secondItem="acV-uq-hXJ" secondAttribute="bottom" constant="8" id="cnQ-M9-TTg"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Hc3-dV-Awq">
+                                        <rect key="frame" x="0.0" y="110" width="600" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hc3-dV-Awq" id="fkv-3B-DyQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="45.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Apellidos" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6a7-0m-vc2">
+                                                    <rect key="frame" x="8" y="8" width="584" height="30"/>
+                                                    <animations/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
+                                                    <connections>
+                                                        <action selector="btnCambioApellidos:" destination="RP2-IA-dqc" eventType="editingChanged" id="E9N-eD-9Ev"/>
+                                                        <outlet property="delegate" destination="RP2-IA-dqc" id="WIE-Wf-Oe8"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="6a7-0m-vc2" secondAttribute="trailing" constant="8" id="BGZ-wo-ElE"/>
+                                                <constraint firstAttribute="bottom" secondItem="6a7-0m-vc2" secondAttribute="bottom" constant="7" id="GL2-xN-4j3"/>
+                                                <constraint firstItem="6a7-0m-vc2" firstAttribute="leading" secondItem="fkv-3B-DyQ" secondAttribute="leading" constant="8" id="M8v-HJ-J4n"/>
+                                                <constraint firstItem="6a7-0m-vc2" firstAttribute="top" secondItem="fkv-3B-DyQ" secondAttribute="top" constant="8" id="OnM-DD-g1n"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="RP2-IA-dqc" id="d6o-ll-QXp"/>
+                            <outlet property="delegate" destination="RP2-IA-dqc" id="bJr-WK-fIA"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="apellidos" destination="6a7-0m-vc2" id="2d0-n5-ZD3"/>
+                        <outlet property="miTablaPersonalizada" destination="bG4-xh-buW" id="tH4-7J-THH"/>
+                        <outlet property="nombre" destination="acV-uq-hXJ" id="xFt-hV-tu7"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nPo-o3-jrZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4035" y="1383"/>
         </scene>
     </scenes>
     <resources>

@@ -192,22 +192,6 @@ class LoginController: UIViewController {
         }
     }
     
-    //MARK: - Rotar Dispositivo
-    override func shouldAutorotate() -> Bool {
-        if (UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait ||
-            UIDevice.currentDevice().orientation == UIDeviceOrientation.PortraitUpsideDown ||
-            UIDevice.currentDevice().orientation == UIDeviceOrientation.Unknown) {
-                return true
-        }
-        else {
-            return false
-        }
-    }
-    
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.Portrait
-    }
-    
     //MARK: - Ocultar login
     func ocultar(ocultar:Bool){
         dispatch_async(dispatch_get_main_queue()) {

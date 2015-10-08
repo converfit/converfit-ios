@@ -54,27 +54,17 @@ class ProfileMenuController: UIViewController,UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.row == 0){
-            //let destinationVC = self.storyboard?.instantiateViewControllerWithIdentifier("PersonalData") as! PersonalDataTablaController
-            //self.navigationController?.pushViewController(destinationVC, animated: true)
+            performSegueWithIdentifier("personalDataSegue", sender: self)
         }else{
             //let destinationVC = self.storyboard?.instantiateViewControllerWithIdentifier("PasswordMenu") as! PasswordMenuController
             //self.navigationController?.pushViewController(destinationVC, animated: true)
         }
     }
     
-    //MARK: - Rotar Dispositivo
-    override func shouldAutorotate() -> Bool {
-        if (UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait ||
-            UIDevice.currentDevice().orientation == UIDeviceOrientation.PortraitUpsideDown ||
-            UIDevice.currentDevice().orientation == UIDeviceOrientation.Unknown) {
-                return true
+    //MARK: - Prepare for segue
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "personalDataSegue"){
+            
         }
-        else {
-            return false
-        }
-    }
-    
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.Portrait
     }
 }
