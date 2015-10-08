@@ -8,6 +8,12 @@
 
 import UIKit
 
+let appVersion = "1.0.0"
+var device_key = "dont_allow"
+//let sistema = "ios"
+let sistema = "android"
+let app = "converfit"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

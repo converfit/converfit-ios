@@ -31,7 +31,7 @@ class LoginController: UIViewController {
     @IBAction func tryLogin(sender: AnyObject) {
         dissmisKeyBoard()
         if(checkFormats()){//formats ok... call the WS
-            
+            login()
         }else{
             showAlert()
         }
@@ -114,5 +114,48 @@ class LoginController: UIViewController {
             self.alertTitle = ""
             self.alertMessage = ""
         }
+    }
+    
+    //MARK: - Login into server
+    func login(){
+        let params = "action=login&email=\(emailTxt.text!)&password=\(passwordTxt.text!)&device_key=\(device_key)&system=\(sistema)&app_version=\(appVersion)&app=\(app)"
+        let urlServidor = Utils.returnUrlWS("access")
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
+        let session = NSURLSession.sharedSession()
+        request.HTTPMethod = "POST"
+        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let loginTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            guard data != nil else {
+                print("no data found: \(error)")
+                return
+            }
+            
+            do {
+                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
+                    if let resultCode = json.objectForKey("result") as? Int{
+                        if(resultCode == 1){
+                            
+                        }else{
+                            if let errorCode = json.objectForKey("error_code") as? String{
+                                (self.alertTitle, self.alertMessage) = Utils.returnTitleAndMessageAlert(errorCode)
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.showAlert()
+                                })
+                            }
+                        }
+                    }
+                } else {
+                    let jsonStr = NSString(data: data!, encoding: NSUTF8StringEncoding)    // No error thrown, but not NSDictionary
+                    print("Error could not parse JSON: \(jsonStr)")
+                }
+            } catch let parseError {
+                print(parseError)                                                          // Log the error thrown by `JSONObjectWithData`
+                let jsonStr = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                print("Error could not parse JSON: '\(jsonStr)'")
+            }
+        }
+        loginTask.resume()
     }
 }

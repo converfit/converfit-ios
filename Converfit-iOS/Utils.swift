@@ -19,7 +19,7 @@ class Utils {
         case "pruebas":
             let rutaServidor = "http://server.converfit.com/"
             if(modelo == "access"){
-                resultado = rutaServidor + "ios/1.0.0/models/access/model.php"
+                resultado = rutaServidor + "android/1.0.0/models/access/model.php"
             }else if(modelo == "conversations"){
                 resultado = rutaServidor + "ios/1.0.0/models/conversations/model.php"
             }else if(modelo == "brand_notifications"){
