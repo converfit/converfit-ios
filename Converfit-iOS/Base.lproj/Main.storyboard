@@ -60,16 +60,43 @@
                                     <constraint firstAttribute="width" secondItem="ZZg-xK-cAF" secondAttribute="height" multiplier="125:32" id="cg1-3z-qJ4"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5G5-kZ-8hV">
+                                <rect key="frame" x="20" y="360" width="560" height="40"/>
+                                <animations/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.33000000000000002" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="blL-V6-Lgi"/>
+                                </constraints>
+                                <state key="normal" title="INICIAR SESIÓN">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¿Has olvidado tu contraseña?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rpY-P3-l9V">
+                                <rect key="frame" x="225" y="420" width="150" height="12"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="H2T-dH-tWT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.92941176470588238" green="0.12156862745098039" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="5G5-kZ-8hV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9eM-ru-bVC"/>
                             <constraint firstItem="KAG-gg-Pag" firstAttribute="top" secondItem="ZZg-xK-cAF" secondAttribute="bottom" constant="20" id="9xu-Wv-Vg1"/>
                             <constraint firstItem="KAG-gg-Pag" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Eco-7p-wCj"/>
+                            <constraint firstItem="5G5-kZ-8hV" firstAttribute="top" secondItem="KAG-gg-Pag" secondAttribute="bottom" constant="8" id="EvP-25-xzf"/>
                             <constraint firstItem="KAG-gg-Pag" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="V7g-fX-sg7"/>
+                            <constraint firstItem="rpY-P3-l9V" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XPr-OI-Jbv"/>
+                            <constraint firstItem="5G5-kZ-8hV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="aSA-V0-QlM"/>
                             <constraint firstItem="KAG-gg-Pag" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="dwA-fe-vu9"/>
+                            <constraint firstItem="rpY-P3-l9V" firstAttribute="top" secondItem="5G5-kZ-8hV" secondAttribute="bottom" constant="20" id="ilX-0r-D3g"/>
                             <constraint firstItem="ZZg-xK-cAF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="50" id="kMp-6Y-hHZ"/>
                             <constraint firstItem="ZZg-xK-cAF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="n4K-eH-D6Y"/>
+                            <constraint firstAttribute="trailing" secondItem="5G5-kZ-8hV" secondAttribute="trailing" constant="20" id="qvE-Eg-9gW"/>
                             <constraint firstAttribute="trailing" secondItem="KAG-gg-Pag" secondAttribute="trailing" constant="20" id="xRV-2Z-neY"/>
                             <constraint firstAttribute="trailing" secondItem="ZZg-xK-cAF" secondAttribute="trailing" constant="50" id="y8F-K3-7kt"/>
                         </constraints>
