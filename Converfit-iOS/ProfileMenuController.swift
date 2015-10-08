@@ -1,14 +1,14 @@
 //
-//  AjustesViewController.swift
+//  ProfileMenuController.swift
 //  Citious_IOs
 //
-//  Created by Manuel Citious on 1/4/15.
+//  Created by Manuel Citious on 7/4/15.
 //  Copyright (c) 2015 Citious Team. All rights reserved.
 //
 
 import UIKit
 
-class AjustesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ProfileMenuController: UIViewController,UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - Variables
     let cellId = "CeldaUserSettings"
@@ -20,10 +20,8 @@ class AjustesViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
         modificarUI()
     }
-    
-    override func viewWillAppear(animated: Bool) {
-       
-    }
+
+    //MARK: - Utils
     
     func modificarUI(){
         miTablaPersonalizada.backgroundColor = UIColor.clearColor()
@@ -38,27 +36,29 @@ class AjustesViewController: UIViewController, UITableViewDataSource, UITableVie
     
     internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var textoCelda = ""
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath)
+        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath)
+        if (cell == nil){
+            //No teniamos ninguna celda y tenemos que crearla
+            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: cellId)
+        }
         //Como solo tendremos dos filas ponemos a cada uno el titulo que le corresponda
         if(indexPath.row == 0){
-            textoCelda = "Perfil"
+            textoCelda = "Datos personales"
         }else{
-            textoCelda = "Cerrar sesión"
+            textoCelda = "Contraseña"
         }
-        cell.textLabel?.text = textoCelda
-        return cell
+        cell?.textLabel?.text = textoCelda
+        return cell!
     }
+    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.row == 0){
-            self.performSegueWithIdentifier("showPerfil", sender: self)
+            //let destinationVC = self.storyboard?.instantiateViewControllerWithIdentifier("PersonalData") as! PersonalDataTablaController
+            //self.navigationController?.pushViewController(destinationVC, animated: true)
         }else{
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                Utils.desLoguear()
-                ocultarLogIn = false
-                self.dismissViewControllerAnimated(true, completion: nil)
-            })
-            LogOut.desLoguear()
+            //let destinationVC = self.storyboard?.instantiateViewControllerWithIdentifier("PasswordMenu") as! PasswordMenuController
+            //self.navigationController?.pushViewController(destinationVC, animated: true)
         }
     }
     
