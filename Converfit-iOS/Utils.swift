@@ -207,4 +207,67 @@ class Utils {
         let result = range != nil ? true : false
         return result
     }
+    
+    //MARK: - Save last Update
+    static func saveLastUpdate(lasUpdate:String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(lasUpdate, forKey: "last_update")
+    }
+    
+    static func getLastUpdate() -> String{
+        var lastUpdate = "0"
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let lastUp = defaults.stringForKey("last_update"){
+            lastUpdate = lastUp
+        }
+        return lastUpdate
+    }
+    
+    //MARK: - Save conversations_last_update
+    static func saveConversationsLastUpdate(lasUpdate:String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(lasUpdate, forKey: "conversations_last_update")
+    }
+    
+    static func getConversationsLastUpdate() -> String{
+        var lastUpdate = "0"
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let lastUp = defaults.stringForKey("conversations_last_update"){
+            lastUpdate = lastUp
+        }
+        return lastUpdate
+    }
+    
+    //MARK: - Save follower last update
+    static func saveLastUpdateFollower(lasUpdate:String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(lasUpdate, forKey: "last_update_follower")
+    }
+    
+    //Funcion para optener el last_update
+    static func getLastUpdateFollower() -> String{
+        var lastUpFavoritos = "0"
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let lastUp = defaults.stringForKey("last_update_follower"){
+            lastUpFavoritos = lastUp
+        }
+        return lastUpFavoritos
+    }
+    
+    //MARK: - Save session_key
+    static func saveSessionKey(sessionKey:String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(sessionKey, forKey: "session_key")
+    }
+    
+    //Funcion para optener el last_update
+    static func getSessionKey() -> String{
+        var lastUpFavoritos = "0"
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let lastUp = defaults.stringForKey("session_key"){
+            lastUpFavoritos = lastUp
+        }
+        return lastUpFavoritos
+    }
+
 }

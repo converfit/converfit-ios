@@ -136,7 +136,19 @@ class LoginController: UIViewController {
                 if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
                     if let resultCode = json.objectForKey("result") as? Int{
                         if(resultCode == 1){
-                            
+                            /*
+                            JSONObject data = datos.getJSONObject("data");
+                            String sessionKey = data.getString("session_key");
+                            String  lastUpdate = data.getString("last_update");
+                            */
+                            if let dataJSON = json.objectForKey("data") as? NSDictionary{
+                                if let sessionKey = dataJSON.objectForKey("session_key") as? String{
+                                    Utils.saveSessionKey(sessionKey)
+                                }
+                                if let lastUpdate = dataJSON.objectForKey("last_update") as? String{
+                                    Utils.saveLastUpdate(lastUpdate)
+                                }
+                            }
                         }else{
                             if let errorCode = json.objectForKey("error_code") as? String{
                                 (self.alertTitle, self.alertMessage) = Utils.returnTitleAndMessageAlert(errorCode)
@@ -147,13 +159,16 @@ class LoginController: UIViewController {
                         }
                     }
                 } else {
-                    let jsonStr = NSString(data: data!, encoding: NSUTF8StringEncoding)    // No error thrown, but not NSDictionary
-                    print("Error could not parse JSON: \(jsonStr)")
+                    (self.alertTitle, self.alertMessage) = Utils.returnTitleAndMessageAlert("default")
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.showAlert()
+                    })
                 }
-            } catch let parseError {
-                print(parseError)                                                          // Log the error thrown by `JSONObjectWithData`
-                let jsonStr = NSString(data: data!, encoding: NSUTF8StringEncoding)
-                print("Error could not parse JSON: '\(jsonStr)'")
+            } catch{
+                (self.alertTitle, self.alertMessage) = Utils.returnTitleAndMessageAlert("default")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.showAlert()
+                })
             }
         }
         loginTask.resume()
