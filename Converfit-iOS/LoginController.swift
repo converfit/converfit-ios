@@ -11,7 +11,8 @@ import UIKit
 class LoginController: UIViewController {
     
     //MARK: - Variables
-    
+    var alertTitle = ""
+    var alertMessage = ""
     
     //MARK: - Outlets
     @IBOutlet weak var viewEmailPassword: UIView!
