@@ -54,8 +54,7 @@ class PasswordMenuController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.row == 0){
-            //let destinationVC = self.storyboard?.instantiateViewControllerWithIdentifier("ChangePassword") as! ChangePasswordTableController
-            //self.navigationController?.pushViewController(destinationVC, animated: true)
+            performSegueWithIdentifier("changePasswordSegue", sender: self)
         }else{
             performSegueWithIdentifier("recuPassSegue", sender: self)
         }

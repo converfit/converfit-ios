@@ -630,6 +630,7 @@
                     <connections>
                         <outlet property="miTablaPersonalizada" destination="KvG-hX-8Xm" id="RoG-26-oxS"/>
                         <segue destination="2yj-py-cBZ" kind="show" identifier="recuPassSegue" id="zbd-FN-IT0"/>
+                        <segue destination="HrE-Kt-cBH" kind="show" identifier="changePasswordSegue" id="BCk-1g-far"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5gq-Nu-KLF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -687,6 +688,96 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iII-LW-8Ul" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4035" y="2102"/>
+        </scene>
+        <!--Change Password Table Controller-->
+        <scene sceneID="c78-vB-gTh">
+            <objects>
+                <tableViewController storyboardIdentifier="ChangePassword" id="HrE-Kt-cBH" customClass="ChangePasswordTableController" customModule="Converfit_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="1" sectionFooterHeight="1" id="l1i-Ia-Ze2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <sections>
+                            <tableViewSection id="YUf-Dk-kYE">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="46" id="zhg-1p-cta">
+                                        <rect key="frame" x="0.0" y="64" width="600" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zhg-1p-cta" id="QEq-4M-uu3">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="45.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Contraseña actual" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fAA-Ky-8Uk">
+                                                    <rect key="frame" x="8" y="8" width="584" height="30"/>
+                                                    <animations/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                    <connections>
+                                                        <action selector="btnPassActu:" destination="HrE-Kt-cBH" eventType="editingChanged" id="kAY-b2-hCp"/>
+                                                        <outlet property="delegate" destination="HrE-Kt-cBH" id="eO5-mf-oqN"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <animations/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="fAA-Ky-8Uk" firstAttribute="top" secondItem="QEq-4M-uu3" secondAttribute="top" constant="8" id="EDd-OQ-0KJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="fAA-Ky-8Uk" secondAttribute="trailing" constant="8" id="og7-F5-qOc"/>
+                                                <constraint firstAttribute="bottom" secondItem="fAA-Ky-8Uk" secondAttribute="bottom" constant="7" id="soF-cp-vXp"/>
+                                                <constraint firstItem="fAA-Ky-8Uk" firstAttribute="leading" secondItem="QEq-4M-uu3" secondAttribute="leading" constant="8" id="vuZ-lw-zkH"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="wbr-sX-rbj">
+                                        <rect key="frame" x="0.0" y="110" width="600" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wbr-sX-rbj" id="NME-Hf-Knp">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="45.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nueva contraseña" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wyr-Lf-tio">
+                                                    <rect key="frame" x="8" y="8" width="584" height="30"/>
+                                                    <animations/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                    <connections>
+                                                        <action selector="btnPassNew:" destination="HrE-Kt-cBH" eventType="editingChanged" id="69F-UE-XTt"/>
+                                                        <outlet property="delegate" destination="HrE-Kt-cBH" id="Yvt-Wp-cvg"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="wyr-Lf-tio" secondAttribute="bottom" constant="7" id="Fl0-gT-Ti6"/>
+                                                <constraint firstItem="wyr-Lf-tio" firstAttribute="leading" secondItem="NME-Hf-Knp" secondAttribute="leading" constant="8" id="ebB-QU-pDm"/>
+                                                <constraint firstItem="wyr-Lf-tio" firstAttribute="top" secondItem="NME-Hf-Knp" secondAttribute="top" constant="8" id="fjZ-cy-sRi"/>
+                                                <constraint firstAttribute="trailing" secondItem="wyr-Lf-tio" secondAttribute="trailing" constant="8" id="lB5-gy-svD"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="HrE-Kt-cBH" id="rR7-dt-4OH"/>
+                            <outlet property="delegate" destination="HrE-Kt-cBH" id="FZF-up-Jf2"/>
+                        </connections>
+                    </tableView>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="miTablaPersonalizada" destination="l1i-Ia-Ze2" id="ihI-AR-LmF"/>
+                        <outlet property="txtPassActual" destination="fAA-Ky-8Uk" id="uxx-Jk-T5J"/>
+                        <outlet property="txtPassNew" destination="wyr-Lf-tio" id="2mb-48-eU3"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pcc-ZM-PMK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3364" y="2819"/>
         </scene>
     </scenes>
     <resources>
