@@ -30,6 +30,7 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         roundViews()
+        addTapActions()
     }
     
     //MARK: - KeyBoard
@@ -41,5 +42,28 @@ class LoginController: UIViewController {
     func roundViews(){
         viewEmailPassword.layer.cornerRadius = 5
         loginButton.layer.cornerRadius = 5
+    }
+    
+    //MARK: - Add Tap Actions
+    func addTapActions(){
+        let tapSingUpLabel =  UITapGestureRecognizer()
+        tapSingUpLabel.addTarget(self, action: "tappedSignUp")
+        singUpLabel.addGestureRecognizer(tapSingUpLabel)
+        
+        let tapLostPasswordLabel = UITapGestureRecognizer()
+        tapLostPasswordLabel.addTarget(self, action: "tappedLostPassword")
+        lostPasswordLabel.addGestureRecognizer(tapLostPasswordLabel)
+    }
+    
+    func tappedSignUp(){//Show singUp converfit web
+        if let requestUrl = NSURL(string: "http://www.converfit.com/app/es/signup/index.html") {
+            UIApplication.sharedApplication().openURL(requestUrl)
+        }
+    }
+    
+    func tappedLostPassword(){//Show recover_password converfit web
+        if let requestUrl = NSURL(string: "http://www.converfit.com/app/es/recover_password/index.html") {
+            UIApplication.sharedApplication().openURL(requestUrl)
+        }
     }
 }
