@@ -27,7 +27,7 @@
                                             <constraint firstAttribute="height" constant="40" id="pAU-tp-pWE"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bc0-hh-2fO">
                                         <rect key="frame" x="0.0" y="52" width="560" height="1"/>
@@ -47,7 +47,7 @@
                                             <constraint firstAttribute="height" constant="40" id="gaX-bZ-1NC"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                     </textField>
                                 </subviews>
                                 <animations/>
@@ -84,6 +84,9 @@
                                 <state key="normal" title="INICIAR SESIÓN">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="tryLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KV5-ki-IzJ"/>
+                                </connections>
                             </button>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¿Has olvidado tu contraseña?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rpY-P3-l9V">
                                 <rect key="frame" x="225" y="420" width="150" height="12"/>

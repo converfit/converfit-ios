@@ -11,7 +11,7 @@ import UIKit
 class Utils {
     
     //MARK: - ULR WebServices
-    static func devolverURLservidor(modelo:String) -> String{
+    static func returnUrlWS(modelo:String) -> String{
         var resultado = ""
         let accesoServidor = "pruebas" // "produccion" o "pruebas"
         
@@ -63,8 +63,8 @@ class Utils {
                 message = "El sistema está temporalmente cerrado. Por favor inténtelo mas tarde."
                 break
             case "version_not_valid":
-                title = "Error"
-                message = "Su aplicación no está actualizada. Por favor descarge la nueva versión."
+                title = "Es necesario actualizar"
+                message = "La versión que estás utilizando no está soportada. Es necesario actualizar."
                 break
             case "db_connection_error":
                 title = "Error"
@@ -91,8 +91,8 @@ class Utils {
                 message = "No existe un usuario con ese email."
                 break
             case "email_or_password_not_valid":
-                title = "Error"
-                message = "El email y contraseña introducidos no coinciden con ningún usuario."
+                title = "Email o contraseña no válidos"
+                message = "El correo electrónico o la contraseña que has introducido no son válidos."
                 break
             case "old_password_not_valid":
                 title = "Error"
@@ -193,10 +193,18 @@ class Utils {
                 title = "Usuario no válido"
                 message = "El usuario que ha seleccionado no es válido."
             default:
-                title = "Error"
-                message = "No se ha podido conectar con el servidor. Por favor inténtelo mas tarde."
+                title = "Error de conexión"
+                message = "No se ha podido establecer conexión con el servidor. Compruebe si tiene acceso a la red y vuelva a intentarlo."
             break
         }
         return (title,message)
+    }
+    
+    //MARK: Email is valid
+    static func emailIsValid(email:String) ->Bool{
+        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        let range = email.rangeOfString(emailRegEx, options:.RegularExpressionSearch)
+        let result = range != nil ? true : false
+        return result
     }
 }
