@@ -38,27 +38,27 @@ class _TimeLine: NSManagedObject {
     // MARK: - Properties
 
     @NSManaged public
-    var content: String?
+    var content: String
 
     // func validateContent(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var created: String?
+    var created: String
 
     // func validateCreated(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var userAvatar: NSData?
+    var userAvatar: NSData
 
     // func validateUserAvatar(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var userKey: String?
+    var userKey: String
 
     // func validateUserKey(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var userName: String?
+    var userName: String
 
     // func validateUserName(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 

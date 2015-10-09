@@ -42,47 +42,47 @@ class _Messsage: NSManagedObject {
     // MARK: - Properties
 
     @NSManaged public
-    var content: String?
+    var content: String
 
     // func validateContent(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var conversationKey: String?
+    var conversationKey: String
 
     // func validateConversationKey(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var created: String?
+    var created: String
 
     // func validateCreated(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var enviado: String?
+    var enviado: String
 
     // func validateEnviado(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var fname: String?
+    var fname: String
 
     // func validateFname(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var lname: String?
+    var lname: String
 
     // func validateLname(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var messageKey: String?
+    var messageKey: String
 
     // func validateMessageKey(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var sender: String?
+    var sender: String
 
     // func validateSender(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var type: String?
+    var type: String
 
     // func validateType(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 

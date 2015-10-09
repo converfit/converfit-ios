@@ -43,52 +43,52 @@ class _Conversation: NSManagedObject {
     // MARK: - Properties
 
     @NSManaged public
-    var avatar: NSData?
+    var avatar: NSData
 
     // func validateAvatar(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var conectionStatus: String?
+    var conectionStatus: String
 
     // func validateConectionStatus(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var conversationKey: String?
+    var conversationKey: String
 
     // func validateConversationKey(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var creationLastMessage: String?
+    var creationLastMessage: String
 
     // func validateCreationLastMessage(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var flagNewUserMessage: NSNumber?
+    var flagNewUserMessage: NSNumber
 
     // func validateFlagNewUserMessage(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var fname: String?
+    var fname: String
 
     // func validateFname(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var lastMessage: String?
+    var lastMessage: String
 
     // func validateLastMessage(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var lastUpdate: String?
+    var lastUpdate: String
 
     // func validateLastUpdate(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var lname: String?
+    var lname: String
 
     // func validateLname(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var userKey: String?
+    var userKey: String
 
     // func validateUserKey(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 

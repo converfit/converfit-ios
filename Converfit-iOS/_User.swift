@@ -39,32 +39,32 @@ class _User: NSManagedObject {
     // MARK: - Properties
 
     @NSManaged public
-    var avatar: NSData?
+    var avatar: NSData
 
     // func validateAvatar(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var connectionStatus: String?
+    var connectionStatus: String
 
     // func validateConnectionStatus(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var horaConectado: String?
+    var horaConectado: String
 
     // func validateHoraConectado(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var lastPageTitle: String?
+    var lastPageTitle: String
 
     // func validateLastPageTitle(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var userKey: String?
+    var userKey: String
 
     // func validateUserKey(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
     @NSManaged public
-    var userName: String?
+    var userName: String
 
     // func validateUserName(value: AutoreleasingUnsafeMutablePointer<AnyObject>, error: NSErrorPointer) -> Bool {}
 
