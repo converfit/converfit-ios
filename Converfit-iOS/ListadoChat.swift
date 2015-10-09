@@ -61,23 +61,6 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         addBadgeCount()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if(listadoConversaciones.isEmpty && !datosRecibidosServidor && mostrarAlert){
-            listadoVacio = true
-            mostrarAlert = false
-            spinner.color = UIColor.blackColor()
-            spinner.frame = CGRectMake(0, 12, 100, 44)
-            spinner.hidden = false
-            spinner.startAnimating()
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.alertCargando.view.addSubview(self.spinner)
-                self.presentViewController(self.alertCargando, animated: true) { () -> Void in
-                    
-                }
-            })
-        }
-    }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)

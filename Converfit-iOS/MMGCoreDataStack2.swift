@@ -37,7 +37,7 @@ class MMGCoreDataStack2: CustomStringConvertible {
     
     var storeURL : NSURL {
         let storePaths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
-        let storePath = String(storePaths.first) as NSString
+        let storePath = String(storePaths.first!) as NSString
         let fileManager = NSFileManager.defaultManager()
         
         do {
