@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="15A284" minimumToolsVersion="Xcode 7.0">
+    <entity name="Conversation" representedClassName="Conversation" syncable="YES">
+        <attribute name="avatar" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="conectionStatus" attributeType="String" syncable="YES"/>
+        <attribute name="conversationKey" attributeType="String" syncable="YES"/>
+        <attribute name="creationLastMessage" attributeType="String" syncable="YES"/>
+        <attribute name="flagNewUserMessage" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="fname" attributeType="String" syncable="YES"/>
+        <attribute name="lastMessage" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdate" attributeType="String" syncable="YES"/>
+        <attribute name="lname" attributeType="String" syncable="YES"/>
+        <attribute name="userKey" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Message" representedClassName="Messsage" syncable="YES">
+        <attribute name="content" attributeType="String" syncable="YES"/>
+        <attribute name="conversationKey" attributeType="String" syncable="YES"/>
+        <attribute name="created" attributeType="String" syncable="YES"/>
+        <attribute name="enviado" attributeType="String" syncable="YES"/>
+        <attribute name="fname" attributeType="String" syncable="YES"/>
+        <attribute name="lname" attributeType="String" syncable="YES"/>
+        <attribute name="messageKey" attributeType="String" syncable="YES"/>
+        <attribute name="sender" attributeType="String" syncable="YES"/>
+        <attribute name="type" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TimeLine" representedClassName="TimeLine" syncable="YES">
+        <attribute name="content" attributeType="String" syncable="YES"/>
+        <attribute name="created" attributeType="String" syncable="YES"/>
+        <attribute name="userAvatar" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="userKey" attributeType="String" syncable="YES"/>
+        <attribute name="userName" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="avatar" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="connectionStatus" attributeType="String" syncable="YES"/>
+        <attribute name="horaConectado" attributeType="String" syncable="YES"/>
+        <attribute name="lastPageTitle" attributeType="String" syncable="YES"/>
+        <attribute name="userKey" attributeType="String" syncable="YES"/>
+        <attribute name="userName" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Conversation" positionX="-63" positionY="-18" width="128" height="195"/>
+        <element name="User" positionX="-54" positionY="-9" width="128" height="135"/>
+        <element name="Message" positionX="-36" positionY="9" width="128" height="180"/>
+        <element name="TimeLine" positionX="-18" positionY="27" width="128" height="120"/>
+    </elements>
+</model>
