@@ -20,6 +20,9 @@
 		647D68521BC7A94C0086A3A7 /* TimeLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D684E1BC7A94C0086A3A7 /* TimeLine.swift */; settings = {ASSET_TAGS = (); }; };
 		647D68531BC7A94C0086A3A7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D684F1BC7A94C0086A3A7 /* User.swift */; settings = {ASSET_TAGS = (); }; };
 		647D68571BC7D0DC0086A3A7 /* ConversationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D68561BC7D0DC0086A3A7 /* ConversationsModel.swift */; settings = {ASSET_TAGS = (); }; };
+		647D685A1BC7D3AE0086A3A7 /* CeldaListaConversacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D68591BC7D3AE0086A3A7 /* CeldaListaConversacion.swift */; settings = {ASSET_TAGS = (); }; };
+		647D685C1BC7D3D20086A3A7 /* ListadoChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D685B1BC7D3D20086A3A7 /* ListadoChat.swift */; settings = {ASSET_TAGS = (); }; };
+		647D685E1BC7D5260086A3A7 /* Fechas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D685D1BC7D5260086A3A7 /* Fechas.swift */; settings = {ASSET_TAGS = (); }; };
 		648921F01BC6A5E200D91EA0 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 648921EF1BC6A5E200D91EA0 /* Chat.storyboard */; settings = {ASSET_TAGS = (); }; };
 		648921F21BC6A78F00D91EA0 /* AjustesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648921F11BC6A78F00D91EA0 /* AjustesViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		648921F41BC6ABF500D91EA0 /* LogOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648921F31BC6ABF500D91EA0 /* LogOut.swift */; settings = {ASSET_TAGS = (); }; };
@@ -48,6 +51,9 @@
 		647D684E1BC7A94C0086A3A7 /* TimeLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLine.swift; sourceTree = "<group>"; };
 		647D684F1BC7A94C0086A3A7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		647D68561BC7D0DC0086A3A7 /* ConversationsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsModel.swift; sourceTree = "<group>"; };
+		647D68591BC7D3AE0086A3A7 /* CeldaListaConversacion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaListaConversacion.swift; sourceTree = "<group>"; };
+		647D685B1BC7D3D20086A3A7 /* ListadoChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListadoChat.swift; sourceTree = "<group>"; };
+		647D685D1BC7D5260086A3A7 /* Fechas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fechas.swift; sourceTree = "<group>"; };
 		648921EF1BC6A5E200D91EA0 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		648921F11BC6A78F00D91EA0 /* AjustesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AjustesViewController.swift; sourceTree = "<group>"; };
 		648921F31BC6ABF500D91EA0 /* LogOut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOut.swift; sourceTree = "<group>"; };
@@ -78,6 +84,7 @@
 		6467362D1BC66A7A001627C7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				647D685B1BC7D3D20086A3A7 /* ListadoChat.swift */,
 				648921F71BC6C31800D91EA0 /* Settings */,
 				648921F81BC6C32300D91EA0 /* Login */,
 			);
@@ -89,6 +96,7 @@
 			children = (
 				6467362E1BC67121001627C7 /* Utils.swift */,
 				648921F31BC6ABF500D91EA0 /* LogOut.swift */,
+				647D685D1BC7D5260086A3A7 /* Fechas.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -110,6 +118,14 @@
 				647D68561BC7D0DC0086A3A7 /* ConversationsModel.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		647D68581BC7D37E0086A3A7 /* CeldasPersonalizadas */ = {
+			isa = PBXGroup;
+			children = (
+				647D68591BC7D3AE0086A3A7 /* CeldaListaConversacion.swift */,
+			);
+			name = CeldasPersonalizadas;
 			sourceTree = "<group>";
 		};
 		648921EA1BC6763C00D91EA0 /* CoreData */ = {
@@ -167,6 +183,7 @@
 		64D947011BC65B4600B524C3 /* Converfit-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				647D68581BC7D37E0086A3A7 /* CeldasPersonalizadas */,
 				64D947021BC65B4600B524C3 /* AppDelegate.swift */,
 				6467362D1BC66A7A001627C7 /* Controllers */,
 				648921EA1BC6763C00D91EA0 /* CoreData */,
@@ -268,6 +285,7 @@
 				647D68511BC7A94C0086A3A7 /* Messsage.swift in Sources */,
 				6467362C1BC66A65001627C7 /* LoginController.swift in Sources */,
 				647D68531BC7A94C0086A3A7 /* User.swift in Sources */,
+				647D685E1BC7D5260086A3A7 /* Fechas.swift in Sources */,
 				648921FE1BC6D40800D91EA0 /* RecuperarPassController.swift in Sources */,
 				648921F41BC6ABF500D91EA0 /* LogOut.swift in Sources */,
 				64D947031BC65B4600B524C3 /* AppDelegate.swift in Sources */,
@@ -276,9 +294,11 @@
 				647D68501BC7A94C0086A3A7 /* Conversation.swift in Sources */,
 				648921FA1BC6C33100D91EA0 /* PersonalDataTablaController.swift in Sources */,
 				6467362F1BC67121001627C7 /* Utils.swift in Sources */,
+				647D685A1BC7D3AE0086A3A7 /* CeldaListaConversacion.swift in Sources */,
 				647D68481BC7A8D90086A3A7 /* _Conversation.swift in Sources */,
 				647D68431BC7A3F80086A3A7 /* Model.xcdatamodeld in Sources */,
 				647D68491BC7A8D90086A3A7 /* _Messsage.swift in Sources */,
+				647D685C1BC7D3D20086A3A7 /* ListadoChat.swift in Sources */,
 				647D68571BC7D0DC0086A3A7 /* ConversationsModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
