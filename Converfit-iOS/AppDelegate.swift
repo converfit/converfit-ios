@@ -14,6 +14,7 @@ var device_key = "dont_allow"
 let sistema = "android"
 let app = "converfit"
 var ocultarLogIn = false
+var coreDataStack = MMGCoreDataStack2(modelName: "Model")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
