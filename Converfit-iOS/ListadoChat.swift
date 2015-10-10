@@ -157,95 +157,58 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         }
         recuperarConversacionesTask.resume()
     }
-    
-    /*
-    func recuperarConversationsServidor(sessionKey:String){
-        var downloadQueue:NSOperationQueue = {
-            var queue = NSOperationQueue()
-            queue.name = "Download queue"
-            queue.maxConcurrentOperationCount = 1
-            return queue
-            }()
-        
-        var conversationLasUp = Utils.obtenerConversationsLastUpdate()
-        let urlServidor = Utils.devolverURLservidor("conversations")
-        let params = "action=list_conversations&session_key=\(sessionKey)&conversations_last_update=\(conversationLasUp)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
-        
+
+    func borrarConversacion(conversationKey:String){
+        let sessionKey = Utils.getSessionKey()
+        let params = "action=delete_conversation&session_key=\(sessionKey)&conversation_key=\(conversationKey)&app_version=\(appVersion)&app=\(app)"
+        let urlServidor = Utils.returnUrlWS("conversations")
         let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
+        let session = NSURLSession.sharedSession()
         request.HTTPMethod = "POST"
-        
         request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        NSURLConnection.sendAsynchronousRequest(request, queue: downloadQueue) { (response, data, error) -> Void in
-            if(data!.length > 0){
-                let JSONObjetcs:NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
-                if let codigoResultado = JSONObjetcs.objectForKey("result") as? Int{
-                    if(codigoResultado == 1){
-                        dbErrorContador = 0
-                        if let dataResultado = JSONObjetcs.objectForKey("data") as? NSDictionary{
-                            if let lastUpdate = dataResultado.objectForKey("conversations_last_update") as? String{
-                                Utils.guardarConversationsLastUpdate(lastUpdate)
-                            }
-                            if let needToUpdate = dataResultado.objectForKey("need_to_update") as? Bool{
-                                if(needToUpdate){
-                                    if let conversations = dataResultado.objectForKey("conversations") as? [NSDictionary]{
-                                        //Borramos las conversaciones que tengamos guardadas y no esten en el array devuelvo por el WS
-                                        self.borrarConversacionesSobrantes(conversations)
-                                        //Llamamos por cada elemento del array de empresas al constructor
-                                        for dict in conversations{
-                                            var conversationKey = self.obtenerConversationKey(dict)
-                                            var lastUpdateConversacion = Conversation.obtenerLastUpdate(conversationKey)
-                                            var existe = Conversation.existeConversacion(conversationKey)
-                                            Conversation.borrarConversationConSessionKey(conversationKey, update: true)
-                                            Conversation(aDict: dict , aLastUpdate: lastUpdateConversacion, existe: existe)
-                                        }
-                                        self.listadoConversaciones = Conversation.devolverListConversations()
-                                        self.datosRecibidosServidor = true
-                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            self.miTabla.reloadData()
-                                        })
-                                    }
-                                }else{
-                                    self.mostrarAlert = false
-                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        self.spinner.stopAnimating()
-                                        self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
-                                            
-                                        })
-                                        self.desactivarBotonEdit()
-                                    })
-                                }
-                            }
-                        }
+        let borrarConversacionTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            guard data != nil else {
+                print("no data found: \(error)")
+                return
+            }
+            
+            do {
+                if(error != nil){
+                    if(error!.code == -1005){
+                        self.borrarConversacion(conversationKey)
                     }else{
-                        if let codigoError = JSONObjetcs.objectForKey("error_code") as? String{
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                var cerradaAlert = false
-                                self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
-                                
-                                })
-                                if(codigoError != "list_conversations_empty"){
-                                    self.desLoguear = Utils.comprobarDesloguear(codigoError)
-                                    (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert(codigoError)
-                                    self.mostrarAlerta()
-                                }else{
-                                    self.mostrarAlert = false
-                                    self.listadoConversaciones.removeAll(keepCapacity: false)
-                                    Conversation.borrarAllConversations()
-                                    self.miTabla.reloadData()
+                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
+                        self.mostrarAlerta()
+                    }
+                }else{
+                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
+                        if let resultCode = json.objectForKey("result") as? Int{
+                            if(resultCode == 1){
+                                //Guardamos el last update del usuario
+                                if let dataResultado = json.objectForKey("data") as? NSDictionary{
+                                    if let lastUpdate = dataResultado.objectForKey("conversations_last_update") as? String{
+                                        Utils.saveConversationsLastUpdate(lastUpdate)
+                                    }
                                 }
-                                self.desactivarBotonEdit()
-                            })
+                            }else{
+                                if let codigoError = json.objectForKey("error_code") as? String{
+                                    if(codigoError != "list_conversations_empty"){
+                                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                                        self.mostrarAlerta()
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-            }else{
-                (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert("error")
+            }catch{
+                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
                 self.mostrarAlerta()
             }
         }
+        borrarConversacionTask.resume()
     }
-   */
+    
     /*
     func borrarConversacion(conversationKey:String){
         var downloadQueue:NSOperationQueue = {
