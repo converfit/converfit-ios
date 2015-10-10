@@ -227,7 +227,7 @@
         <scene sceneID="puS-rk-hv6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Nea-ao-i0m" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" systemItem="recents" id="UCr-aZ-sc4"/>
+                    <tabBarItem key="tabBarItem" title="" image="NotificationsIcon" id="UCr-aZ-sc4"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WQh-ad-wRd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -247,7 +247,7 @@
         <scene sceneID="O7U-E8-KcS">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pgp-sl-rtG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="bso-bb-3Xr"/>
+                    <tabBarItem key="tabBarItem" image="UserIcon" id="bso-bb-3Xr"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ohr-Nz-iwi">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -267,7 +267,7 @@
         <scene sceneID="iPa-z1-CyP">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AGm-nd-bps" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="more" id="c0d-XR-kH3"/>
+                    <tabBarItem key="tabBarItem" image="ChatIcon" id="c0d-XR-kH3"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0el-6F-elj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -373,7 +373,7 @@
         <scene sceneID="fNM-s5-Khv">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="C0D-YS-6j6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="mostViewed" id="MNr-A4-Xe9"/>
+                    <tabBarItem key="tabBarItem" image="OptionsIcon" id="MNr-A4-Xe9"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DSD-R9-eNe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -892,6 +892,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ChatIcon" width="50" height="50"/>
         <image name="LoginIcon" width="600" height="213"/>
+        <image name="NotificationsIcon" width="50" height="50"/>
+        <image name="OptionsIcon" width="50" height="50"/>
+        <image name="UserIcon" width="50" height="50"/>
     </resources>
 </document>
