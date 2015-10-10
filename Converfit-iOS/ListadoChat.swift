@@ -11,7 +11,6 @@ import UIKit
 class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
     //MARK: - Variables
-    var sessionKey = ""
     var mensajeAlert = ""
     var tituloAlert = ""
     var listadoConversaciones = [ConversationsModel]()
@@ -40,8 +39,6 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.editButtonItem().title = "Editar"
-        let defaults = NSUserDefaults.standardUserDefaults()
-        sessionKey = defaults.stringForKey("session_key")!
         listadoConversaciones = Conversation.devolverListConversations()
         if(listadoConversaciones.isEmpty){
             listadoVacio = true
@@ -49,7 +46,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
             datosRecibidosServidor = true
             miTabla.reloadData()
         }
-        //recuperarConversationsServidor(sessionKey)
+        recuperarConversaciones()
        
         //Creamos un footer con un UIView para eliminar los separator extras
         miTabla.tableFooterView = UIView()
@@ -75,6 +72,92 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     }
     
     //MARK: - ComunicacionServidor
+    func recuperarConversaciones(){
+        let sessionKey = Utils.getSessionKey()
+        let conversationLasUp = Utils.getConversationsLastUpdate()
+        let params = "action=list_conversations&session_key=\(sessionKey)&conversations_last_update=\(conversationLasUp)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
+        let urlServidor = Utils.returnUrlWS("conversations")
+        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
+        let session = NSURLSession.sharedSession()
+        request.HTTPMethod = "POST"
+        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        let recuperarConversacionesTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            guard data != nil else {
+                print("no data found: \(error)")
+                return
+            }
+            
+            do {
+                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
+                    if let resultCode = json.objectForKey("result") as? Int{
+                        if(resultCode == 1){
+                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
+                                if let lastUpdate = dataResultado.objectForKey("conversations_last_update") as? String{
+                                    Utils.saveConversationsLastUpdate(lastUpdate)
+                                }
+                                if let needToUpdate = dataResultado.objectForKey("need_to_update") as? Bool{
+                                    if(needToUpdate){
+                                        if let conversations = dataResultado.objectForKey("conversations") as? [NSDictionary]{
+                                            //Borramos las conversaciones que tengamos guardadas y no esten en el array devuelvo por el WS
+                                            self.borrarConversacionesSobrantes(conversations)
+                                            //Llamamos por cada elemento del array de empresas al constructor
+                                            for dict in conversations{
+                                                let conversationKey = self.obtenerConversationKey(dict)
+                                                let lastUpdateConversacion = Conversation.obtenerLastUpdate(conversationKey)
+                                                let existe = Conversation.existeConversacion(conversationKey)
+                                                Conversation.borrarConversationConSessionKey(conversationKey, update: true)
+                                                _ = Conversation(aDict: dict , aLastUpdate: lastUpdateConversacion, existe: existe)
+                                            }
+                                            self.listadoConversaciones = Conversation.devolverListConversations()
+                                            self.datosRecibidosServidor = true
+                                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                                self.miTabla.reloadData()
+                                            })
+                                        }
+                                    }else{
+                                        self.mostrarAlert = false
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            self.spinner.stopAnimating()
+                                            self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
+                                                
+                                            })
+                                            self.desactivarBotonEdit()
+                                        })
+                                    }
+                                }
+                            }
+                        }else{
+                            if let codigoError = json.objectForKey("error_code") as? String{
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
+                                        
+                                    })
+                                    if(codigoError != "list_conversations_empty"){
+                                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                                        self.mostrarAlerta()
+                                    }else{
+                                        self.mostrarAlert = false
+                                        self.listadoConversaciones.removeAll(keepCapacity: false)
+                                        Conversation.borrarAllConversations()
+                                        self.miTabla.reloadData()
+                                    }
+                                    self.desactivarBotonEdit()
+                                })
+                            }
+                        }
+                    }else{
+                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
+                        self.mostrarAlerta()
+                    }
+                }
+            } catch{
+                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
+                self.mostrarAlerta()
+            }
+        }
+        recuperarConversacionesTask.resume()
+    }
+    
     /*
     func recuperarConversationsServidor(sessionKey:String){
         var downloadQueue:NSOperationQueue = {
@@ -247,7 +330,6 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     }
     
     func resetContexto(){//Reseteamos el valor de las variables a por defecto
-        sessionKey = ""
         mensajeAlert = ""
         tituloAlert = ""
         //Vaciamos el Array de conversaciones para que cuando añadamos una nueva al volver no se dupliquen
@@ -265,18 +347,12 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         isPush = true
         //Reseteamos los valores a los originales
         listadoConversaciones.removeAll(keepCapacity: false)
-        //Obtenemos los datos
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let session = defaults.stringForKey("session_key")
-        {
-            sessionKey = session
-            listadoConversaciones = Conversation.devolverListConversations()
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.miTabla.reloadData()
-                self.addBadgeCount()
-                self.desactivarBotonEdit()
-            })
-        }
+        listadoConversaciones = Conversation.devolverListConversations()
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.miTabla.reloadData()
+            self.addBadgeCount()
+            self.desactivarBotonEdit()
+        })
     }
     
     func desactivarBotonEdit(){
@@ -361,11 +437,20 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         //comprobamos el Flag para cambiar el color del texto
         if(listadoConversaciones[indexPath.row].flagNewMessageUser){
             cell.lastMessageCreation.textColor = UIColor.blueColor()
-            cell.imagenNuevoMensaje.image = UIImage(named: "NuevoMensaje")
         }else{
             cell.lastMessageCreation.textColor = UIColor.blackColor()
-            cell.imagenNuevoMensaje.image = nil
         }
+        let conectionStatus = listadoConversaciones[indexPath.row].connectionStatus
+        if(conectionStatus == "online"){
+            cell.imageConnectionStatus.image = UIImage(named: "ConnectionStatus_Online")
+        }else if(conectionStatus == "offline"){
+            cell.imageConnectionStatus.image = UIImage(named: "ConnectionStatus_Offline")
+        }else if(conectionStatus == "inactive"){
+            cell.imageConnectionStatus.image = UIImage(named: "ConnectionStatus_Inactive")
+        }else{
+            cell.imageConnectionStatus.image = UIImage(named: "ConnectionStatus_Mobile")
+        }
+        
         return cell
     }
     
@@ -437,21 +522,5 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
     func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
         return "Borrar"
-    }
-    
-    //MARK: - Rotar Dispositivo
-    override func shouldAutorotate() -> Bool {
-        if (UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait ||
-            UIDevice.currentDevice().orientation == UIDeviceOrientation.PortraitUpsideDown ||
-            UIDevice.currentDevice().orientation == UIDeviceOrientation.Unknown) {
-                return true
-        }
-        else {
-            return false
-        }
-    }
-    
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.Portrait
     }
 }

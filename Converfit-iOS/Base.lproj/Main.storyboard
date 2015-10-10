@@ -784,7 +784,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="12/12/2015" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlX-sg-zRG">
-                                                    <rect key="frame" x="485" y="31" width="52" height="12"/>
+                                                    <rect key="frame" x="498" y="31" width="52" height="12"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="52" id="Bu1-pz-qwj"/>
@@ -806,8 +806,8 @@
                                                         <constraint firstAttribute="height" constant="48" id="Aua-1K-duw"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cbP-HJ-2Sb">
-                                                    <rect key="frame" x="545" y="30" width="14" height="14"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cbP-HJ-2Sb">
+                                                    <rect key="frame" x="553" y="30" width="14" height="14"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="14" id="U2W-ZE-kos"/>
@@ -815,14 +815,14 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kb5-hT-JeL">
-                                                    <rect key="frame" x="64" y="16" width="413" height="19.5"/>
+                                                    <rect key="frame" x="64" y="16" width="426" height="19.5"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8q-NW-RbN">
-                                                    <rect key="frame" x="64" y="43" width="413" height="15.5"/>
+                                                    <rect key="frame" x="64" y="35.5" width="426" height="23"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="12"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -831,13 +831,12 @@
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="cbP-HJ-2Sb" secondAttribute="trailing" id="36G-aZ-Lj8"/>
+                                                <constraint firstAttribute="trailing" secondItem="cbP-HJ-2Sb" secondAttribute="trailing" id="36G-aZ-Lj8"/>
                                                 <constraint firstItem="dlX-sg-zRG" firstAttribute="centerY" secondItem="hFd-VN-WHt" secondAttribute="centerY" id="Ao2-9v-xQj"/>
-                                                <constraint firstItem="H8q-NW-RbN" firstAttribute="top" secondItem="kb5-hT-JeL" secondAttribute="bottom" constant="8" id="EMl-9x-caS"/>
+                                                <constraint firstItem="H8q-NW-RbN" firstAttribute="top" secondItem="kb5-hT-JeL" secondAttribute="bottom" id="EMl-9x-caS"/>
                                                 <constraint firstItem="hFd-VN-WHt" firstAttribute="top" relation="greaterThanOrEqual" secondItem="dX8-vV-zWg" secondAttribute="top" constant="3" id="Ew3-lW-3TQ"/>
                                                 <constraint firstItem="cbP-HJ-2Sb" firstAttribute="centerY" secondItem="hFd-VN-WHt" secondAttribute="centerY" id="KLw-iT-GM5"/>
                                                 <constraint firstItem="dlX-sg-zRG" firstAttribute="leading" secondItem="kb5-hT-JeL" secondAttribute="trailing" constant="8" id="Nuy-da-qvH"/>
-                                                <constraint firstItem="kb5-hT-JeL" firstAttribute="top" secondItem="dX8-vV-zWg" secondAttribute="topMargin" constant="1" id="ODV-Lp-rsF"/>
                                                 <constraint firstAttribute="height" secondItem="cbP-HJ-2Sb" secondAttribute="height" id="RKP-6s-b7j"/>
                                                 <constraint firstItem="kb5-hT-JeL" firstAttribute="leading" secondItem="hFd-VN-WHt" secondAttribute="trailing" constant="8" id="ZMP-h8-2TH"/>
                                                 <constraint firstItem="dlX-sg-zRG" firstAttribute="leading" secondItem="H8q-NW-RbN" secondAttribute="trailing" constant="8" id="fyp-oO-aHC"/>
@@ -846,13 +845,12 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="H8q-NW-RbN" secondAttribute="bottom" constant="7.5" id="mmF-OP-gfC"/>
                                                 <constraint firstItem="hFd-VN-WHt" firstAttribute="leading" secondItem="dX8-vV-zWg" secondAttribute="leadingMargin" id="nyq-cz-oI4"/>
                                                 <constraint firstItem="kb5-hT-JeL" firstAttribute="top" secondItem="dX8-vV-zWg" secondAttribute="topMargin" constant="8" id="poU-8q-ZZy"/>
-                                                <constraint firstItem="cbP-HJ-2Sb" firstAttribute="leading" secondItem="dlX-sg-zRG" secondAttribute="trailing" constant="8" id="tqh-k0-hxC"/>
+                                                <constraint firstItem="cbP-HJ-2Sb" firstAttribute="leading" secondItem="dlX-sg-zRG" secondAttribute="trailing" constant="3" id="tqh-k0-hxC"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hFd-VN-WHt" secondAttribute="bottom" constant="3" id="vig-G7-onV"/>
                                                 <constraint firstItem="H8q-NW-RbN" firstAttribute="leading" secondItem="hFd-VN-WHt" secondAttribute="trailing" constant="8" id="wTo-cM-0PO"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="ODV-Lp-rsF"/>
                                                     <exclude reference="RKP-6s-b7j"/>
                                                     <exclude reference="jxo-FZ-2dD"/>
                                                 </mask>
@@ -862,6 +860,7 @@
                                         <connections>
                                             <outlet property="avatarImagen" destination="hFd-VN-WHt" id="P1n-q5-dUn"/>
                                             <outlet property="brandName" destination="kb5-hT-JeL" id="1Om-wt-IVY"/>
+                                            <outlet property="imageConnectionStatus" destination="cbP-HJ-2Sb" id="Tnf-mN-Wkg"/>
                                             <outlet property="lastMessage" destination="H8q-NW-RbN" id="N7R-cs-8Nb"/>
                                             <outlet property="lastMessageCreation" destination="dlX-sg-zRG" id="AlX-cv-e8h"/>
                                         </connections>

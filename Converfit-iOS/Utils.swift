@@ -21,7 +21,7 @@ class Utils {
             if(modelo == "access"){
                 resultado = rutaServidor + "android/1.0.0/models/access/model.php"
             }else if(modelo == "conversations"){
-                resultado = rutaServidor + "ios/1.0.0/models/conversations/model.php"
+                resultado = rutaServidor + "android/1.0.0/models/conversations/model.php"
             }else if(modelo == "brand_notifications"){
                 resultado = rutaServidor + "ios/1.0.0/models/brand_notifications/model.php"
             }else if(modelo == "users"){

@@ -15,12 +15,14 @@ class CeldaListaConversacion: UITableViewCell {
     @IBOutlet weak var brandName: UILabel!
     @IBOutlet weak var lastMessage: UILabel!
     @IBOutlet weak var lastMessageCreation: UILabel!
-    @IBOutlet weak var imagenNuevoMensaje: UIImageView!
-    @IBOutlet weak var assignedTo: UILabel!
+    @IBOutlet weak var imageConnectionStatus: UIImageView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        avatarImagen.layer.cornerRadius = avatarImagen.frame.height/2
+        avatarImagen.clipsToBounds = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
