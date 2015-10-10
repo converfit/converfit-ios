@@ -209,62 +209,6 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         borrarConversacionTask.resume()
     }
     
-    /*
-    func borrarConversacion(conversationKey:String){
-        var downloadQueue:NSOperationQueue = {
-            var queue = NSOperationQueue()
-            queue.name = "Download queue"
-            queue.maxConcurrentOperationCount = 60
-            return queue
-            }()
-        
-        let params = "action=delete_conversation&session_key=\(sessionKey)&conversation_key=\(conversationKey)&app_version=\(appVersion)&app=\(app)"
-        
-        let urlServidor = Utils.devolverURLservidor("conversations")
-        
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        request.HTTPMethod = "POST"
-        
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        NSURLConnection.sendAsynchronousRequest(request, queue: downloadQueue) { (response, data, error) -> Void in
-            if(error != nil){
-                if(error!.code == -1005){
-                    self.borrarConversacion(conversationKey)
-                }else{
-                    (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert("error")
-                    self.mostrarAlerta()
-                }
-            }else{
-                if(data!.length > 0){
-                    var JSONObjetcs:NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
-                    if let codigoResultado = JSONObjetcs.objectForKey("result") as? Int{
-                        if(codigoResultado == 1){
-                            dbErrorContador = 0
-                            //Guardamos el last update del usuario
-                            if let dataResultado = JSONObjetcs.objectForKey("data") as? NSDictionary{
-                                if let lastUpdate = dataResultado.objectForKey("conversations_last_update") as? String{
-                                    Utils.guardarConversationsLastUpdate(lastUpdate)
-                                }
-                            }
-                        }
-                        else{
-                            if let codigoError = JSONObjetcs.objectForKey("error_code") as? String{
-                                if(codigoError != "list_conversations_empty"){
-                                    self.desLoguear = Utils.comprobarDesloguear(codigoError)
-                                    (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert(codigoError)
-                                    self.mostrarAlerta()
-                                }
-                            }
-                        }
-                    }
-                }else{
-                    (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert("error")
-                    self.mostrarAlerta()
-                }
-            }
-        }
-    }
-    */
     //MARK: - Utils
     func  borrarConversacionesSobrantes(conversations:NSArray){
         var listCkeys = [String]()
@@ -351,6 +295,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     }
     
     func getListBrands(){
+        Fechas.devolverTiempo("")
         //let listBrandVC = self.storyboard?.instantiateViewControllerWithIdentifier("ListBrand") as! ListBrandController
         //self.navigationController?.pushViewController(listBrandVC, animated: true)
     }
@@ -396,7 +341,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         cell.lastMessage.text = listadoConversaciones[indexPath.row].lastMessage
         cell.avatarImagen?.image = listadoConversaciones[indexPath.row].avatar
         let fechaLastMessage = listadoConversaciones[indexPath.row].lastMessageCreation
-        cell.lastMessageCreation.text = Fechas.convertirFechaUnixToString(fechaLastMessage)
+        cell.lastMessageCreation.text = Fechas.devolverTiempo(fechaLastMessage)
         //comprobamos el Flag para cambiar el color del texto
         if(listadoConversaciones[indexPath.row].flagNewMessageUser){
             cell.lastMessageCreation.textColor = UIColor.blueColor()
