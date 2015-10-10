@@ -280,6 +280,14 @@ class Utils {
         defaults.removeObjectForKey("last_update")
         defaults.removeObjectForKey("last_update_favorito")
         defaults.removeObjectForKey("conversations_last_update")
+        borrarAllCoreData()
+    }
+    
+    //Funcion para borarr los datos de CoreData
+    static func borrarAllCoreData(){
+         Conversation.borrarAllConversations()
+        //User.borrarAllUsers()
+        //Messsage.borrarAllMessages()
     }
     
     //MARK: - Strings

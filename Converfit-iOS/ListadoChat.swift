@@ -432,7 +432,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if(editingStyle == UITableViewCellEditingStyle.Delete){
-            /*borrarConversacion(listadoConversaciones[indexPath.row].conversationKey)
+            borrarConversacion(listadoConversaciones[indexPath.row].conversationKey)
             Conversation.borrarConversationConSessionKey(listadoConversaciones[indexPath.row].conversationKey, update: false)
             listadoConversaciones.removeAll(keepCapacity: false)
             listadoConversaciones = Conversation.devolverListConversations()
@@ -440,7 +440,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
             miTabla.reloadData()
             if(listadoConversaciones.count == 0){
                 desactivarBotonEdit()
-            }*/
+            }
         }
     }
     
