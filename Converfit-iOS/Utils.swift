@@ -308,4 +308,45 @@ class Utils {
         cadena = textoConEspacios.stringByReplacingOccurrencesOfString("\n", withString: "", options: [], range: nil)
         return cadena
     }
+    
+    //Funcion que devuelve una acitivity indicator
+    static func crearActivityLoading(width:Double, heigth:Double) -> UIActivityIndicatorView{
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: width, height: heigth)
+        activityIndicator.color = UIColor.darkGrayColor()
+        
+        return activityIndicator
+    }
+    
+    //Funcion para guardar el fname del usuario logado
+    static func guardarFname(fname:String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(fname, forKey: "fname")
+    }
+    
+    //Funcion para obtener el fname del usuario logado
+    static func obtenerFname() -> String{
+        var fname = ""
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let aFname = defaults.stringForKey("fname"){
+            fname = aFname
+        }
+        return fname
+    }
+    
+    //Funcion para guardar el lname del usuario logado
+    static func guardarLname(lname:String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(lname, forKey: "lname")
+    }
+    
+    //Funcion para obtener el fname del usuario logado
+    static func obtenerLname() -> String{
+        var lname = ""
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let aLname = defaults.stringForKey("lname"){
+            lname = aLname
+        }
+        return lname
+    }
 }
