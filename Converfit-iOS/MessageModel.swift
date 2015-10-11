@@ -87,7 +87,7 @@ class MessageModel {
         }
     }
     
-    func generateThumnail(url : NSURL) -> UIImage{
+    func generateThumnail(url : NSURL) -> UIImage?{
         //let asset : AVAsset = AVAsset.assetWithURL(url)
         let asset: AVAsset = AVAsset(URL: url)
         let assetImgGenerate : AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)

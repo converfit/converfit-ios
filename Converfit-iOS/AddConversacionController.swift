@@ -1200,16 +1200,16 @@ extension AddConversacionController: UITextFieldDelegate{
     func guardarMensajeYenviar(){
         let tipo = "text"
         //guardamos el valor del mensaje que hemos introducido y lo ponemos a blanco
-        var textoMensaje = escribirMensajeOutlet.text
+        var textoMensaje = escribirMensajeOutlet.text!
         escribirMensajeOutlet.text = ""
         //Si el tamaño del texto es mayor que 0 quiere decir que hemos introducido algo
-        if(Utils.quitarEspacios(textoMensaje!).characters.count > 0){
+        if(Utils.quitarEspacios(textoMensaje).characters.count > 0){
             
             fechaCreacion = Fechas.fechaActualToString()
             //si venimos de la pantalla de ListBrand, Favoritos o Busqueda es una conversacion nueva con lo cual tenemos que  crear la conversacion
             if(conversacionNueva == true){
                 crearConversacion()
-                addNuevaConversacion(textoMensaje!)
+                addNuevaConversacion(textoMensaje)
             }else{
                 let hora = NSString(string: Messsage.devolverHoraUltimoMensaje(self.conversationKey)).doubleValue
                 if(NSString(string: fechaCreacion).doubleValue < hora){
@@ -1218,30 +1218,27 @@ extension AddConversacionController: UITextFieldDelegate{
             }
             let messageKey = Messsage.obtenerMessageKeyTemporal()
             //Añadimos un mensaje nuevo al modelo
-            let mensajeTextoDict = ["message_key": messageKey, "converstation_key": conversationKey, "sender": "brand", "created": fechaCreacion, "content": textoMensaje, "type": tipo, "enviado":true, "fname": fname, "lname": lname]
-            var mensaje = MessageModel(aDict: mensajeTextoDict)
-            Messsage(model: mensaje)
+            let mensajeTextoDict = ["message_key": messageKey, "converstation_key": conversationKey, "sender": "brand", "created": fechaCreacion, "content": textoMensaje, "type": tipo, "enviado":"true", "fname": fname, "lname": lname]
+            let mensaje = MessageModel(aDict: mensajeTextoDict)
+            _ = Messsage(model: mensaje)
             listaMensajes.removeAll(keepCapacity: false)
             listaMensajes = Messsage.devolverListMessages(conversationKey)
             if(listaMensajes.count > 20){
-                var botonMasMensajes = ["message_key": "a", "converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonMensajeAnterior","enviado":true, "fname": "a", "lname": "a"]
-                var fakeDictMasMensajeBoton = MessageModel(aDict: botonMasMensajes)
+                let botonMasMensajes = ["message_key": "a", "converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonMensajeAnterior","enviado":true, "fname": "a", "lname": "a"]
+                let fakeDictMasMensajeBoton = MessageModel(aDict: botonMasMensajes)
                 listaMensajesPaginada = Array(listaMensajes[(0)..<20])
                 listaMensajesPaginada.append(fakeDictMasMensajeBoton)
                 indicePaginado = 0
             }else{
                 listaMensajesPaginada = listaMensajes
             }
-            var botonesInfoLLamar = ["message_key": "a", "converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonesLLamarInfo","enviado":true, "fname": "a", "lname": "a"]
-            var fakeDictBotons = MessageModel(aDict: botonesInfoLLamar)
-            listaMensajesPaginada.append(fakeDictBotons)
             moverUltimaFila = true
             miTabla.reloadData()
-            Conversation.updateLastMesssageConversation(conversationKey, ultimoMensaje: textoMensaje!, fechaCreacion: fechaCreacion)
-            textoMensaje = Utils.removerEspaciosBlanco(textoMensaje!)//Cambiamos los espacios en blanco por +
+            Conversation.updateLastMesssageConversation(conversationKey, ultimoMensaje: textoMensaje, fechaCreacion: fechaCreacion)
+            textoMensaje = Utils.removerEspaciosBlanco(textoMensaje)//Cambiamos los espacios en blanco por +
             let sessionKey = Utils.getSessionKey()
-            var params = "action=add_message&session_key=\(sessionKey)&conversation_key=\(conversationKey)&type=premessage&app_version=\(appVersion)&app=\(app)"
-            addMessage(params, messageKey: messageKey, contenido: textoMensaje!, tipo: tipo)
+            let params = "action=add_message&session_key=\(sessionKey)&conversation_key=\(conversationKey)&type=premessage&app_version=\(appVersion)&app=\(app)"
+            addMessage(params, messageKey: messageKey, contenido: textoMensaje, tipo: tipo)
         }
     }
     

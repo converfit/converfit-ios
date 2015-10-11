@@ -62,26 +62,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
         let semaphore = dispatch_semaphore_create(0)
         let checkSessionTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
-            guard data != nil else {
+            /*guard data != nil else {
                 print("no data found: \(error)")
                 return
             }
-            
-            do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                    if let resultCode = json.objectForKey("result") as? Int{
-                        if(resultCode == 1){
-                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                if let lastUpdate = dataResultado.objectForKey("last_update") as? String{
+            */
+            if(data != nil){
+                do {
+                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
+                        if let resultCode = json.objectForKey("result") as? Int{
+                            if(resultCode == 1){
+                                if let dataResultado = json.objectForKey("data") as? NSDictionary{
+                                    if let lastUpdate = dataResultado.objectForKey("last_update") as? String{
                                     Utils.saveLastUpdate(lastUpdate)
                                     ocultarLogIn = true
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            } catch{
+                } catch{
                 
+                }
             }
             dispatch_semaphore_signal(semaphore)
         }
