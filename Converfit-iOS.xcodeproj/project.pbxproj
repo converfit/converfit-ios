@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6457ECD41BCAAE93009F2A50 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6457ECD31BCAAE93009F2A50 /* UserModel.swift */; settings = {ASSET_TAGS = (); }; };
 		6467362A1BC6600C001627C7 /* MMGCoreDataStack2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646736291BC6600C001627C7 /* MMGCoreDataStack2.swift */; settings = {ASSET_TAGS = (); }; };
 		6467362C1BC66A65001627C7 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6467362B1BC66A65001627C7 /* LoginController.swift */; settings = {ASSET_TAGS = (); }; };
 		6467362F1BC67121001627C7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6467362E1BC67121001627C7 /* Utils.swift */; settings = {ASSET_TAGS = (); }; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6457ECD31BCAAE93009F2A50 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		646736291BC6600C001627C7 /* MMGCoreDataStack2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMGCoreDataStack2.swift; sourceTree = "<group>"; };
 		6467362B1BC66A65001627C7 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		6467362E1BC67121001627C7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 		647D68551BC7AB200086A3A7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6457ECD31BCAAE93009F2A50 /* UserModel.swift */,
 				647D68561BC7D0DC0086A3A7 /* ConversationsModel.swift */,
 				64B41ECE1BC931D6008D932B /* MessageModel.swift */,
 			);
@@ -355,6 +358,7 @@
 				647D685A1BC7D3AE0086A3A7 /* CeldaListaConversacion.swift in Sources */,
 				647D68481BC7A8D90086A3A7 /* _Conversation.swift in Sources */,
 				647D68431BC7A3F80086A3A7 /* Model.xcdatamodeld in Sources */,
+				6457ECD41BCAAE93009F2A50 /* UserModel.swift in Sources */,
 				64B41ECF1BC931D6008D932B /* MessageModel.swift in Sources */,
 				64B41EC91BC930F3008D932B /* CeldaPdfEncuesta.swift in Sources */,
 				647D68491BC7A8D90086A3A7 /* _Messsage.swift in Sources */,

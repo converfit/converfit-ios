@@ -550,13 +550,13 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     
     func crearConversacion(){
         let sessionKey = Utils.getSessionKey()
-         let params = "action=add_conversation&session_key=\(sessionKey)&user_key=\(userKey)&app_version=\(appVersion)&app=\(app)"
+         let params = "action=open_conversation&session_key=\(sessionKey)&user_key=\(userKey)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("conversations")
         let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
         let session = NSURLSession.sharedSession()
         request.HTTPMethod = "POST"
         request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let logOutTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        let openConversationTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
@@ -588,7 +588,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 self.mostrarAlerta()
             }
         }
-        logOutTask.resume()
+        openConversationTask.resume()
     }
     /*
     func crearConversacion(){
@@ -649,7 +649,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         let session = NSURLSession.sharedSession()
         request.HTTPMethod = "POST"
         request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let logOutTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        let addMensajeTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
@@ -701,7 +701,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 self.mostrarAlerta()
             }
         }
-        logOutTask.resume()
+        addMensajeTask.resume()
     }
     
     /*
@@ -776,7 +776,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         let session = NSURLSession.sharedSession()
         request.HTTPMethod = "POST"
         request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let logOutTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        let udpateMensajeTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
@@ -815,7 +815,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 self.mostrarAlerta()
             }
         }
-        logOutTask.resume()
+        udpateMensajeTask.resume()
     }
     
     /*
