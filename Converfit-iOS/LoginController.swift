@@ -150,6 +150,23 @@ class LoginController: UIViewController {
                                 if let lastUpdate = dataJSON.objectForKey("last_update") as? String{
                                     Utils.saveLastUpdate(lastUpdate)
                                 }
+                                //Obtenemos los datos del admin para el lname y fname
+                                if let admin = dataJSON.objectForKey("admin") as? NSDictionary{
+                                    //Obtenemos el id del admin logado
+                                    if let id = admin.objectForKey("id_admin") as? String{
+                                        Utils.guardarIdLogin(id)
+                                    }
+                                    
+                                    //Obtenemos el fname
+                                    if let fname = admin.objectForKey("fname") as? String{
+                                        Utils.guardarFname(fname)
+                                    }
+                                    //Obtenemos el lame
+                                    if let lname = admin.objectForKey("lname") as? String{
+                                        Utils.guardarLname(lname)
+                                    }
+                                }
+
                     
                                 //Show the tabBar
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in

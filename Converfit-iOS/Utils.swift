@@ -318,6 +318,21 @@ class Utils {
         return activityIndicator
     }
     
+    static func guardarIdLogin(id:String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(id, forKey: "id_login")
+    }
+    
+    //Funcion para obtener el id del usuario logado
+    static func obtenerIdLogin() -> String{
+        var id = "0"
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let aID = defaults.stringForKey("id_login"){
+            id = aID
+        }
+        return id
+    }
+    
     //Funcion para guardar el fname del usuario logado
     static func guardarFname(fname:String){
         let defaults = NSUserDefaults.standardUserDefaults()

@@ -885,6 +885,7 @@
                     <navigationItem key="navigationItem" title="Chats" id="KqP-vT-17l"/>
                     <connections>
                         <outlet property="miTabla" destination="mLM-Bd-8KR" id="VV9-Wo-bLd"/>
+                        <segue destination="dFW-An-6OG" kind="show" identifier="showConversation" id="mEW-0b-d8E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d9y-md-m8V" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -991,8 +992,8 @@
                                                                     <nil key="highlightedColor"/>
                                                                     <variation key="default">
                                                                         <mask key="constraints">
-                                                                            <exclude reference="PGJ-Ig-H0B"/>
                                                                             <exclude reference="9Yo-CF-dWi"/>
+                                                                            <exclude reference="PGJ-Ig-H0B"/>
                                                                         </mask>
                                                                     </variation>
                                                                 </label>

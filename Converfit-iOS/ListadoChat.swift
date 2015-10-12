@@ -25,6 +25,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     var desLoguear = false
     var mostrarAlert = true
     var isSubBrand = false
+    var tapPosicionConversacion = 0
     
     //MARK: - Outlets
     @IBOutlet weak var miTabla: UITableView!
@@ -362,17 +363,9 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        /*
-        let addConversacionVC = self.storyboard?.instantiateViewControllerWithIdentifier("AddConversation") as! AddConversacionController
-        //Rellenamos los valores que queramos pasar al otro VC
-        addConversacionVC.sessionKey = sessionKey
-        addConversacionVC.userKey = listadoConversaciones[indexPath.row].userkey
-        addConversacionVC.conversacionNueva = false
-        addConversacionVC.userName = listadoConversaciones[indexPath.row].fname + " " + listadoConversaciones[indexPath.row].lname
-        addConversacionVC.conversationKey = listadoConversaciones[indexPath.row].conversationKey
-        self.navigationController?.pushViewController(addConversacionVC, animated: true)
-        */
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        tapPosicionConversacion = indexPath.row
+        performSegueWithIdentifier("showConversation", sender: self)
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -430,5 +423,16 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
     func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
         return "Borrar"
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "showConversation"){
+            let messagesVC = segue.destinationViewController as! AddConversacionController
+            messagesVC.conversacionNueva = false
+            messagesVC.conversationKey = listadoConversaciones[tapPosicionConversacion].conversationKey
+            messagesVC.userKey = listadoConversaciones[tapPosicionConversacion].userkey
+            messagesVC.userName = listadoConversaciones[tapPosicionConversacion].fname +
+                " " + listadoConversaciones[tapPosicionConversacion].lname
+        }
     }
 }

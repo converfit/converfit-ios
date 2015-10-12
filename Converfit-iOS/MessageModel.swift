@@ -63,7 +63,12 @@ class MessageModel {
         created = aDict.objectForKey("created") as! String
         content = aDict.objectForKey("content") as! String
         type = aDict.objectForKey("type") as! String
-        enviado = aDict.objectForKey("enviado") as! String
+        let anEnviado = aDict.objectForKey("enviado") as! Bool
+        var enviadoString = "false"
+        if(anEnviado){
+            enviadoString = "true"
+        }
+        enviado = enviadoString
         fname = aDict.objectForKey("fname") as! String
         lname = aDict.objectForKey("lname") as! String
         

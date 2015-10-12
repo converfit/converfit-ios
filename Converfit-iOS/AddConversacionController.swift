@@ -264,7 +264,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     
     //Funcion para redondear los botones y demas formatos de la UI
     func modificarUI(){
-        self.title = "Test title"
+        self.title = userName
         //Ocultamos el tabBar
         self.tabBarController?.tabBar.hidden = true
     }
@@ -1218,7 +1218,7 @@ extension AddConversacionController: UITextFieldDelegate{
             }
             let messageKey = Messsage.obtenerMessageKeyTemporal()
             //Añadimos un mensaje nuevo al modelo
-            let mensajeTextoDict = ["message_key": messageKey, "converstation_key": conversationKey, "sender": "brand", "created": fechaCreacion, "content": textoMensaje, "type": tipo, "enviado":"true", "fname": fname, "lname": lname]
+            let mensajeTextoDict = ["message_key": messageKey, "converstation_key": conversationKey, "sender": "brand", "created": fechaCreacion, "content": textoMensaje, "type": tipo, "enviado": true, "fname": fname, "lname": lname]
             let mensaje = MessageModel(aDict: mensajeTextoDict)
             _ = Messsage(model: mensaje)
             listaMensajes.removeAll(keepCapacity: false)
