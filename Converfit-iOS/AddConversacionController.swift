@@ -126,7 +126,6 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         }else if(hacerFoto){
             hacerFoto = false
         }
-        crearBotonesBarraNavegacion()
         addTap()
     }
     
@@ -195,11 +194,6 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                     self.listaMensajesPaginada = self.listaMensajes
                 }
             }
-            
-            let botonesInfoLLamar = ["message_key": "a","converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonesLLamarInfo" , "enviado":true, "fname": "a", "lname": "a"]
-            let fakeDictBotons = MessageModel(aDict: botonesInfoLLamar)
-            self.listaMensajesPaginada.append(fakeDictBotons)
-            
             //Cuando acabamos todo lo demas volvemos al hilo principal para actualizar la UI
             dispatch_async(dispatch_get_main_queue()) {
                 self.miTabla.reloadData()
@@ -220,26 +214,6 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         })
     }
     
-    //Creamos los botones de la barra de navegacion
-    func crearBotonesBarraNavegacion(){
-        //Creamos un boton de tipo detailDisclosure y le asignamos una accion
-        let rightButton = UIButton(type: UIButtonType.DetailDisclosure)
-        rightButton.addTarget(self, action: "mostrarInformacion", forControlEvents: UIControlEvents.TouchUpInside)
-        //Creamos un fakeBoton de tipo UIBarButtonItem para encapsular el boton que creamos antes
-        let fakeButtonItem:UIBarButtonItem = UIBarButtonItem(customView: rightButton)
-        self.navigationItem.rightBarButtonItem = fakeButtonItem
-        
-        let backButton = UIBarButtonItem(title: "Chats", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
-        //Configuramos el boton de iniciar sesion
-        navigationItem.leftBarButtonItem = backButton
-    }
-    
-    //funcion con la que volvemos atras
-    func goBack(){
-        self.navigationController?.popToRootViewControllerAnimated(true)
-        vieneDeListadoMensajes = true
-    }
-    
     //Funcion que va aumentando la lista de mensajes de 20 en 20 siempre que sea posible
     func mostrarMasMensajes(){
         indicePaginado += 1
@@ -255,9 +229,6 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
             }else{
                 listaMensajesPaginada = Array(listaMensajes[0..<listaMensajes.count])
             }
-            let botonesInfoLLamar = ["message_key": "a", "converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonesLLamarInfo" , "enviado":true, "fname": "a", "lname": "a"]
-            let fakeDictBotons = MessageModel(aDict: botonesInfoLLamar)
-            listaMensajesPaginada.append(fakeDictBotons)
             miTabla.reloadData()
         }
     }
@@ -491,63 +462,6 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         recuperarListadoMensajesTask.resume()
     }
     
-    /*
-    func recuperarListadoMensajes(){
-        let messajeQueue:NSOperationQueue = {
-            let queue = NSOperationQueue()
-            queue.name = "mensaje queue"
-            queue.maxConcurrentOperationCount = 60
-            return queue
-            }()
-        
-        let lastUpdate = Conversation.obtenerLastUpdate(conversationKey)
-        let urlServidor = Utils.devolverURLservidor("conversations")
-        let params = "action=list_messages&session_key=\(sessionKey)&conversation_key=\(conversationKey)&last_update=\(lastUpdate)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
-        
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        request.HTTPMethod = "POST"
-        
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        NSURLConnection.sendAsynchronousRequest(request, queue: messajeQueue) { (response, data, error) -> Void in
-            if(data!.length > 0){ //1
-                let JSONObjetcs:NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
-                if let codigoResultado = JSONObjetcs.objectForKey("result") as? Int{//2
-                    if(codigoResultado  == 1){//3
-                        dbErrorContador = 0
-                        if let dataResultado = JSONObjetcs.objectForKey("data") as? NSDictionary{//4
-                            if let lastUp = dataResultado.objectForKey("last_update") as? String{//5
-                                Conversation.modificarLastUpdate(self.conversationKey, aLastUpdate: lastUp)
-                            }//5
-                            if let needToUpdate = dataResultado.objectForKey("need_to_update") as? Bool{//6
-                                if (needToUpdate){//7
-                                    Messsage.borrarMensajesConConverstaionKey(self.conversationKey)
-                                    if let messagesArray = dataResultado.objectForKey("messages") as? [NSDictionary]{//8
-                                        //Llamamos por cada elemento del array de empresas al constructor
-                                        for dict in messagesArray{//9
-                                            Messsage(aDict: dict, aConversationKey: self.conversationKey)
-                                        }//9
-                                    }//8
-                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        self.rellenarListaMensajes()
-                                    })
-                                }//7
-                            }//6
-                        }//4
-                    }//3
-                    else{
-                        if let codigoError = JSONObjetcs.objectForKey("error_code") as? String{
-                            self.desLoguear = Utils.comprobarDesloguear(codigoError)
-                            (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert(codigoError)
-                            self.mostrarAlerta()
-                        }
-                    }
-                }//2
-            }//1
-        }
-    }
-    */
-    
     func crearConversacion(){
         let sessionKey = Utils.getSessionKey()
          let params = "action=open_conversation&session_key=\(sessionKey)&user_key=\(userKey)&app_version=\(appVersion)&app=\(app)"
@@ -590,58 +504,6 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         }
         openConversationTask.resume()
     }
-    /*
-    func crearConversacion(){
-        var hayError = false
-        let url = Utils.devolverURLservidor("conversations")
-        
-        //establecemos los parametros
-        let params = "action=add_conversation&session_key=\(sessionKey)&user_key=\(userKey)&app_version=\(appVersion)&app=\(app)"
-        if let data = Utils().postRequest(url, params: params){//Realizamos la llamada por post
-            if(data.length > 0){
-                let JSONObjetcs:NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
-                if let codigoResultado = JSONObjetcs.objectForKey("result") as? Int{
-                    if(codigoResultado == 1){
-                        dbErrorContador = 0
-                        if let dataResultado = JSONObjetcs.objectForKey("data") as? NSDictionary{
-                            if let claveConversacion  = dataResultado.objectForKey("conversation_key") as? String{
-                                conversationKey = claveConversacion
-                                conversacionNueva = false
-                                if let lastUpdate = dataResultado.objectForKey("conversations_last_update") as? String{
-                                    Utils.guardarConversationsLastUpdate(lastUpdate)
-                                }
-                            }else{
-                                hayError = true//Falla la asignacion del optional
-                            }
-                        }else{
-                            hayError = true//Falla la asignacion del optional
-                        }
-                    }else{
-                        if let codigoError = JSONObjetcs.objectForKey("error_code") as? String{
-                            self.desLoguear = Utils.comprobarDesloguear(codigoError)
-                            (tituloAlert,mensajeAlert) = Utils().establecerTituloMensajeAlert(codigoError)
-                            mostrarAlerta()
-                        }else{
-                            hayError = true//Falla la asignacion del optional
-                        }
-                    }
-                }else{
-                    hayError = true//Falla la asignacion del optional
-                }
-            }else{
-                (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert("error")
-                self.mostrarAlerta()
-            }
-        }else{
-            hayError = true//Falla la asignacion del optional
-        }
-        
-        //Error en los opcionales
-        if(hayError){//Si hay error es que fallaron los desempaqutados de los opcionales o algun error inesperado
-            (tituloAlert,mensajeAlert) = Utils().establecerTituloMensajeAlert("error")
-            mostrarAlerta()
-        }
-    }*/
     
     func addMessage(params:String, messageKey:String, contenido:String, tipo:String){
         let urlServidor = Utils.returnUrlWS("conversations")
@@ -704,70 +566,6 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         addMensajeTask.resume()
     }
     
-    /*
-    func addMessage(params:String, messageKey:String, contenido:String, tipo:String){
-        let addMessajeQueue:NSOperationQueue = {
-            let queue = NSOperationQueue()
-            queue.name = "addMessaje queue"
-            queue.maxConcurrentOperationCount = 60
-            return queue
-            }()
-        
-        let urlServidor = Utils.devolverURLservidor("conversations")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        request.HTTPMethod = "POST"
-        
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        NSURLConnection.sendAsynchronousRequest(request, queue: addMessajeQueue) { (response, data, error) -> Void in
-            if(data!.length > 0){
-                if(error != nil){
-                    if(error!.code == -1005){
-                        self.addMessage(params, messageKey: messageKey, contenido: contenido, tipo: tipo)
-                    }
-                }else{
-                    let JSONObjetcs:NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
-                    if let codigoResultado = JSONObjetcs.objectForKey("result") as? Int{
-                        if(codigoResultado == 0){
-                            Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: false)
-                            let anUltimoMensajeEnviado = Messsage.devolverUltimoMensajeEnviadoOk(self.conversationKey)
-                            if let ultimoMensajeEnviado = anUltimoMensajeEnviado{
-                                Conversation.updateLastMesssageConversation(ultimoMensajeEnviado.conversationKey, ultimoMensaje: ultimoMensajeEnviado.content, fechaCreacion: ultimoMensajeEnviado.created)
-                            }
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.rellenarListaMensajes()
-                            })
-                            if let codigoError = JSONObjetcs.objectForKey("error_code") as? String{
-                                if(Utils.comprobarDesloguear(codigoError)){
-                                    self.desLoguear = true
-                                }
-                                (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert(codigoError)
-                                self.mostrarAlerta()
-                            }
-                        }else{//Se ha insertado  el mensaje correctamente y por lo tanto guardamos el lastUpdate
-                            dbErrorContador = 0
-                            if let dataResultado = JSONObjetcs.objectForKey("data") as? NSDictionary{
-                                if let lastUpd = dataResultado.objectForKey("last_update") as?String{
-                                    var hora = NSString(string: Messsage.devolverHoraUltimoMensaje(self.conversationKey)).doubleValue
-                                    if(NSString(string: lastUpd).doubleValue < hora){
-                                        hora = hora + 3
-                                    }
-                                    Messsage.actualizarFechaMensaje(self.conversationKey, messageKey: messageKey, fecha: "\(hora)")
-                                }
-                                if let messageKeyServidor = dataResultado.objectForKey("message_key") as?String {
-                                    Messsage.updateMessageKeyTemporal(self.conversationKey, messageKey: messageKey, messageKeyServidor: messageKeyServidor)
-                                    self.updateMessage(messageKeyServidor, content: contenido,tipo: tipo)
-                                }
-                            }
-                        }
-                    }
-                }
-            }else{
-                (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert("error")
-                self.mostrarAlerta()
-            }
-        }
-    }
-    */
     func updateMessage(messageKey:String, content:String, tipo:String){
         let sessionKey = Utils.getSessionKey()
         let params = "action=update_message&session_key=\(sessionKey)&conversation_key=\(conversationKey)&message_key=\(messageKey)&content=\(content)&type=\(tipo)&app=\(app)"
@@ -818,62 +616,6 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         udpateMensajeTask.resume()
     }
     
-    /*
-    func updateMessage(messageKey:String, content:String, tipo:String){
-        let updateMessageQueue:NSOperationQueue = {
-            let queue = NSOperationQueue()
-            queue.name = "updateMessage queue"
-            queue.maxConcurrentOperationCount = 60
-            return queue
-            }()
-        
-        let urlServidor = Utils.devolverURLservidor("conversations")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        request.HTTPMethod = "POST"
-        let params = "action=update_message&session_key=\(sessionKey)&conversation_key=\(conversationKey)&message_key=\(messageKey)&content=\(content)&type=\(tipo)&app=\(app)"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        NSURLConnection.sendAsynchronousRequest(request, queue: updateMessageQueue) { (response, data, error) -> Void in
-            if(data!.length > 0){
-                if(error != nil){
-                    if(error!.code == -1005){
-                        self.updateMessage(messageKey, content: content,tipo: tipo)
-                    }
-                }else{
-                    let JSONObjetcs:NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
-                    if let codigoResultado = JSONObjetcs.objectForKey("result") as? Int{
-                        if(codigoResultado == 0){
-                            self.listaMessagesKeyFallidos.append(messageKey)
-                            Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: false)
-                            let anUltimoMensajeEnviado = Messsage.devolverUltimoMensajeEnviadoOk(self.conversationKey)
-                            if let ultimoMensajeEnviado = anUltimoMensajeEnviado{
-                                Conversation.updateLastMesssageConversation(ultimoMensajeEnviado.conversationKey, ultimoMensaje: ultimoMensajeEnviado.content, fechaCreacion: ultimoMensajeEnviado.created)
-                            }
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.rellenarListaMensajes()
-                            })
-                            if let codigoError = JSONObjetcs.objectForKey("error_code") as? String{
-                                if(Utils.comprobarDesloguear(codigoError)){
-                                    self.desLoguear = true
-                                    (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert(codigoError)
-                                    self.mostrarAlerta()
-                                }
-                            }
-                        }else{
-                            dbErrorContador = 0
-                            if let dataResultado = JSONObjetcs.objectForKey("data") as? NSDictionary{
-                            }
-                        }
-                    }
-                }
-            }else{
-                (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert("error")
-                self.mostrarAlerta()
-            }
-        }
-    }
-    */
- 
     //MARK: - Teclado
     func dissmisKeyboard(){
         self.view.endEditing(true)
@@ -1314,9 +1056,6 @@ extension AddConversacionController: UINavigationControllerDelegate, UIImagePick
         }else{
             listaMensajesPaginada = listaMensajes
         }
-        let botonesInfoLLamar = ["message_key": "a", "converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonesLLamarInfo", "enviado":true, "fname": "a", "lname": "a"]
-        let fakeDictBotons = MessageModel(aDict: botonesInfoLLamar)
-        listaMensajesPaginada.append(fakeDictBotons)
         
         miTabla.reloadData()
         Conversation.updateLastMesssageConversation(conversationKey, ultimoMensaje: ultimoMensaje, fechaCreacion: fechaCreacion)
