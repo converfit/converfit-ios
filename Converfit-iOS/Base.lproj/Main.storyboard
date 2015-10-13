@@ -1636,7 +1636,7 @@
                                                         <constraint firstAttribute="height" constant="48" id="bge-TP-CPt"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GPE-F3-F3l">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GPE-F3-F3l">
                                                     <rect key="frame" x="553" y="30" width="14" height="14"/>
                                                     <animations/>
                                                     <constraints>

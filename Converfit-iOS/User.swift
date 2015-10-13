@@ -43,7 +43,7 @@ public class User: _User {
     static func devolverListaUsers() -> [UserModel]{
         var listadoUsers = [UserModel]()
         let request = NSFetchRequest(entityName: User.entityName())
-        let miShorDescriptor = NSSortDescriptor(key: "fname", ascending: true)
+        let miShorDescriptor = NSSortDescriptor(key: "horaConectado", ascending: false)
         request.sortDescriptors = [miShorDescriptor]
         request.returnsObjectsAsFaults = false
         
@@ -60,14 +60,14 @@ public class User: _User {
     static func buscarUser(textoBuscado:String) ->[UserModel]{
         var listadoUsers = [UserModel]()
         let request = NSFetchRequest(entityName: User.entityName())
-        let fnamePredicate = NSPredicate(format: "fname contains[cd] %@", textoBuscado)//Obtenemos los nombres que contengan el texto
-        let lnamePredicate = NSPredicate(format: "lname contains[cd] %@", textoBuscado)//Obtenemos los nombres que contengan el texto
+        let fnamePredicate = NSPredicate(format: "userName contains[cd] %@", textoBuscado)//Obtenemos los nombres que contengan el texto
+        //let lnamePredicate = NSPredicate(format: "lname contains[cd] %@", textoBuscado)//Obtenemos los nombres que contengan el texto
         //Creamos un predicado con las busquedas tanto del texto en el nombre como en el username
-        let orPredicate = NSCompoundPredicate(type: NSCompoundPredicateType.OrPredicateType, subpredicates: [fnamePredicate, lnamePredicate])
+        let orPredicate = NSCompoundPredicate(type: NSCompoundPredicateType.OrPredicateType, subpredicates: [fnamePredicate])
         
         request.predicate = orPredicate
         
-        let miShorDescriptor = NSSortDescriptor(key: "fname", ascending: true)
+        let miShorDescriptor = NSSortDescriptor(key: "horaConectado", ascending: false)
         request.sortDescriptors = [miShorDescriptor]
         request.returnsObjectsAsFaults = false
         

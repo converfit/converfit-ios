@@ -44,7 +44,7 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
             if(!listadoUsers.isEmpty){
                 datosRecibidosServidor = true
             }
-            //recuperarUserServidor()
+            recuperarUserServidor()
             
             modificarUI()
             //Tenemos que forzar la recarga para que cuando cambiemos con el tabBar se recargue correctamente
@@ -127,6 +127,77 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     }
     
     //MARK: - ComunicacionServidor
+    func recuperarUserServidor(){
+        let sessionKey = Utils.getSessionKey()
+        let usersLastUpdate = Utils.getLastUpdateFollower()
+        let params = "action=list_users&session_key=\(sessionKey)&users_last_update=\(usersLastUpdate)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
+        let urlServidor = Utils.returnUrlWS("brands")
+        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
+        let session = NSURLSession.sharedSession()
+        request.HTTPMethod = "POST"
+        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        let recuperarUsersTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            guard data != nil else {
+                print("no data found: \(error)")
+                return
+            }
+            
+            do {
+                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
+                    if let resultCode = json.objectForKey("result") as? Int{
+                        if(resultCode == 1){
+                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
+                                //Guardamos el last update de favoritos
+                                if let lastUpdate = dataResultado.objectForKey("users_last_update") as? String{
+                                    Utils.saveLastUpdateFollower(lastUpdate)
+                                }
+                                //Obtenemos el need_to_update para ver si hay que actualizar la lista o no
+                                if let needUpdate = dataResultado.objectForKey("need_to_update") as? Bool{
+                                    if(needUpdate){
+                                        if let listaUsuarios = dataResultado.objectForKey("users") as? NSArray{
+                                            User.borrarAllUsers()
+                                            //Llamamos por cada elemento del array de empresas al constructor
+                                            for dict in listaUsuarios{
+                                                _=User(aDict: dict as! NSDictionary)
+                                            }
+                                        }
+                                        self.datosRecibidosServidor = true
+                                        self.listadoUsers = User.devolverListaUsers()
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            self.miTablaPersonalizada.reloadData()
+                                        })
+                                    }
+                                }
+                            }
+                        }
+                        else{
+                            if let codigoError = json.objectForKey("error_code") as? String{
+                                self.datosRecibidosServidor = true
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
+                                        if(codigoError != "list_users_empty"){
+                                            (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                                            self.mostrarAlerta()
+                                        }else{
+                                            self.mostrarAlert = false
+                                        }
+                                    })
+                                })
+                                
+                            }
+                        }
+                    }
+                }
+            } catch{
+                self.spinner.stopAnimating()
+                self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
+                    self.mostrarAlerta()
+                })
+            }
+        }
+        recuperarUsersTask.resume()
+    }
     /*
     func recuperarUserServidor(){
         var downloadQueue:NSOperationQueue = {
@@ -210,6 +281,21 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellId) as! CeldaListadoFavoritos
+        cell.imagenAvatar.image = listadoUsers[indexPath.row].avatar
+        cell.name.text = listadoUsers[indexPath.row].userName
+        cell.lastPage.text = listadoUsers[indexPath.row].lastPageTitle
+        cell.hora.text = Fechas.devolverTiempo(listadoUsers[indexPath.row].horaConectado)
+        let conectionStatus = listadoUsers[indexPath.row].connectionStatus
+        if(conectionStatus == "online"){
+            cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Online")
+        }else if(conectionStatus == "offline"){
+            cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Offline")
+        }else if(conectionStatus == "inactive"){
+            cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Inactive")
+        }else{
+            cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Mobile")
+        }
+
         /*
         cell.imagenAvatar.image = listadoUsers[indexPath.row].avatar
         cell.name.text = listadoUsers[indexPath.row].fname + " " + listadoUsers[indexPath.row].lname

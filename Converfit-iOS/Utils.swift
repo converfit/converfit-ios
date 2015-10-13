@@ -23,11 +23,11 @@ class Utils {
             }else if(modelo == "conversations"){
                 resultado = rutaServidor + "android/1.0.0/models/conversations/model.php"
             }else if(modelo == "brand_notifications"){
-                resultado = rutaServidor + "ios/1.0.0/models/brand_notifications/model.php"
-            }else if(modelo == "users"){
-                resultado = rutaServidor + "ios/1.0.0/models/users/model.php"
+                resultado = rutaServidor + "android/1.0.0/models/brand_notifications/model.php"
             }else if(modelo == "brands"){
-                resultado = rutaServidor + "ios/1.0.0/models/brands/model.php"
+                resultado = rutaServidor + "android/1.0.0/models/users/model.php"
+            }else if(modelo == "webchat"){
+                resultado = rutaServidor + "android/1.0.0/models/brands/model.php"
             }else if(modelo == "pdf"){
                 resultado = rutaServidor + "resources/message_files/"
             }
@@ -35,15 +35,15 @@ class Utils {
         default:
             let rutaServidor = "http://server.converfit.com/"
             if(modelo == "access"){
-                resultado = rutaServidor + "ios/1.0.0/models/access/model.php"
+                resultado = rutaServidor + "android/1.0.0/models/access/model.php"
             }else if(modelo == "conversations"){
-                resultado = rutaServidor + "ios/1.0.0/models/conversations/model.php"
+                resultado = rutaServidor + "android/1.0.0/models/conversations/model.php"
             }else if(modelo == "brand_notifications"){
-                resultado = rutaServidor + "ios/1.0.0/models/brand_notifications/model.php"
-            }else if(modelo == "users"){
-                resultado = rutaServidor + "ios/1.0.0/models/users/model.php"
+                resultado = rutaServidor + "android/1.0.0/models/brand_notifications/model.php"
             }else if(modelo == "brands"){
-                resultado = rutaServidor + "ios/1.0.0/models/brands/model.php"
+                resultado = rutaServidor + "android/1.0.0/models/users/model.php"
+            }else if(modelo == "webchat"){
+                resultado = rutaServidor + "android/1.0.0/models/brands/model.php"
             }else if(modelo == "pdf"){
                 resultado = rutaServidor + "resources/message_files/"
             }
@@ -278,7 +278,7 @@ class Utils {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.removeObjectForKey("session_key")
         defaults.removeObjectForKey("last_update")
-        defaults.removeObjectForKey("last_update_favorito")
+        defaults.removeObjectForKey("last_update_follower")
         defaults.removeObjectForKey("conversations_last_update")
         borrarAllCoreData()
     }
