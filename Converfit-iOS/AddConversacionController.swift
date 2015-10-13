@@ -40,6 +40,8 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     var listaMessagesKeyFallidos = [String]()
     let fname = Utils.obtenerFname()
     let lname = Utils.obtenerLname()
+    let imagenDetailSegue = "imagenDetailSegue"
+    var indiceSeleccionado = 0
     
     //MARK: - Outlets
     @IBOutlet weak var escribirMensajeOutlet: UITextField!
@@ -326,12 +328,8 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         let indice = sender.view?.tag
         let listaMensajesOrdenadas = Array(listaMensajesPaginada.reverse())
         if(listaMensajesOrdenadas[indice!].type == "jpeg_base64"){
-            //let imagenMostrar = decodificarImagen(listaMensajesOrdenadas[indice!].content)
-            listaMensajes.removeAll(keepCapacity: false)//Borramos la lista para que al volver no solape datos
-            listaMensajesPaginada.removeAll(keepCapacity: false)
-            //let detailImagenVC = self.storyboard?.instantiateViewControllerWithIdentifier("ImageDetail") as! ImageDetailController
-            //detailImagenVC.imagenMostrada = imagenMostrar
-            //self.navigationController?.pushViewController(detailImagenVC, animated: true)
+            indiceSeleccionado = indice!
+            performSegueWithIdentifier(imagenDetailSegue, sender: self)
         }else if(listaMensajesOrdenadas[indice!].type == "mp4_base64"){
             //let mostrarVideodVC = self.storyboard?.instantiateViewControllerWithIdentifier("videoDetail") as! VideoViewController
             //mostrarVideodVC.dataVideo = Utils.decodificarVideo(listaMensajesOrdenadas[indice!].content)
@@ -340,6 +338,16 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
 
         }else{
             abrirPDfEncuesta(indice!)
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == imagenDetailSegue){
+            let listaMensajesOrdenadas = Array(listaMensajesPaginada.reverse())
+            let imagenMostrar = decodificarImagen(listaMensajesOrdenadas[indiceSeleccionado].content)
+            let imagenDetailVC = segue.destinationViewController as! ImageDetailController
+            imagenDetailVC.imagenMostrada = imagenMostrar
+            
         }
     }
     

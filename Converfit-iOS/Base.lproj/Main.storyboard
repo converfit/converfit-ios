@@ -1598,6 +1598,7 @@
                         <outlet property="miTabla" destination="eGX-K3-qLt" id="Sxr-0J-YmK"/>
                         <outlet property="spinner" destination="Iyc-Le-iNm" id="hSs-Du-ZqT"/>
                         <outlet property="vistaContenedoraTeclado" destination="uPJ-Oj-qIT" id="EZa-pR-0JR"/>
+                        <segue destination="iMk-fJ-BZN" kind="show" identifier="imagenDetailSegue" id="WpB-1W-fp6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ii-XA-NZA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1734,6 +1735,69 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DgF-fS-Oad" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2664" y="-27"/>
+        </scene>
+        <!--Image Detail Controller-->
+        <scene sceneID="9ko-j6-dle">
+            <objects>
+                <viewController storyboardIdentifier="ImageDetail" id="iMk-fJ-BZN" customClass="ImageDetailController" customModule="Converfit_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2xb-3s-g8n"/>
+                        <viewControllerLayoutGuide type="bottom" id="qh6-5B-OFQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" id="M1N-gO-sAv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="crK-LJ-if7">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6TI-Kt-U1s">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="580"/>
+                                        <animations/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" id="5JK-Y1-vso"/>
+                                            <constraint firstAttribute="height" id="z6b-Gk-K0W"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="z6b-Gk-K0W"/>
+                                                <exclude reference="5JK-Y1-vso"/>
+                                            </mask>
+                                        </variation>
+                                    </imageView>
+                                </subviews>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="6TI-Kt-U1s" secondAttribute="trailing" id="2rY-mb-6ul"/>
+                                    <constraint firstItem="6TI-Kt-U1s" firstAttribute="centerX" secondItem="crK-LJ-if7" secondAttribute="centerX" id="6TU-G6-V0g"/>
+                                    <constraint firstItem="6TI-Kt-U1s" firstAttribute="leading" secondItem="crK-LJ-if7" secondAttribute="leading" id="Y0c-Q9-iVo"/>
+                                    <constraint firstItem="6TI-Kt-U1s" firstAttribute="centerY" secondItem="crK-LJ-if7" secondAttribute="centerY" id="axe-HK-FKr"/>
+                                    <constraint firstItem="6TI-Kt-U1s" firstAttribute="top" secondItem="crK-LJ-if7" secondAttribute="top" id="mcV-Cc-XfO"/>
+                                    <constraint firstAttribute="bottom" secondItem="6TI-Kt-U1s" secondAttribute="bottom" id="tI5-2a-Xoh"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="iMk-fJ-BZN" id="ZYO-E0-Ru1"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="0.96999999999999997" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="crK-LJ-if7" firstAttribute="top" secondItem="2xb-3s-g8n" secondAttribute="bottom" id="CMd-Gu-zbz"/>
+                            <constraint firstAttribute="trailing" secondItem="crK-LJ-if7" secondAttribute="trailing" id="P6p-gs-elo"/>
+                            <constraint firstItem="qh6-5B-OFQ" firstAttribute="top" secondItem="crK-LJ-if7" secondAttribute="bottom" id="xO1-08-OXb"/>
+                            <constraint firstItem="crK-LJ-if7" firstAttribute="leading" secondItem="M1N-gO-sAv" secondAttribute="leading" id="xO1-CO-MK5"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imagenGrande" destination="6TI-Kt-U1s" id="uTH-ak-Aem"/>
+                        <outlet property="miScroll" destination="crK-LJ-if7" id="U1o-qt-q42"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aud-hu-BIU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4110" y="-471"/>
         </scene>
     </scenes>
     <resources>
