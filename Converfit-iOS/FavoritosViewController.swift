@@ -15,7 +15,8 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     var sessionKey = ""
     var mensajeAlert = ""
     var tituloAlert = ""
-    var listadoUsers = [UserModel]()
+    var listadoUsersConectados = [UserModel]()
+    var listadoUsersAPP = [UserModel]()
     var datosRecibidosServidor = false
     var alertCargando = UIAlertController(title: "", message: "Cargando...", preferredStyle: .Alert)
     var spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
@@ -42,8 +43,9 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
             self.tabBarController?.selectedIndex = 2
             vieneDeListadoMensajes = false
         }else{
-            listadoUsers = User.devolverListaUsers()
-            if(!listadoUsers.isEmpty){
+            listadoUsersConectados = User.devolverUsuariosConectados()
+            listadoUsersAPP = User.devolverUsuariosAPP()
+            if(!listadoUsersConectados.isEmpty || !listadoUsersAPP.isEmpty){
                 datosRecibidosServidor = true
             }
             recuperarUserServidor()
@@ -85,7 +87,8 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     //MARK: - Utils
     func resetContexto(){
         //Funcion que utilizamos para poner los datos por defecto cuando desaparece la pantalla
-        listadoUsers.removeAll(keepCapacity: false)
+        //listadoUsersConectados.removeAll(keepCapacity: false)
+        //listadoUsersAPP.removeAll(keepCapacity: false)
         miTablaPersonalizada.reloadData()
         mensajeAlert = ""
         tituloAlert = ""
@@ -164,7 +167,9 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
                                             }
                                         }
                                         self.datosRecibidosServidor = true
-                                        self.listadoUsers = User.devolverListaUsers()
+                                        //self.listadoUsers = User.devolverListaUsers()
+                                        self.listadoUsersConectados = User.devolverUsuariosConectados()
+                                        self.listadoUsersAPP = User.devolverUsuariosAPP()
                                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                             self.miTablaPersonalizada.reloadData()
                                         })
@@ -216,17 +221,35 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         }
     }
     
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
+        
+        let headerView = view as! UITableViewHeaderFooterView
+        headerView.textLabel?.textColor = UIColor(red: 187/255, green: 187/255, blue: 187/255, alpha: 1)
+        headerView.textLabel?.font = UIFont.systemFontOfSize(16)
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listadoUsers.count// Create 1 row as an example
+        if(section == 0){
+            return User.devolverNumeroUsuariosConectados()
+        }else{
+            return User.devolverNumeroUsuariosAPP()
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellId) as! CeldaListadoFavoritos
-        cell.imagenAvatar.image = listadoUsers[indexPath.row].avatar
-        cell.name.text = listadoUsers[indexPath.row].userName
-        cell.lastPage.text = listadoUsers[indexPath.row].lastPageTitle
-        cell.hora.text = Fechas.devolverTiempo(listadoUsers[indexPath.row].horaConectado)
-        let conectionStatus = listadoUsers[indexPath.row].connectionStatus
+        var user:UserModel
+        if(indexPath.section == 0){
+            user = listadoUsersConectados[indexPath.row]
+        }else{
+            user = listadoUsersAPP[indexPath.row]
+        }
+        cell.imagenAvatar.image = user.avatar
+        cell.name.text = user.userName
+        cell.lastPage.text = user.lastPageTitle
+        cell.hora.text = Fechas.devolverTiempo(user.horaConectado)
+        let conectionStatus = user.connectionStatus
         if(conectionStatus == "online"){
             cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Online")
         }else if(conectionStatus == "offline"){
@@ -267,7 +290,13 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == segueShowConversationUser){
             let indice = indexSeleccionado?.row
-            let (userHasConversation, conversationKey) = Conversation.existeConversacionDeUsuario(listadoUsers[indice!].userKey)
+            var user:UserModel
+            if(indexSeleccionado!.section == 0){
+                user = listadoUsersConectados[indice!]
+            }else{
+                user = listadoUsersAPP[indice!]
+            }
+            let (userHasConversation, conversationKey) = Conversation.existeConversacionDeUsuario(user.userKey)
              let messagesVC = segue.destinationViewController as! AddConversacionController
             if(userHasConversation){
                 messagesVC.conversacionNueva = false
@@ -276,12 +305,12 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
             }else{
                 messagesVC.conversacionNueva = true
             }
-            messagesVC.userKey = listadoUsers[indice!].userKey
-            messagesVC.userName = listadoUsers[indice!].userName
+            messagesVC.userKey = user.userKey
+            messagesVC.userName = user.userName
         }
     }
 }
-
+/*
 //Extension para la gestion del SearcBar
 extension FavoritosViewController: UISearchBarDelegate{
     //Funcion que se ejecuta cada vez que se cambia el texto de busqueda
@@ -324,5 +353,5 @@ extension FavoritosViewController: UISearchBarDelegate{
             miTablaPersonalizada.reloadData()
         }
     }
-}
+}*/
 

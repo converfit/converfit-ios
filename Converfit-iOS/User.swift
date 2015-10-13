@@ -66,6 +66,43 @@ public class User: _User {
         return listadoUsers
     }
     
+    //Metodo que devuelve el numero total de Usuarios de la APP
+    static func devolverUsuariosAPP() -> [UserModel]{
+        var listadoUsers = [UserModel]()
+        
+        let request = NSFetchRequest(entityName: User.entityName())
+        request.predicate = NSPredicate(format: "connectionStatus = %@", "mobile")//Obtenemos solo las favoritas
+        let miShorDescriptor = NSSortDescriptor(key: "horaConectado", ascending: false)
+        request.sortDescriptors = [miShorDescriptor]
+        request.returnsObjectsAsFaults = false
+        
+        let results = (try! coreDataStack.context.executeFetchRequest(request)) as! [User]
+        for user in results{
+            let aux = UserModel(modelo: user)
+            listadoUsers.append(aux)
+        }
+        return listadoUsers
+    }
+    
+    //Metodo que devuelve el numero total de Usuarios CONECTADOS
+    static func devolverUsuariosConectados() -> [UserModel]{
+        var listadoUsers = [UserModel]()
+        
+        let request = NSFetchRequest(entityName: User.entityName())
+        request.predicate = NSPredicate(format: "connectionStatus != %@", "mobile")//Obtenemos solo las favoritas
+        let miShorDescriptor = NSSortDescriptor(key: "horaConectado", ascending: false)
+        request.sortDescriptors = [miShorDescriptor]
+        request.returnsObjectsAsFaults = false
+        
+        let results = (try! coreDataStack.context.executeFetchRequest(request)) as! [User]
+        for user in results{
+            let aux = UserModel(modelo: user)
+            listadoUsers.append(aux)
+        }
+        return listadoUsers
+    }
+
+    
     //Metodo para buscar un User a partir de un texto dado
     static func buscarUser(textoBuscado:String) ->[UserModel]{
         var listadoUsers = [UserModel]()
@@ -123,4 +160,38 @@ public class User: _User {
         }
     }
     
+    //Metodo que devuelve el numero total de Usuarios de la APP
+    static func devolverNumeroUsuariosAPP() -> Int{
+        var usuariosAPP = 0
+        
+        let request = NSFetchRequest(entityName: User.entityName())
+        request.predicate = NSPredicate(format: "connectionStatus = %@", "mobile")//Obtenemos solo las favoritas
+        let miShorDescriptor = NSSortDescriptor(key: "horaConectado", ascending: false)
+        request.sortDescriptors = [miShorDescriptor]
+        request.returnsObjectsAsFaults = false
+        
+        let results = (try! coreDataStack.context.executeFetchRequest(request)) as! [User]
+        if(results.count > 0){
+            usuariosAPP = results.count
+        }
+        return usuariosAPP
+    }
+    
+    //Metodo que devuelve el numero total de Usuarios CONECTADOS
+    static func devolverNumeroUsuariosConectados() -> Int{
+        var usuariosConectados = 0
+        
+        let request = NSFetchRequest(entityName: User.entityName())
+        request.predicate = NSPredicate(format: "connectionStatus != %@", "mobile")//Obtenemos solo las favoritas
+        let miShorDescriptor = NSSortDescriptor(key: "horaConectado", ascending: false)
+        request.sortDescriptors = [miShorDescriptor]
+        request.returnsObjectsAsFaults = false
+        
+        let results = (try! coreDataStack.context.executeFetchRequest(request)) as! [User]
+        if(results.count > 0){
+            usuariosConectados = results.count
+        }
+        
+        return usuariosConectados
+    }
 }
