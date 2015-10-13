@@ -11,6 +11,8 @@ public class User: _User {
         //Guardamos el userKey
         if let anUserKey = aDict.objectForKey("user_key") as? String{
             userKey = anUserKey
+        }else{
+            userKey = ""
         }
         
         //Guardamos el avatar
@@ -22,18 +24,26 @@ public class User: _User {
         
         if let anUserName = aDict.objectForKey("user_name") as? String{
             userName = anUserName
+        }else{
+            userName = ""
         }
         
         if let aLastPageTitle = aDict.objectForKey("last_page_title") as? String{
             lastPageTitle = aLastPageTitle
+        }else{
+            lastPageTitle = ""
         }
         
         if let aConnectionStatus = aDict.objectForKey("connection-status") as? String{
             connectionStatus = aConnectionStatus
+        }else{
+            connectionStatus = ""
         }
         
         if let anHoraConectado = aDict.objectForKey("last_connection") as? String{
             horaConectado = anHoraConectado
+        }else{
+            horaConectado = ""
         }
         
         coreDataStack.saveContext()

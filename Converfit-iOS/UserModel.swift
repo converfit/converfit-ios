@@ -22,16 +22,32 @@ class UserModel {
     //Inicializador de Favoritos
     convenience init(modelo:User){
         self.init()
-        if(modelo.avatar.length > 0){
+        /*if(modelo.avatar.length > 0){
             if let foto = UIImage(data: modelo.avatar) {
                 avatar = foto
             }
+        }*/
+        if let avatarString = modelo.avatar{
+            if let foto = UIImage(data: avatarString){
+                avatar = foto
+            }
         }
-        connectionStatus = modelo.connectionStatus
-        horaConectado = modelo.horaConectado
-        lastPageTitle = modelo.lastPageTitle
-        userKey = modelo.userKey
-        userName = modelo.userName
+        
+        if let aConnectionStatus = modelo.connectionStatus{
+            connectionStatus = aConnectionStatus
+        }
+        if let anHoraConectado = modelo.horaConectado{
+            horaConectado = anHoraConectado
+        }
+        if let aLastPageTitle = modelo.lastPageTitle{
+            lastPageTitle = aLastPageTitle
+        }
+        if let anUserKey = modelo.userKey{
+            userKey = anUserKey
+        }
+        if let anUserName = modelo.userName{
+            userName = anUserName
+        }
         
     }
     

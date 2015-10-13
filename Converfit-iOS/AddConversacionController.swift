@@ -369,22 +369,28 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func addNuevaConversacion(lastMessage:String){
-        /*let user = User.obtenerUser(userKey)
-        let imageData = UIImagePNGRepresentation((user?.avatar)!)
-        var avatar = ""
-        if let avatarImage = imageData?.base64EncodedStringWithOptions([]){
-            avatar = avatarImage
-        }
+        if let user = User.obtenerUser(userKey){
+            let imageData = UIImagePNGRepresentation((user.avatar)!)
+            var avatar = ""
+            if let avatarImage = imageData?.base64EncodedStringWithOptions([]){
+                avatar = avatarImage
+            }
         
-        let hora = NSString(string: Conversation.devolverHoraUltimaConversacion()).doubleValue
-        if(NSString(string: fechaCreacion).doubleValue < hora){
-            fechaCreacion = "\(hora + 3)"
+            let hora = NSString(string: Conversation.devolverHoraUltimaConversacion()).doubleValue
+            if(NSString(string: fechaCreacion).doubleValue < hora){
+                fechaCreacion = "\(hora + 3)"
+            }
+            let auxUserDict = ["user_key":userKey, "avatar": avatar,"connection-status": user.connectionStatus]
+            let userNameArray = user.userName.componentsSeparatedByString(" ")
+            let userFname:String = userNameArray[0]
+            var lnameUser = ""
+            for(var i = 1; i < userNameArray.count; i++){
+                lnameUser += userNameArray[i] + " "
+            }
+            let conversacionDict = ["conversation_key": conversationKey, "user_fname": userFname, "user_lname": lnameUser,"user": auxUserDict, "flag_new_message_user": "0", "last_message": lastMessage, "last_update": fechaCreacion]
+            _=Conversation(aDict: conversacionDict, aLastUpdate: fechaCreacion, existe: false)
         }
-        let auxUserDict = ["user_key":user?.userKey, "avatar": avatar]
-        
-        let conversacionDict = ["conversation_key": conversationKey, "user_fname": user?.fname, "user_lname": user?.lname, "avatar": avatar, "user_key": userKey, "flag_new_message_user": "0", "last_message": lastMessage, "last_update": fechaCreacion]
-        Conversation(aDict: conversacionDict, aLastUpdate: fechaCreacion)
-        */
+    
     }
   
     
