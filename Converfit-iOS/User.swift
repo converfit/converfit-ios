@@ -48,7 +48,7 @@ public class User: _User {
         
         coreDataStack.saveContext()
     }
-    
+    /*
     //Metodo que devuelve la lista de todos los Users
     static func devolverListaUsers() -> [UserModel]{
         var listadoUsers = [UserModel]()
@@ -65,7 +65,7 @@ public class User: _User {
         }
         return listadoUsers
     }
-    
+    */
     //Metodo que devuelve el numero total de Usuarios de la APP
     static func devolverUsuariosAPP() -> [UserModel]{
         var listadoUsers = [UserModel]()
@@ -104,13 +104,13 @@ public class User: _User {
 
     
     //Metodo para buscar un User a partir de un texto dado
-    static func buscarUser(textoBuscado:String) ->[UserModel]{
+    static func buscarUserConectado(textoBuscado:String) ->[UserModel]{
         var listadoUsers = [UserModel]()
         let request = NSFetchRequest(entityName: User.entityName())
         let fnamePredicate = NSPredicate(format: "userName contains[cd] %@", textoBuscado)//Obtenemos los nombres que contengan el texto
-        //let lnamePredicate = NSPredicate(format: "lname contains[cd] %@", textoBuscado)//Obtenemos los nombres que contengan el texto
+        let conectadoPredicate = NSPredicate(format: "connectionStatus != %@", "mobile")//Obtenemos los nombres que contengan el texto
         //Creamos un predicado con las busquedas tanto del texto en el nombre como en el username
-        let orPredicate = NSCompoundPredicate(type: NSCompoundPredicateType.OrPredicateType, subpredicates: [fnamePredicate])
+        let orPredicate = NSCompoundPredicate(type: NSCompoundPredicateType.AndPredicateType, subpredicates: [fnamePredicate, conectadoPredicate])
         
         request.predicate = orPredicate
         
@@ -126,6 +126,30 @@ public class User: _User {
         }
         return listadoUsers
     }
+    //Metodo para buscar un User a partir de un texto dado
+    static func buscarUserAPP(textoBuscado:String) ->[UserModel]{
+        var listadoUsers = [UserModel]()
+        let request = NSFetchRequest(entityName: User.entityName())
+        let fnamePredicate = NSPredicate(format: "userName contains[cd] %@", textoBuscado)//Obtenemos los nombres que contengan el texto
+        let mobilePredicate = NSPredicate(format: "connectionStatus = %@", "mobile")//Obtenemos los nombres que contengan el texto
+        //Creamos un predicado con las busquedas tanto del texto en el nombre como en el username
+        let orPredicate = NSCompoundPredicate(type: NSCompoundPredicateType.AndPredicateType, subpredicates: [fnamePredicate, mobilePredicate])
+        
+        request.predicate = orPredicate
+        
+        let miShorDescriptor = NSSortDescriptor(key: "horaConectado", ascending: false)
+        request.sortDescriptors = [miShorDescriptor]
+        request.returnsObjectsAsFaults = false
+        
+        let results = (try! coreDataStack.context.executeFetchRequest(request)) as! [User]
+        
+        for user in results{
+            let aux = UserModel(modelo: user)
+            listadoUsers.append(aux)
+        }
+        return listadoUsers
+    }
+
     
     //Borra todos los User
     static func borrarAllUsers() -> Bool{

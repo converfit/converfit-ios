@@ -1667,7 +1667,7 @@
                                                     <rect key="frame" x="64" y="34" width="426" height="23.5"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -1763,8 +1763,8 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="z6b-Gk-K0W"/>
                                                 <exclude reference="5JK-Y1-vso"/>
+                                                <exclude reference="z6b-Gk-K0W"/>
                                             </mask>
                                         </variation>
                                     </imageView>

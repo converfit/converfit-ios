@@ -26,6 +26,8 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     var isSubBrand = false
     let segueShowConversationUser = "showConversationUser"
     var indexSeleccionado:NSIndexPath?
+    var numeroUsuarioConectados = 0
+    var numeroUsuariosAPP = 0
     
     //MARK: - Outlets
     @IBOutlet weak var miTablaPersonalizada: UITableView!
@@ -45,6 +47,8 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         }else{
             listadoUsersConectados = User.devolverUsuariosConectados()
             listadoUsersAPP = User.devolverUsuariosAPP()
+            numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
+            numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
             if(!listadoUsersConectados.isEmpty || !listadoUsersAPP.isEmpty){
                 datosRecibidosServidor = true
             }
@@ -169,6 +173,8 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
                                         self.datosRecibidosServidor = true
                                         //self.listadoUsers = User.devolverListaUsers()
                                         self.listadoUsersConectados = User.devolverUsuariosConectados()
+                                        self.numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
+                                        self.numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
                                         self.listadoUsersAPP = User.devolverUsuariosAPP()
                                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                             self.miTablaPersonalizada.reloadData()
@@ -229,11 +235,21 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         headerView.textLabel?.font = UIFont.systemFontOfSize(16)
     }
     
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if(numeroUsuarioConectados == 0 && section == 0){
+            return 0.0
+        }else if(numeroUsuariosAPP == 0 && section == 1){
+            return 0.0
+        }else{
+            return 30.0
+        }
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){
-            return User.devolverNumeroUsuariosConectados()
+            return numeroUsuarioConectados
         }else{
-            return User.devolverNumeroUsuariosAPP()
+            return numeroUsuariosAPP
         }
     }
     
@@ -310,24 +326,32 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         }
     }
 }
-/*
+
 //Extension para la gestion del SearcBar
 extension FavoritosViewController: UISearchBarDelegate{
     //Funcion que se ejecuta cada vez que se cambia el texto de busqueda
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         var textoBuscado = searchBar.text!
         if(!Utils.quitarEspacios(textoBuscado).isEmpty){
-            listadoUsers.removeAll(keepCapacity: false)
+            //listadoUsersConectados.removeAll(keepCapacity: false)
+            //listadoUsersAPP.removeAll(keepCapacity: false)
             //Eliminamos los espacios al final del texto
             textoBuscado = textoBuscado.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            listadoUsers = User.buscarUser(textoBuscado)
+            listadoUsersConectados = User.buscarUserConectado(textoBuscado)
+            listadoUsersAPP = User.buscarUserAPP(textoBuscado)
+            numeroUsuarioConectados = listadoUsersConectados.count
+            numeroUsuariosAPP = listadoUsersAPP.count
             miTablaPersonalizada.reloadData()
         }else{//Si esta vacio lo vaciamos por si era un espacio el introducido
             searchBar.text = ""
             searchBar.showsCancelButton = false
             searchBar.resignFirstResponder()
-            listadoUsers.removeAll(keepCapacity: false)
-            listadoUsers = User.devolverListaUsers()
+            //listadoUsersConectados.removeAll(keepCapacity: false)
+            //listadoUsersAPP.removeAll(keepCapacity: false)
+            listadoUsersConectados = User.devolverUsuariosConectados()
+            listadoUsersAPP = User.devolverUsuariosAPP()
+            numeroUsuarioConectados = listadoUsersConectados.count
+            numeroUsuariosAPP = listadoUsersAPP.count
             miTablaPersonalizada.reloadData()
         }
     }
@@ -348,10 +372,14 @@ extension FavoritosViewController: UISearchBarDelegate{
         self.view.endEditing(true)
         if(!searchBar.text!.isEmpty){
             searchBar.text = ""
-            listadoUsers.removeAll(keepCapacity: false)
-            listadoUsers = User.devolverListaUsers()
+            //listadoUsersConectados.removeAll(keepCapacity: false)
+            //listadoUsersAPP.removeAll(keepCapacity: false)
+            listadoUsersConectados = User.devolverUsuariosConectados()
+            listadoUsersAPP = User.devolverUsuariosAPP()
+            numeroUsuarioConectados = listadoUsersConectados.count
+            numeroUsuariosAPP = listadoUsersAPP.count
             miTablaPersonalizada.reloadData()
         }
     }
-}*/
+}
 
