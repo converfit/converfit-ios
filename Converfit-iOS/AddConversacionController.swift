@@ -42,6 +42,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     let lname = Utils.obtenerLname()
     let imagenDetailSegue = "imagenDetailSegue"
     let videoSegue = "videoSegue"
+    let pdfSegue = "pdfSegue"
     var indiceSeleccionado = 0
     
     //MARK: - Outlets
@@ -333,7 +334,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         }else if(listaMensajesOrdenadas[indiceSeleccionado].type == "mp4_base64"){
             performSegueWithIdentifier(videoSegue, sender: self)
         }else{
-            //abrirPDfEncuesta(indice!)
+            performSegueWithIdentifier(pdfSegue, sender: self)
         }
     }
     
@@ -349,6 +350,12 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
             let mostrarVideoVC = segue.destinationViewController as! VideoViewController
             mostrarVideoVC.dataVideo = Utils.decodificarVideo(listaMensajesOrdenadas[indiceSeleccionado].content)
             mostrarVideoVC.messageKey = listaMensajesOrdenadas[indiceSeleccionado].messageKey
+        }else if(segue.identifier == pdfSegue){
+            var listaMensajesOrdenadas = Array(listaMensajesPaginada.reverse())
+            let urlPdf = Utils.returnUrlWS("pdf") + listaMensajesOrdenadas[indiceSeleccionado].messageKey + ".pdf"
+            let detailPdf = segue.destinationViewController as! visorPdfController
+            detailPdf.urlString = urlPdf
+            detailPdf.titulo = listaMensajesOrdenadas[indiceSeleccionado].content
         }
     }
     
@@ -356,25 +363,10 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     func tapCell(sender: UITapGestureRecognizer){
         let row = sender.view?.tag
         if let indice = row{
-            abrirPDfEncuesta(indice)
+            indiceSeleccionado = indice
+            performSegueWithIdentifier(pdfSegue, sender: self)
         }
     }
-    
-    //Funcion para reutilizable para dirigin a visorPdf o Encuesta
-    func abrirPDfEncuesta(indice: Int){
-        /*var listaMensajesOrdenadas = Array(listaMensajesPaginada.reverse())
-        if(listaMensajesOrdenadas[indice].type == "document_pdf"){
-            let urlPdf = Utils.devolverURLservidor("pdf") + listaMensajesOrdenadas[indice].messageKey + ".pdf"
-            let detailPdf = self.storyboard?.instantiateViewControllerWithIdentifier("visorPdf") as! visorPdfController
-            detailPdf.urlString = urlPdf
-            detailPdf.titulo = listaMensajesOrdenadas[indice].content
-            listaMensajes.removeAll(keepCapacity: false)
-            listaMensajesOrdenadas.removeAll(keepCapacity: false)
-            listaMensajesPaginada.removeAll(keepCapacity: false)
-            self.navigationController?.pushViewController(detailPdf, animated: true)
-        }*/
-    }
-    
     
     func addNuevaConversacion(lastMessage:String){
         /*let user = User.obtenerUser(userKey)
