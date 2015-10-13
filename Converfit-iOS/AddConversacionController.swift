@@ -190,7 +190,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 Conversation.cambiarFlagNewMessageUserConversation(self.conversationKey,nuevo: false)
                 self.resetearBadgeIconoApp()
                 if(self.listaMensajes.count > 20){
-                    let botonMasMensajes = ["message_key": "a","converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonMensajeAnterior", "enviado":true, "fname": "a", "lname": "a"]
+                    let botonMasMensajes = ["message_key": "a","converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonMensajeAnterior", "enviado":"true", "fname": "a", "lname": "a"]
                     let fakeDictMasMensajeBoton = MessageModel(aDict: botonMasMensajes)
                     self.listaMensajesPaginada = Array(self.listaMensajes[(0)..<20])//Copiamos los 20 primeros elementos de la lista
                     self.listaMensajesPaginada.append(fakeDictMasMensajeBoton)
@@ -226,7 +226,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
             let indiceFinal = (indicePaginado + 1) * 20
             if( indiceFinal < listaMensajes.count){ //Comprobamos si se pueden mostrar los 20 siguientes mensajes enteros
                 listaMensajesPaginada = Array(listaMensajes[0..<indiceFinal]) //Si el indice es menor que el tamaño entero se el ultimo elemento sera el de indiceFinal
-                let botonMasMensajes = ["message_key": "a","converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonMensajeAnterior" ,"enviado":true, "fname": "a", "lname": "a"]
+                let botonMasMensajes = ["message_key": "a","converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonMensajeAnterior" ,"enviado":"true", "fname": "a", "lname": "a"]
                 let fakeDictMasMensajeBoton = MessageModel(aDict: botonMasMensajes)
                 //Si el indice final es menor que el numero de elementos significa que hay mas mensajes por lo tanto mostramos el boton de mensajes Anteriores
                 listaMensajesPaginada.append(fakeDictMasMensajeBoton)
@@ -275,7 +275,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         alert.addAction(UIAlertAction(title: "Reenviar mensajes fallidos", style: .Default, handler: { action -> Void in
             let listaMensajesFallidos = Messsage.devolverMensajesFallidos(self.conversationKey)
             for mensajeFallido in listaMensajesFallidos{
-                Messsage.cambiarEstadoEnviadoMensaje(mensajeFallido.conversationKey, messageKey: mensajeFallido.messageKey, enviado: true)
+                Messsage.cambiarEstadoEnviadoMensaje(mensajeFallido.conversationKey, messageKey: mensajeFallido.messageKey, enviado: "true")
                 let fechaActualizada = Fechas.fechaActualToString()
                 Messsage.actualizarFechaMensaje(self.conversationKey, messageKey: mensajeFallido.messageKey, fecha: fechaActualizada)
                 self.rellenarListaMensajes()
@@ -471,6 +471,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         let session = NSURLSession.sharedSession()
         request.HTTPMethod = "POST"
         request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        let semaphore = dispatch_semaphore_create(0)
         let openConversationTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
@@ -502,8 +503,10 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
                 self.mostrarAlerta()
             }
+            dispatch_semaphore_signal(semaphore)
         }
         openConversationTask.resume()
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
     }
     
     func addMessage(params:String, messageKey:String, contenido:String, tipo:String){
@@ -542,7 +545,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                                     }
                                 }
                             }else{
-                                Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: false)
+                                Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: "false")
                                 let anUltimoMensajeEnviado = Messsage.devolverUltimoMensajeEnviadoOk(self.conversationKey)
                                 if let ultimoMensajeEnviado = anUltimoMensajeEnviado{
                                     Conversation.updateLastMesssageConversation(ultimoMensajeEnviado.conversationKey, ultimoMensaje: ultimoMensajeEnviado.content, fechaCreacion: ultimoMensajeEnviado.created)
@@ -593,7 +596,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                             //LogOutCorrecto
                             }else{
                                 self.listaMessagesKeyFallidos.append(messageKey)
-                                Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: false)
+                                Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: "false")
                                 let anUltimoMensajeEnviado = Messsage.devolverUltimoMensajeEnviadoOk(self.conversationKey)
                                 if let ultimoMensajeEnviado = anUltimoMensajeEnviado{
                                     Conversation.updateLastMesssageConversation(ultimoMensajeEnviado.conversationKey, ultimoMensaje: ultimoMensajeEnviado.content, fechaCreacion: ultimoMensajeEnviado.created)
@@ -961,13 +964,13 @@ extension AddConversacionController: UITextFieldDelegate{
             }
             let messageKey = Messsage.obtenerMessageKeyTemporal()
             //Añadimos un mensaje nuevo al modelo
-            let mensajeTextoDict = ["message_key": messageKey, "converstation_key": conversationKey, "sender": "brand", "created": fechaCreacion, "content": textoMensaje, "type": tipo, "enviado": true, "fname": fname, "lname": lname]
+            let mensajeTextoDict = ["message_key": messageKey, "converstation_key": conversationKey, "sender": "brand", "created": fechaCreacion, "content": textoMensaje, "type": tipo, "enviado": "true", "fname": fname, "lname": lname]
             let mensaje = MessageModel(aDict: mensajeTextoDict)
             _ = Messsage(model: mensaje)
             listaMensajes.removeAll(keepCapacity: false)
             listaMensajes = Messsage.devolverListMessages(conversationKey)
             if(listaMensajes.count > 20){
-                let botonMasMensajes = ["message_key": "a", "converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonMensajeAnterior","enviado":true, "fname": "a", "lname": "a"]
+                let botonMasMensajes = ["message_key": "a", "converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonMensajeAnterior","enviado":"true", "fname": "a", "lname": "a"]
                 let fakeDictMasMensajeBoton = MessageModel(aDict: botonMasMensajes)
                 listaMensajesPaginada = Array(listaMensajes[(0)..<20])
                 listaMensajesPaginada.append(fakeDictMasMensajeBoton)
@@ -1043,13 +1046,13 @@ extension AddConversacionController: UINavigationControllerDelegate, UIImagePick
     func enviarFotoVideo(tipo:String, contenido:String, ultimoMensaje:String){
         let messageKey = Messsage.obtenerMessageKeyTemporal()
         
-        let mensajeTextoDict = ["message_key": messageKey, "converstation_key": conversationKey, "sender": "brand", "created": fechaCreacion, "content": contenido, "type": tipo, "enviado":true, "fname": fname, "lname": lname]
+        let mensajeTextoDict = ["message_key": messageKey, "converstation_key": conversationKey, "sender": "brand", "created": fechaCreacion, "content": contenido, "type": tipo, "enviado":"true", "fname": fname, "lname": lname]
         let mensaje = MessageModel(aDict: mensajeTextoDict)
         _ = Messsage(model: mensaje)
         listaMensajes.removeAll(keepCapacity: false)
         listaMensajes = Messsage.devolverListMessages(conversationKey)
         if(listaMensajes.count > 20){
-            let botonMasMensajes = ["message_key": "a", "converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonMensajeAnterior", "enviado":true, "fname": "a", "lname": "a"]
+            let botonMasMensajes = ["message_key": "a", "converstation_key": "a", "sender": "a", "created": "a", "content": "a", "type": "botonMensajeAnterior", "enviado":"true", "fname": "a", "lname": "a"]
             let fakeDictMasMensajeBoton = MessageModel(aDict: botonMasMensajes)
             listaMensajesPaginada = Array(listaMensajes[(0)..<20])
             listaMensajesPaginada.append(fakeDictMasMensajeBoton)

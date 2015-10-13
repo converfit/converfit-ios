@@ -285,9 +285,9 @@ class Utils {
     
     //Funcion para borarr los datos de CoreData
     static func borrarAllCoreData(){
-         Conversation.borrarAllConversations()
-        //User.borrarAllUsers()
-        //Messsage.borrarAllMessages()
+        Conversation.borrarAllConversations()
+        User.borrarAllUsers()
+        Messsage.borrarAllMessages()
     }
     
     //MARK: - Strings

@@ -176,14 +176,15 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
                             if let codigoError = json.objectForKey("error_code") as? String{
                                 self.datosRecibidosServidor = true
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
-                                        if(codigoError != "list_users_empty"){
-                                            (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                            self.mostrarAlerta()
-                                        }else{
-                                            self.mostrarAlert = false
-                                        }
-                                    })
+                                    /*self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
+                                        
+                                    })*/
+                                    if(codigoError != "list_users_empty"){
+                                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                                        self.mostrarAlerta()
+                                    }else{
+                                        self.mostrarAlert = false
+                                    }
                                 })
                                 
                             }
@@ -192,10 +193,11 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
                 }
             } catch{
                 self.spinner.stopAnimating()
-                self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
-                    (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                    self.mostrarAlerta()
-                })
+                /*self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    
+                })*/
+                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
+                self.mostrarAlerta()
             }
         }
         recuperarUsersTask.resume()
@@ -244,9 +246,9 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         if(indexPath.isEqual(tableView.indexPathsForVisibleRows?.last) && datosRecibidosServidor){
             datosRecibidosServidor = false
             spinner.stopAnimating()
-            alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
+            /*alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
                 
-            })
+            })*/
         }
     }
     

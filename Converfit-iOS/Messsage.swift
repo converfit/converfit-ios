@@ -203,7 +203,7 @@ public class Messsage: _Messsage {
     }
     
     //Metodo para cambiar a poll_closed una encuesta
-    static func cambiarEstadoEnviadoMensaje(conversationKey:String, messageKey:String, enviado:Bool){
+    static func cambiarEstadoEnviadoMensaje(conversationKey:String, messageKey:String, enviado:String){
         let request = NSFetchRequest(entityName: Messsage.entityName())
         let converstationKeyPredicate = NSPredicate(format: "conversationKey = %@", conversationKey)//Obtenemos los mensajes de una conversacion
         let messageKeyPredicate = NSPredicate(format: "messageKey = %@", messageKey)//Obtenemos el mensaje correspondiente a un messageKey
