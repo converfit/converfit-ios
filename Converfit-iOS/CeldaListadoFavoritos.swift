@@ -13,6 +13,9 @@ class CeldaListadoFavoritos: UITableViewCell {
     //MARK: - Outlets
     @IBOutlet weak var imagenAvatar: UIImageView!
     @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var lastPage: UILabel!
+    @IBOutlet weak var hora: UILabel!
+    @IBOutlet weak var imagenConnectionStatus: UIImageView!
     
     
     //MARK: - LifeCycle
