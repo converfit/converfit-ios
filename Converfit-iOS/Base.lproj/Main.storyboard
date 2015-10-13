@@ -1599,6 +1599,7 @@
                         <outlet property="spinner" destination="Iyc-Le-iNm" id="hSs-Du-ZqT"/>
                         <outlet property="vistaContenedoraTeclado" destination="uPJ-Oj-qIT" id="EZa-pR-0JR"/>
                         <segue destination="iMk-fJ-BZN" kind="show" identifier="imagenDetailSegue" id="WpB-1W-fp6"/>
+                        <segue destination="N3Z-Fx-l1B" kind="show" identifier="videoSegue" id="zX0-Iz-XtA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ii-XA-NZA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1748,11 +1749,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="crK-LJ-if7">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crK-LJ-if7">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6TI-Kt-U1s">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="580"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="6TI-Kt-U1s">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                         <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -1798,6 +1799,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aud-hu-BIU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4110" y="-471"/>
+        </scene>
+        <!--Video View Controller-->
+        <scene sceneID="EtE-p9-3i6">
+            <objects>
+                <viewController storyboardIdentifier="videoDetail" id="N3Z-Fx-l1B" customClass="VideoViewController" customModule="Converfit_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eWd-Dd-wzO"/>
+                        <viewControllerLayoutGuide type="bottom" id="OFf-ca-rAk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Hlf-kR-6TJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y3n-VN-xf3">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="123" id="bEx-oI-AcS"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="bEx-oI-AcS"/>
+                                    </mask>
+                                </variation>
+                            </webView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Y3n-VN-xf3" secondAttribute="trailing" id="0zM-IJ-WJ6"/>
+                            <constraint firstItem="Y3n-VN-xf3" firstAttribute="leading" secondItem="Hlf-kR-6TJ" secondAttribute="leading" id="B9f-Vw-w4S"/>
+                            <constraint firstItem="Y3n-VN-xf3" firstAttribute="top" secondItem="eWd-Dd-wzO" secondAttribute="bottom" id="HTH-oc-Eqg"/>
+                            <constraint firstItem="OFf-ca-rAk" firstAttribute="top" secondItem="Y3n-VN-xf3" secondAttribute="bottom" id="mTO-BJ-Sv4"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="Y3n-VN-xf3" id="O6n-xQ-F3Q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GsN-Cg-108" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4139" y="356"/>
         </scene>
     </scenes>
     <resources>

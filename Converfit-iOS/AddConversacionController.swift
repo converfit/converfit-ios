@@ -41,6 +41,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     let fname = Utils.obtenerFname()
     let lname = Utils.obtenerLname()
     let imagenDetailSegue = "imagenDetailSegue"
+    let videoSegue = "videoSegue"
     var indiceSeleccionado = 0
     
     //MARK: - Outlets
@@ -325,19 +326,14 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     
     //Funcion que se ejecuta cuando pulsamos sobre las imagenes de las celdas
     func tapImage(sender: UITapGestureRecognizer){
-        let indice = sender.view?.tag
+        indiceSeleccionado = (sender.view?.tag)!
         let listaMensajesOrdenadas = Array(listaMensajesPaginada.reverse())
-        if(listaMensajesOrdenadas[indice!].type == "jpeg_base64"){
-            indiceSeleccionado = indice!
+        if(listaMensajesOrdenadas[indiceSeleccionado].type == "jpeg_base64"){
             performSegueWithIdentifier(imagenDetailSegue, sender: self)
-        }else if(listaMensajesOrdenadas[indice!].type == "mp4_base64"){
-            //let mostrarVideodVC = self.storyboard?.instantiateViewControllerWithIdentifier("videoDetail") as! VideoViewController
-            //mostrarVideodVC.dataVideo = Utils.decodificarVideo(listaMensajesOrdenadas[indice!].content)
-            //mostrarVideodVC.messageKey = listaMensajesOrdenadas[indice!].messageKey
-            //self.navigationController?.pushViewController(mostrarVideodVC, animated: true)
-
+        }else if(listaMensajesOrdenadas[indiceSeleccionado].type == "mp4_base64"){
+            performSegueWithIdentifier(videoSegue, sender: self)
         }else{
-            abrirPDfEncuesta(indice!)
+            //abrirPDfEncuesta(indice!)
         }
     }
     
@@ -348,6 +344,11 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
             let imagenDetailVC = segue.destinationViewController as! ImageDetailController
             imagenDetailVC.imagenMostrada = imagenMostrar
             
+        }else if(segue.identifier == videoSegue){
+            let listaMensajesOrdenadas = Array(listaMensajesPaginada.reverse())
+            let mostrarVideoVC = segue.destinationViewController as! VideoViewController
+            mostrarVideoVC.dataVideo = Utils.decodificarVideo(listaMensajesOrdenadas[indiceSeleccionado].content)
+            mostrarVideoVC.messageKey = listaMensajesOrdenadas[indiceSeleccionado].messageKey
         }
     }
     

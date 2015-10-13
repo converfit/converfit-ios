@@ -364,4 +364,9 @@ class Utils {
         }
         return lname
     }
+    
+    //Funcion para decodificar el video a un NSData
+    static func decodificarVideo(videoBase64:String) -> NSData?{
+        return NSData(base64EncodedString: videoBase64, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+    }
 }
