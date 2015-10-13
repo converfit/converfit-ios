@@ -253,4 +253,20 @@ public class Conversation: _Conversation {
         }
     }
     
+    //Devuelve si un userKey tiene conversacion o no
+    static func existeConversacionDeUsuario(userKey:String) -> (Bool, String){
+        var existe = false
+        var conversationKey = ""
+        let request = NSFetchRequest(entityName: Conversation.entityName())
+        request.predicate = NSPredicate(format: "userKey = %@", userKey)//Obtenemos solo las favoritas
+        request.returnsObjectsAsFaults = false
+        
+        let listConversaciones = (try! coreDataStack.context.executeFetchRequest(request)) as! [Conversation]
+        if (listConversaciones.count > 0){
+            existe = true
+            conversationKey = listConversaciones[0].conversationKey
+        }
+        
+        return (existe, conversationKey)
+    }
 }

@@ -23,6 +23,8 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     var desLoguear = false
     var mostrarAlert = true
     var isSubBrand = false
+    let segueShowConversationUser = "showConversationUser"
+    var indexSeleccionado:NSIndexPath?
     
     //MARK: - Outlets
     @IBOutlet weak var miTablaPersonalizada: UITableView!
@@ -198,81 +200,6 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         }
         recuperarUsersTask.resume()
     }
-    /*
-    func recuperarUserServidor(){
-        var downloadQueue:NSOperationQueue = {
-            var queue = NSOperationQueue()
-            queue.name = "Download queue"
-            queue.maxConcurrentOperationCount = 1
-            return queue
-            }()
-        let favoritosLastUpdate = Utils.getLastUpdateFollower()
-        
-        let urlServidor = Utils.devolverURLservidor("brands")
-        let params = "action=list_brand_users&session_key=\(sessionKey)&users_last_update=\(favoritosLastUpdate)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
-        
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        request.HTTPMethod = "POST"
-        
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        NSURLConnection.sendAsynchronousRequest(request, queue: downloadQueue) { (response, data, error) -> Void in
-            if(data.length > 0){
-                var JSONObjetcs:NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
-                if let codigoResultado = JSONObjetcs.objectForKey("result") as? Int{
-                    if(codigoResultado == 1){
-                        dbErrorContador = 0
-                        if let dataResultado = JSONObjetcs.objectForKey("data") as? NSDictionary{
-                            //Guardamos el last update de favoritos
-                            if let lastUpdate = dataResultado.objectForKey("brand_users_last_update") as? String{
-                                Utils.guardarLastUpdateFavorito(lastUpdate)
-                            }
-                            //Obtenemos el need_to_update para ver si hay que actualizar la lista o no
-                            if let needUpdate = dataResultado.objectForKey("need_to_update") as? Bool{
-                                if(needUpdate){
-                                    if let listaUsuarios = dataResultado.objectForKey("users") as? NSArray{
-                                       User.borrarAllUsers()
-                                        //Llamamos por cada elemento del array de empresas al constructor
-                                        for dict in listaUsuarios{
-                                            User(aDict: dict as! NSDictionary)
-                                        }
-                                    }
-                                    self.datosRecibidosServidor = true
-                                    self.listadoUsers = User.devolverListaUsers()
-                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        self.miTablaPersonalizada.reloadData()
-                                    })
-                                }
-                            }
-                        }
-                    }
-                    else{
-                        if let codigoError = JSONObjetcs.objectForKey("error_code") as? String{
-                            self.datosRecibidosServidor = true
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
-                                    if(codigoError != "list_users_empty"){
-                                        self.desLoguear = Utils.comprobarDesloguear(codigoError)
-                                        (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert(codigoError)
-                                        self.mostrarAlerta()
-                                    }else{
-                                        self.mostrarAlert = false
-                                    }
-                                })
-                            })
-                            
-                        }
-                    }
-                }
-            }else{
-                self.spinner.stopAnimating()
-                self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
-                    (self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert("error")
-                    self.mostrarAlerta()
-                })
-            }
-        }
-    }
-    */
         
     //MARK: - Table
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -296,80 +223,20 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
             cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Mobile")
         }
 
-        /*
-        cell.imagenAvatar.image = listadoUsers[indexPath.row].avatar
-        cell.name.text = listadoUsers[indexPath.row].fname + " " + listadoUsers[indexPath.row].lname
-        if(listadoUsers[indexPath.row].user_blocked){
-            //cell.userInteractionEnabled = false            
-            cell.backgroundColor = UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
-        }else{
-            //cell.userInteractionEnabled = true
-            cell.backgroundColor = UIColor.whiteColor()
-        }
-*/
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        /*
-        if(!isSubBrand){
-            
-            //Limpiamos el texto que haya en el seachBar
-            self.view.endEditing(true)
-            miSearchBar.text = "";
-            miSearchBar.showsCancelButton = false
-            miSearchBar.resignFirstResponder()
-            
-            var mensajeUserBloqued = ""
-            var titleUserBloqued = ""
-            var bloquearDesbloquear:UIAlertAction
-            if(listadoUsers[indexPath.row].user_blocked){
-                titleUserBloqued = "Usuario bloqueado"
-                mensajeUserBloqued = "El usuario al que intenta acceder se encuentra bloqueado. No podrá contestar sus mensajes a menos que lo desbloquee."
-                
-                //Boton para desbloquear un usuario
-                bloquearDesbloquear =  UIAlertAction(title: "Desbloquear usuario", style: .Default, handler: { (action) -> Void in
-                    self.blockUser(self.listadoUsers[indexPath.row].userKey, bloqueado: false)
-                    User.updateUserBlocked(self.listadoUsers[indexPath.row].userKey, blocked: false)
-                    self.listadoUsers = User.devolverListaUsers()
-                    self.miTablaPersonalizada.reloadData()
-                })
-            }else{
-                titleUserBloqued = "Elija una opción"
-                
-                //Boton para bloquear un usuario
-                bloquearDesbloquear =  UIAlertAction(title: "Bloquear usuario", style: .Default, handler: { (action) -> Void in
-                    self.blockUser(self.listadoUsers[indexPath.row].userKey, bloqueado: true)
-                    User.updateUserBlocked(self.listadoUsers[indexPath.row].userKey, blocked: true)
-                    self.listadoUsers = User.devolverListaUsers()
-                    self.miTablaPersonalizada.reloadData()
-                })
-            }
-            
-            //Boton para iniciar una nueva conversacion
-            let iniciarConversacionUsuario = UIAlertAction(title: "Iniciar conversación", style: .Default, handler: { (action) -> Void in
-                self.iniciarConversacion(indexPath.row)
-            })
-            
-            //Boton para cancelar
-            let cancel = UIAlertAction(title: "Cancelar", style: .Cancel, handler: { (action) -> Void in
-                self.listadoUsers = User.devolverListaUsers()
-                self.miTablaPersonalizada.reloadData()
-            })
-
-            
-            //Creamos el alertSheet
-            let alertUserBlocked = UIAlertController(title: titleUserBloqued, message: mensajeUserBloqued, preferredStyle: .ActionSheet)
-            //Añadimos las acciones
-            alertUserBlocked.addAction(iniciarConversacionUsuario)
-            alertUserBlocked.addAction(bloquearDesbloquear)
-            alertUserBlocked.addAction(cancel)
-            
-            self.presentViewController(alertUserBlocked, animated: true, completion: { () -> Void in
-                
-            })
-        }
-*/
+        //Limpiamos el texto que haya en el seachBar
+        self.view.endEditing(true)
+        miSearchBar.text = "";
+        miSearchBar.showsCancelButton = false
+        miSearchBar.resignFirstResponder()
+        
+        indexSeleccionado = indexPath
+        
+        performSegueWithIdentifier(segueShowConversationUser, sender: self)
+        
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -383,17 +250,21 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         }
     }
     
-    //Funcion para iniciar una conversación nueva
-    func iniciarConversacion(indice:Int){
-        /*let addConversacionVC = self.storyboard?.instantiateViewControllerWithIdentifier("AddConversation") as! AddConversacionController
-        //Rellenamos los valores que queramos pasar al otro VC
-        addConversacionVC.sessionKey = sessionKey
-        addConversacionVC.userKey = listadoUsers[indice].userKey
-        addConversacionVC.conversacionNueva = true
-        addConversacionVC.userName = listadoUsers[indice].fname + " " + listadoUsers[indice].lname
-        resetContexto()
-        self.navigationController?.pushViewController(addConversacionVC, animated: true)
-        */
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == segueShowConversationUser){
+            let indice = indexSeleccionado?.row
+            let (userHasConversation, conversationKey) = Conversation.existeConversacionDeUsuario(listadoUsers[indice!].userKey)
+             let messagesVC = segue.destinationViewController as! AddConversacionController
+            if(userHasConversation){
+                messagesVC.conversacionNueva = false
+                messagesVC.conversationKey = conversationKey
+
+            }else{
+                messagesVC.conversacionNueva = true
+            }
+            messagesVC.userKey = listadoUsers[indice!].userKey
+            messagesVC.userName = listadoUsers[indice!].userName
+        }
     }
 }
 

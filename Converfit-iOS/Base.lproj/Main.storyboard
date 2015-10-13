@@ -1728,11 +1728,12 @@
                     <connections>
                         <outlet property="miSearchBar" destination="J3J-A3-3ak" id="EdG-qd-bEo"/>
                         <outlet property="miTablaPersonalizada" destination="agV-o3-ssb" id="erz-x4-UQt"/>
+                        <segue destination="dFW-An-6OG" kind="show" identifier="showConversationUser" id="fcf-Gg-GVA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DgF-fS-Oad" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2664" y="-65"/>
+            <point key="canvasLocation" x="2664" y="-27"/>
         </scene>
     </scenes>
     <resources>
@@ -1744,4 +1745,7 @@
         <image name="Play" width="50" height="50"/>
         <image name="UserIcon" width="50" height="50"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="fcf-Gg-GVA"/>
+    </inferredMetricsTieBreakers>
 </document>
