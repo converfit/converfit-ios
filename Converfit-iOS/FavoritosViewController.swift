@@ -204,6 +204,18 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     }
         
     //MARK: - Table
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (section == 0){
+            return "CONECTADOS"
+        }else{
+            return "CITIOUS APP"
+        }
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listadoUsers.count// Create 1 row as an example
     }
