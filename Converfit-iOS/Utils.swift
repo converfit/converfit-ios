@@ -296,6 +296,7 @@ class Utils {
         defaults.removeObjectForKey("last_update")
         defaults.removeObjectForKey("last_update_follower")
         defaults.removeObjectForKey("conversations_last_update")
+        defaults.removeObjectForKey("last_update_brands_notifications")
         borrarAllCoreData()
     }
     
@@ -304,6 +305,7 @@ class Utils {
         Conversation.borrarAllConversations()
         User.borrarAllUsers()
         Messsage.borrarAllMessages()
+        TimeLine.borrarAllPost()
     }
     
     //MARK: - Strings

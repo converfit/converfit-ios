@@ -270,6 +270,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="TimeLime" id="qMc-iF-jOt"/>
+                    <connections>
+                        <outlet property="miCollectionView" destination="CEq-mj-Ixc" id="8Sj-a0-YtK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KVJ-gg-STz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

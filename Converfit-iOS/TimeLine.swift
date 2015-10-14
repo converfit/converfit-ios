@@ -38,12 +38,12 @@ public class TimeLine: _TimeLine {
         coreDataStack.saveContext()
     }
 
-    //Metodo que devuelve todo el listado de Conversaciones
+    //Metodo que devuelve todo el listado de Post
     static func devolverListTimeLine() -> [TimeLineModel]{
         
         var listadoTimeLine = [TimeLineModel]()
         
-        let request = NSFetchRequest(entityName: Conversation.entityName())
+        let request = NSFetchRequest(entityName: TimeLine.entityName())
         let miShorDescriptor = NSSortDescriptor(key: "created", ascending: false)
         request.sortDescriptors = [miShorDescriptor]
         request.returnsObjectsAsFaults = false
@@ -57,4 +57,19 @@ public class TimeLine: _TimeLine {
         return listadoTimeLine
     }
 
+    //Borramos todo el listado de Post
+    static func borrarAllPost(){
+        let request = NSFetchRequest(entityName: TimeLine.entityName())
+        request.returnsObjectsAsFaults = false
+        let allPosts = try! coreDataStack.context.executeFetchRequest(request)
+        
+        if allPosts.count > 0 {
+            
+            for result: AnyObject in allPosts{
+                coreDataStack.context.deleteObject(result as! NSManagedObject)
+            }
+            coreDataStack.saveContext()
+        }
+
+    }
 }
