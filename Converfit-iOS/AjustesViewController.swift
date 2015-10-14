@@ -24,6 +24,7 @@ class AjustesViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewWillAppear(animated: Bool) {
        super.viewWillAppear(animated)
         vieneDeListadoMensajes = false
+        Utils.customAppear(self)
     }
     
     func modificarUI(){

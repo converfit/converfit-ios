@@ -41,6 +41,7 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.editButtonItem().title = "Editar"
+        Utils.customAppear(self)
         if(vieneDeListadoMensajes){
             self.tabBarController?.selectedIndex = 2
             vieneDeListadoMensajes = false

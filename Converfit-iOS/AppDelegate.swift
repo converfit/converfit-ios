@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         comprobarCheckSession()
+        customizeAppearance()
         return true
     }
 
@@ -90,6 +91,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         checkSessionTask.resume()
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
     }
-
+    
+    func customizeAppearance(){
+        window!.tintColor = Utils.returnRedConverfit()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+    }
 }
 

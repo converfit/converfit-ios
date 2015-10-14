@@ -40,6 +40,8 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        //self.navigationController?.navigationBar.barTintColor = Utils.returnRedConverfit()
+        Utils.customAppear(self)
         vieneDeListadoMensajes = false
         self.editButtonItem().title = "Editar"
         listadoConversaciones = Conversation.devolverListConversations()

@@ -29,6 +29,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        Utils.customAppear(self)
         listadoPost = TimeLine.devolverListTimeLine()
         miCollectionView.reloadData()
         recuperarTimeLine()
@@ -52,6 +53,9 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! TimeLineCollectionViewCell
         
         cell.avatarImage.image = listadoPost[indexPath.row].avatar
+        cell.avatarImage.layer.cornerRadius = cell.avatarImage.frame.height/2
+        cell.avatarImage.clipsToBounds = true
+        
         cell.userName.text = listadoPost[indexPath.row].userName
         let hora = Fechas.devolverTiempo(listadoPost[indexPath.row].created)
         cell.time.text = devolverHoraFormateada(hora)

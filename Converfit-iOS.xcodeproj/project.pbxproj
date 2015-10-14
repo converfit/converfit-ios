@@ -163,7 +163,6 @@
 		647D68581BC7D37E0086A3A7 /* CeldasPersonalizadas */ = {
 			isa = PBXGroup;
 			children = (
-				64ED087A1BCE4E0D00578646 /* TimeLine */,
 				64B41EC31BC93074008D932B /* CeldasMensajes */,
 				64B41EC21BC93069008D932B /* CeldasTabBar */,
 			);
@@ -238,6 +237,7 @@
 		64B41EC21BC93069008D932B /* CeldasTabBar */ = {
 			isa = PBXGroup;
 			children = (
+				64ED087B1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift */,
 				6487DBE01BCCF05D00DC9C12 /* CeldaListadoFavoritos.swift */,
 				647D68591BC7D3AE0086A3A7 /* CeldaListaConversacion.swift */,
 			);
@@ -294,14 +294,6 @@
 				64D9470E1BC65B4600B524C3 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		64ED087A1BCE4E0D00578646 /* TimeLine */ = {
-			isa = PBXGroup;
-			children = (
-				64ED087B1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift */,
-			);
-			name = TimeLine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

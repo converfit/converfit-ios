@@ -387,4 +387,20 @@ class Utils {
     static func decodificarVideo(videoBase64:String) -> NSData?{
         return NSData(base64EncodedString: videoBase64, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
     }
+    
+    //Funcion que devuelve el color de rojoConverfit
+    static func returnRedConverfit() -> UIColor{
+        return UIColor(red: 237/255, green: 31/255, blue: 36/255, alpha: 1)
+    }
+    
+    static func returnGrisFondo() -> UIColor{
+        return UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
+    }
+
+    //Metodo para modificar la apariencia
+    static func customAppear(vc:UIViewController){
+        vc.navigationController?.navigationBar.barTintColor = returnRedConverfit()
+        vc.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        vc.view.backgroundColor = returnGrisFondo()
+    }
 }

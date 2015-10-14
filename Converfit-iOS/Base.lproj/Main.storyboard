@@ -421,7 +421,7 @@
                             </label>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.9137254901960784" green="0.9137254901960784" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ctz-mr-fGA" firstAttribute="trailing" secondItem="gaY-2N-MI5" secondAttribute="trailing" id="0aU-7u-tyN"/>
                             <constraint firstAttribute="trailing" secondItem="DAd-5H-Ac9" secondAttribute="trailing" id="CFa-iI-huO"/>
@@ -2212,6 +2212,6 @@
         <image name="UserIcon" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mEW-0b-d8E"/>
+        <segue reference="fcf-Gg-GVA"/>
     </inferredMetricsTieBreakers>
 </document>
