@@ -48,6 +48,7 @@
 		64D947081BC65B4600B524C3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64D947061BC65B4600B524C3 /* Main.storyboard */; };
 		64D9470A1BC65B4600B524C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64D947091BC65B4600B524C3 /* Assets.xcassets */; };
 		64D9470D1BC65B4600B524C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64D9470B1BC65B4600B524C3 /* LaunchScreen.storyboard */; };
+		64ED08771BCE3CBE00578646 /* UsersChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED08761BCE3CBE00578646 /* UsersChatViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		64D947091BC65B4600B524C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		64D9470C1BC65B4600B524C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		64D9470E1BC65B4600B524C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64ED08761BCE3CBE00578646 /* UsersChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersChatViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,7 +195,6 @@
 				648921FB1BC6D10900D91EA0 /* PasswordMenuController.swift */,
 				648921F91BC6C33100D91EA0 /* PersonalDataTablaController.swift */,
 				648921F51BC6BF3000D91EA0 /* ProfileMenuController.swift */,
-				648921F11BC6A78F00D91EA0 /* AjustesViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -211,6 +212,7 @@
 			children = (
 				6487DBDD1BCCEEE900DC9C12 /* FavoritosViewController.swift */,
 				647D685B1BC7D3D20086A3A7 /* ListadoChat.swift */,
+				648921F11BC6A78F00D91EA0 /* AjustesViewController.swift */,
 			);
 			name = TabBar;
 			sourceTree = "<group>";
@@ -218,6 +220,7 @@
 		64B41EC11BC93051008D932B /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				64ED08761BCE3CBE00578646 /* UsersChatViewController.swift */,
 				64B41ECC1BC93145008D932B /* AddConversacionController.swift */,
 			);
 			name = Others;
@@ -355,6 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64ED08771BCE3CBE00578646 /* UsersChatViewController.swift in Sources */,
 				647D684A1BC7A8D90086A3A7 /* _TimeLine.swift in Sources */,
 				64B41ECB1BC930F3008D932B /* CeldaCargarMensajesAnteriores.swift in Sources */,
 				6487DBE61BCD0F9C00DC9C12 /* VideoViewController.swift in Sources */,

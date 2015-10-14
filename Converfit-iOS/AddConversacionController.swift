@@ -43,6 +43,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     let imagenDetailSegue = "imagenDetailSegue"
     let videoSegue = "videoSegue"
     let pdfSegue = "pdfSegue"
+    let showUsersChat = "showUsersChat"
     var indiceSeleccionado = 0
     
     //MARK: - Outlets
@@ -135,7 +136,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = false
+        self.tabBarController?.tabBar.hidden = false
         listaMensajes.removeAll(keepCapacity: false)
         listaMensajesPaginada.removeAll(keepCapacity: false)
         mostrarMensajesAnteriores = false
@@ -146,6 +147,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         stopObservingKeyBoard()
         dissmisKeyboard()
         bottomConstratitVistaTeclado.constant = 0
+        vieneDeListadoMensajes = true
     }
     
     override func viewDidAppear(animated: Bool) {

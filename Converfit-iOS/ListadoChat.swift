@@ -26,6 +26,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     var mostrarAlert = true
     var isSubBrand = false
     var tapPosicionConversacion = 0
+    let showUsersChatSegue = "showUsersChat"
     
     //MARK: - Outlets
     @IBOutlet weak var miTabla: UITableView!
@@ -39,6 +40,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        vieneDeListadoMensajes = false
         self.editButtonItem().title = "Editar"
         listadoConversaciones = Conversation.devolverListConversations()
         if(listadoConversaciones.isEmpty){
@@ -272,33 +274,18 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
             self.editButtonItem().enabled = true
             self.editButtonItem().title = "Editar"
         }
-        /*
-        if(User.devolverListaUsers().count == 0 || Utils.obtenerIsGroupSubBrand()){
-            navigationItem.rightBarButtonItem?.enabled = false
-        }else{
-            navigationItem.rightBarButtonItem?.enabled = true
-        }
-        */
     }
     
     func crearBotonesCabecera(){
         //Añadimos un boton para ver las empresas
         let rightButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Compose, target: self, action:"getListBrands")
-       /* isSubBrand = Utils.obtenerIsGroupSubBrand()
-        if(User.devolverListaUsers().count == 0 || isSubBrand){
-            rightButton.enabled = false
-        }else{
-            rightButton.enabled = true
-        }*/
         navigationItem.rightBarButtonItem = rightButton
         // Ponemos el boton de editar para borrar la tabla
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
     }
     
     func getListBrands(){
-        Fechas.devolverTiempo("")
-        //let listBrandVC = self.storyboard?.instantiateViewControllerWithIdentifier("ListBrand") as! ListBrandController
-        //self.navigationController?.pushViewController(listBrandVC, animated: true)
+        performSegueWithIdentifier(showUsersChatSegue, sender: self)
     }
     
     func mostrarAlerta(){
