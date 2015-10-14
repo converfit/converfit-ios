@@ -46,7 +46,6 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource {
 extension TimeLineViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let width = self.view.frame.width
-        print(width)
         return CGSize(width: width, height: 156)
     }
     
