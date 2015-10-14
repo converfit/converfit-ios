@@ -163,7 +163,7 @@
             </objects>
             <point key="canvasLocation" x="244" y="285"/>
         </scene>
-        <!--TimeLime-->
+        <!--Converfit-->
         <scene sceneID="spq-av-drp">
             <objects>
                 <viewController id="ZX4-iV-F5o" customClass="TimeLineViewController" customModule="Converfit_iOS" customModuleProvider="target" sceneMemberID="viewController">
@@ -267,7 +267,9 @@
                             <constraint firstAttribute="trailing" secondItem="CEq-mj-Ixc" secondAttribute="trailing" id="fkx-X3-oke"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="TimeLime" id="qMc-iF-jOt"/>
+                    <navigationItem key="navigationItem" title="Converfit" id="qMc-iF-jOt">
+                        <barButtonItem key="backBarButtonItem" title="Volver" id="QaE-BS-Gzy"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="miCollectionView" destination="CEq-mj-Ixc" id="8Sj-a0-YtK"/>
                     </connections>
@@ -431,7 +433,7 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Ajustes" id="uSg-D3-rT6">
+                    <navigationItem key="navigationItem" title="Converfit" id="uSg-D3-rT6">
                         <barButtonItem key="backBarButtonItem" title="Volver" id="gye-D7-hro"/>
                     </navigationItem>
                     <connections>
@@ -522,7 +524,9 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Perfil" id="bAb-lj-HjK"/>
+                    <navigationItem key="navigationItem" title="Perfil" id="bAb-lj-HjK">
+                        <barButtonItem key="backBarButtonItem" title="Volver" id="qpP-eF-f0p"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="miTablaPersonalizada" destination="yUl-Xm-Cup" id="cmT-3K-okF"/>
                         <segue destination="RP2-IA-dqc" kind="show" identifier="personalDataSegue" id="9u5-JT-Aq3"/>
@@ -680,7 +684,9 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="NF0-9V-ZLN"/>
+                    <navigationItem key="navigationItem" id="NF0-9V-ZLN">
+                        <barButtonItem key="backBarButtonItem" title="Volver" id="2XO-Bn-DQg"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="miTablaPersonalizada" destination="KvG-hX-8Xm" id="RoG-26-oxS"/>
                         <segue destination="2yj-py-cBZ" kind="show" identifier="recuPassSegue" id="zbd-FN-IT0"/>
@@ -947,7 +953,9 @@
                             <constraint firstAttribute="trailing" secondItem="mLM-Bd-8KR" secondAttribute="trailing" id="luW-dy-Ifh"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Chats" id="KqP-vT-17l"/>
+                    <navigationItem key="navigationItem" title="Converfit" id="KqP-vT-17l">
+                        <barButtonItem key="backBarButtonItem" title="Volver" id="Q20-ZI-pkx"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="miTabla" destination="mLM-Bd-8KR" id="VV9-Wo-bLd"/>
                         <segue destination="dFW-An-6OG" kind="show" identifier="showConversation" id="mEW-0b-d8E"/>
@@ -1821,7 +1829,9 @@
                             <constraint firstItem="J3J-A3-3ak" firstAttribute="top" secondItem="GdV-z3-LBF" secondAttribute="bottom" id="cdy-bM-L7K"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Usuarios" id="Mac-Ez-hLf"/>
+                    <navigationItem key="navigationItem" title="Converfit" id="Mac-Ez-hLf">
+                        <barButtonItem key="backBarButtonItem" title="Volver" id="HyS-dN-pMR"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="miSearchBar" destination="J3J-A3-3ak" id="EdG-qd-bEo"/>
                         <outlet property="miTablaPersonalizada" destination="agV-o3-ssb" id="erz-x4-UQt"/>
@@ -2106,7 +2116,9 @@
                             <constraint firstItem="Wiq-Cf-MWd" firstAttribute="top" secondItem="msy-vL-wv9" secondAttribute="bottom" id="y5e-2Q-hlz"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Usuarios" id="E53-PF-dj0"/>
+                    <navigationItem key="navigationItem" title="Usuarios" id="E53-PF-dj0">
+                        <barButtonItem key="backBarButtonItem" title="Volver" id="qxa-Xe-xoo"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="miSearchBar" destination="Wiq-Cf-MWd" id="mlg-OZ-p8d"/>
                         <outlet property="miTablaPersonalizada" destination="KqF-iU-7qv" id="pNe-Ge-jfq"/>
@@ -2212,6 +2224,6 @@
         <image name="UserIcon" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fcf-Gg-GVA"/>
+        <segue reference="mEW-0b-d8E"/>
     </inferredMetricsTieBreakers>
 </document>
