@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UIWebViewDelegate {
     
     //MARK: - Variables
     private let reuseIdentifier = "timeLineCollectionCell"
@@ -59,6 +59,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         
         cell.html.scrollView.scrollEnabled = false
         cell.html.scrollView.bounces = false
+        cell.html.delegate = self
         
         return cell
     }
@@ -182,5 +183,13 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
             fechaFormateada = unixTimeString
         }
         return fechaFormateada
+    }
+    
+    //MARK: - Lanzar enlace del webView en safari
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if(navigationType == UIWebViewNavigationType.LinkClicked){
+            UIApplication.sharedApplication().openURL(request.URL!)
+        }
+        return true
     }
 }
