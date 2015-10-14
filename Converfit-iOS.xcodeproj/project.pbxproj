@@ -49,6 +49,8 @@
 		64D9470A1BC65B4600B524C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64D947091BC65B4600B524C3 /* Assets.xcassets */; };
 		64D9470D1BC65B4600B524C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64D9470B1BC65B4600B524C3 /* LaunchScreen.storyboard */; };
 		64ED08771BCE3CBE00578646 /* UsersChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED08761BCE3CBE00578646 /* UsersChatViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		64ED08791BCE4AFD00578646 /* TimeLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED08781BCE4AFD00578646 /* TimeLineViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		64ED087C1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED087B1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +98,8 @@
 		64D9470C1BC65B4600B524C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		64D9470E1BC65B4600B524C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64ED08761BCE3CBE00578646 /* UsersChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersChatViewController.swift; sourceTree = "<group>"; };
+		64ED08781BCE4AFD00578646 /* TimeLineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineViewController.swift; sourceTree = "<group>"; };
+		64ED087B1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +160,7 @@
 		647D68581BC7D37E0086A3A7 /* CeldasPersonalizadas */ = {
 			isa = PBXGroup;
 			children = (
+				64ED087A1BCE4E0D00578646 /* TimeLine */,
 				64B41EC31BC93074008D932B /* CeldasMensajes */,
 				64B41EC21BC93069008D932B /* CeldasTabBar */,
 			);
@@ -213,6 +218,7 @@
 				6487DBDD1BCCEEE900DC9C12 /* FavoritosViewController.swift */,
 				647D685B1BC7D3D20086A3A7 /* ListadoChat.swift */,
 				648921F11BC6A78F00D91EA0 /* AjustesViewController.swift */,
+				64ED08781BCE4AFD00578646 /* TimeLineViewController.swift */,
 			);
 			name = TabBar;
 			sourceTree = "<group>";
@@ -285,6 +291,14 @@
 				64D9470E1BC65B4600B524C3 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		64ED087A1BCE4E0D00578646 /* TimeLine */ = {
+			isa = PBXGroup;
+			children = (
+				64ED087B1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift */,
+			);
+			name = TimeLine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -376,6 +390,7 @@
 				6487DBE11BCCF05D00DC9C12 /* CeldaListadoFavoritos.swift in Sources */,
 				647D68531BC7A94C0086A3A7 /* User.swift in Sources */,
 				647D685E1BC7D5260086A3A7 /* Fechas.swift in Sources */,
+				64ED087C1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift in Sources */,
 				648921FE1BC6D40800D91EA0 /* RecuperarPassController.swift in Sources */,
 				64B41ED11BC9320A008D932B /* ResizeImage.swift in Sources */,
 				64B41ECD1BC93145008D932B /* AddConversacionController.swift in Sources */,
@@ -387,6 +402,7 @@
 				647D68501BC7A94C0086A3A7 /* Conversation.swift in Sources */,
 				648921FA1BC6C33100D91EA0 /* PersonalDataTablaController.swift in Sources */,
 				6467362F1BC67121001627C7 /* Utils.swift in Sources */,
+				64ED08791BCE4AFD00578646 /* TimeLineViewController.swift in Sources */,
 				647D685A1BC7D3AE0086A3A7 /* CeldaListaConversacion.swift in Sources */,
 				647D68481BC7A8D90086A3A7 /* _Conversation.swift in Sources */,
 				647D68431BC7A3F80086A3A7 /* Model.xcdatamodeld in Sources */,
