@@ -12,6 +12,6 @@ class TimeLineCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var time: UILabel!
-    @IBOutlet weak var html: UILabel!
+    @IBOutlet weak var html: UIWebView!
     
 }

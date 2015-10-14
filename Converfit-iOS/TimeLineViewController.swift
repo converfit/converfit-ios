@@ -55,6 +55,10 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         cell.userName.text = listadoPost[indexPath.row].userName
         let hora = Fechas.devolverTiempo(listadoPost[indexPath.row].created)
         cell.time.text = devolverHoraFormateada(hora)
+        cell.html.loadHTMLString(listadoPost[indexPath.row].content, baseURL: nil)
+        
+        cell.html.scrollView.scrollEnabled = false
+        cell.html.scrollView.bounces = false
         
         return cell
     }
@@ -62,7 +66,15 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     //MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let width = self.view.frame.width
-        return CGSize(width: width, height: 156)
+        let contenido = listadoPost[indexPath.row].content
+        var height = CGFloat(130)
+        let contenidoSize = contenido.characters.count
+        if(contenido.containsString("<img")){
+            height = 320
+        }else if(contenidoSize < 50){
+            height = 100
+        }
+        return CGSize(width: width, height: height)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
