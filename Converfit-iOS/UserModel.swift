@@ -22,11 +22,6 @@ class UserModel {
     //Inicializador de Favoritos
     convenience init(modelo:User){
         self.init()
-        /*if(modelo.avatar.length > 0){
-            if let foto = UIImage(data: modelo.avatar) {
-                avatar = foto
-            }
-        }*/
         if let avatarString = modelo.avatar{
             if let foto = UIImage(data: avatarString){
                 avatar = foto

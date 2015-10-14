@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TimeLineViewController: UIViewController, UICollectionViewDataSource {
+class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     private let reuseIdentifier = "timeLineCollectionCell"
     private let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -41,9 +41,8 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource {
         
         return cell
     }
-}
-
-extension TimeLineViewController: UICollectionViewDelegateFlowLayout{
+    
+    //MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let width = self.view.frame.width
         return CGSize(width: width, height: 156)
@@ -52,4 +51,36 @@ extension TimeLineViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return sectionInsets
     }
+
+    //MARK: - Servidor
+    func recuperarTimeLine(){
+        let sessionKey = Utils.getSessionKey()
+        let brandsNotificationsLastUpdate = Utils.getLastUpdateBrandsNotifications()
+        let params = "action=list_brand_notifications&session_key=\(sessionKey)&brand_notifications_last_update=\(brandsNotificationsLastUpdate)&offset=\(0)&limit=\(1000)&app=\(app)"
+        let urlServidor = Utils.returnUrlWS("access")
+        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
+        let session = NSURLSession.sharedSession()
+        request.HTTPMethod = "POST"
+        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        let recuperarTimeLineTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            guard data != nil else {
+                print("no data found: \(error)")
+                return
+            }
+            
+            do {
+                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
+                    if let resultCode = json.objectForKey("result") as? Int{
+                        if(resultCode == 1){
+                            //LogOutCorrecto
+                        }
+                    }
+                }
+            } catch{
+                
+            }
+        }
+        recuperarTimeLineTask.resume()
+    }
+
 }

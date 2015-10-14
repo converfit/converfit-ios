@@ -254,6 +254,22 @@ class Utils {
         return lastUpFavoritos
     }
     
+    //MARK: - Save brandsNotifications last update
+    static func saveLastUpdateBrandsNotifications(lasUpdate:String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(lasUpdate, forKey: "last_update_brands_notifications")
+    }
+    
+    //Funcion para optener el brandsNotifications last_update
+    static func getLastUpdateBrandsNotifications() -> String{
+        var lastUpBrandsNotifications = "0"
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let lastUp = defaults.stringForKey("last_update_brands_notifications"){
+            lastUpBrandsNotifications = lastUp
+        }
+        return lastUpBrandsNotifications
+    }
+
     //MARK: - Save session_key
     static func saveSessionKey(sessionKey:String){
         let defaults = NSUserDefaults.standardUserDefaults()

@@ -51,6 +51,7 @@
 		64ED08771BCE3CBE00578646 /* UsersChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED08761BCE3CBE00578646 /* UsersChatViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		64ED08791BCE4AFD00578646 /* TimeLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED08781BCE4AFD00578646 /* TimeLineViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		64ED087C1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED087B1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		64ED087E1BCE5F4400578646 /* TimeLineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED087D1BCE5F4400578646 /* TimeLineModel.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +101,7 @@
 		64ED08761BCE3CBE00578646 /* UsersChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersChatViewController.swift; sourceTree = "<group>"; };
 		64ED08781BCE4AFD00578646 /* TimeLineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineViewController.swift; sourceTree = "<group>"; };
 		64ED087B1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineCollectionViewCell.swift; sourceTree = "<group>"; };
+		64ED087D1BCE5F4400578646 /* TimeLineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 				6457ECD31BCAAE93009F2A50 /* UserModel.swift */,
 				647D68561BC7D0DC0086A3A7 /* ConversationsModel.swift */,
 				64B41ECE1BC931D6008D932B /* MessageModel.swift */,
+				64ED087D1BCE5F4400578646 /* TimeLineModel.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				647D685A1BC7D3AE0086A3A7 /* CeldaListaConversacion.swift in Sources */,
 				647D68481BC7A8D90086A3A7 /* _Conversation.swift in Sources */,
 				647D68431BC7A3F80086A3A7 /* Model.xcdatamodeld in Sources */,
+				64ED087E1BCE5F4400578646 /* TimeLineModel.swift in Sources */,
 				6457ECD41BCAAE93009F2A50 /* UserModel.swift in Sources */,
 				64B41ECF1BC931D6008D932B /* MessageModel.swift in Sources */,
 				64B41EC91BC930F3008D932B /* CeldaPdfEncuesta.swift in Sources */,
