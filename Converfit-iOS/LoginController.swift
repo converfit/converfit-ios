@@ -125,7 +125,8 @@ class LoginController: UIViewController {
     
     //MARK: - Login into server
     func login(){
-        let params = "action=login&email=\(emailTxt.text!)&password=\(passwordTxt.text!)&device_key=\(device_key)&system=\(sistema)&app_version=\(appVersion)&app=\(app)"
+        let deviceKey = Utils.getDeviceKey()
+        let params = "action=login&email=\(emailTxt.text!)&password=\(passwordTxt.text!)&device_key=\(deviceKey)&system=\(sistema)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("access")
         
         let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)

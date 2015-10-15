@@ -9,7 +9,6 @@
 import UIKit
 
 let appVersion = "1.0.0"
-var device_key = "dont_allow"
 //let sistema = "ios"
 let sistema = "android"
 let app = "converfit"
@@ -27,6 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
+        let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(setting)
+        UIApplication.sharedApplication().registerForRemoteNotifications()
         comprobarCheckSession()
         customizeAppearance()
         return true
@@ -58,7 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func comprobarCheckSession(){
         let sessionKey = Utils.getSessionKey()
         let lastUpdate = Utils.getLastUpdate()
-        let params = "action=check_session&session_key=\(sessionKey)&device_key=\(device_key)&last_update=\(lastUpdate)&system=\(sistema)&app_version=\(appVersion)&app=\(app)"
+        let deviceKey = Utils.getDeviceKey()
+        let params = "action=check_session&session_key=\(sessionKey)&device_key=\(deviceKey)&last_update=\(lastUpdate)&system=\(sistema)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("access")
         let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
         let session = NSURLSession.sharedSession()
@@ -99,5 +103,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.tintColor = Utils.returnRedConverfit()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
     }
+    
+    //MARK: - Push Notifications
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        var stringDeviceToken = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
+        stringDeviceToken = stringDeviceToken.stringByReplacingOccurrencesOfString(" ", withString: "", options: [], range: nil)
+        Utils.saveDeviceKey(stringDeviceToken)
+       _=PostServidor.actualizarDeviceKey()
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        _=PostServidor.actualizarDeviceKey()
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        let dictNotification = userInfo as NSDictionary
+       // updatePush(dictNotification)
+    }
+
 }
 

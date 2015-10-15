@@ -285,6 +285,21 @@ class Utils {
         return lastUpFavoritos
     }
     
+    //MARK: - Save session_key
+    static func saveDeviceKey(deviceKey:String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(deviceKey, forKey: "devide_key")
+    }
+    
+    static func getDeviceKey() -> String{
+        var deviceKey = "dont_allow"
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let device = defaults.stringForKey("devide_key"){
+            deviceKey = device
+        }
+        return deviceKey
+    }
+    
     //MARK: - Strings
     static func removerEspaciosBlanco(textoConEspacios:String) ->String{
         var cadena = textoConEspacios
