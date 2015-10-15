@@ -41,7 +41,7 @@ class LogOut {
     }
     
     //Funcion para cuando la sessionKey no es valida te desloguea
-    static func desLoguearBorrarDatos(vista:UIViewController){
+    static func desLoguearBorrarDatos(){
         //Borramos el badgeIcon de la App
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         //Borramos el sessionkey que teniamos guardado
@@ -52,7 +52,6 @@ class LogOut {
         defaults.removeObjectForKey("conversations_last_update")
         defaults.removeObjectForKey("last_update_brands_notifications")
         borrarAllCoreData()
-        vista.dismissViewControllerAnimated(true, completion: nil)
     }
     
     //Funcion para borarr los datos de CoreData

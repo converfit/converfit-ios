@@ -42,7 +42,7 @@ class visorPdfController: UIViewController,UIWebViewDelegate, UIDocumentInteract
         rightButton.action = "saveIbooks"
         
         navigationItem.rightBarButtonItem = rightButton
-        
+        self.tabBarController?.tabBar.hidden = true
     }
     
     override func didReceiveMemoryWarning() {

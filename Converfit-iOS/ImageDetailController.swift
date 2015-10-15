@@ -27,6 +27,7 @@ class ImageDetailController: UIViewController,UIScrollViewDelegate {
         doubleTapRecognizer.numberOfTapsRequired = 2
         doubleTapRecognizer.numberOfTouchesRequired = 1
         miScroll.addGestureRecognizer(doubleTapRecognizer)
+        self.tabBarController?.tabBar.hidden = true
     }
 
     override func didReceiveMemoryWarning() {

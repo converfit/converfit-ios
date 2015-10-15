@@ -56,9 +56,9 @@ class AjustesViewController: UIViewController, UITableViewDataSource, UITableVie
             self.performSegueWithIdentifier("showPerfil", sender: self)
         }else{
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                LogOut.desLoguearBorrarDatos(self)
+                LogOut.desLoguearBorrarDatos()
                 ocultarLogIn = false
-                //self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismissViewControllerAnimated(true, completion: nil)
             })
             LogOut.desLoguear()
         }

@@ -132,9 +132,8 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         if(desLoguear){
             desLoguear = false
             alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
-                let vc = self
+                LogOut.desLoguearBorrarDatos()
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
-                    LogOut.desLoguearBorrarDatos(vc)
                 })
             }))
         }else{

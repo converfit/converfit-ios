@@ -20,6 +20,7 @@ class VideoViewController: UIViewController, UIWebViewDelegate {
         // Do any additional setup after loading the view.
         webView.delegate = self
         mostrarVideo()
+        self.tabBarController?.tabBar.hidden = true
     }
 
     override func didReceiveMemoryWarning() {
