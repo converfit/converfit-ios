@@ -53,6 +53,7 @@
 		64ED087C1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED087B1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		64ED087E1BCE5F4400578646 /* TimeLineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED087D1BCE5F4400578646 /* TimeLineModel.swift */; settings = {ASSET_TAGS = (); }; };
 		9B779E6A1BCFBC360062F9D7 /* PostServidor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E691BCFBC360062F9D7 /* PostServidor.swift */; settings = {ASSET_TAGS = (); }; };
+		9B779E6E1BCFD9D00062F9D7 /* NavBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +105,7 @@
 		64ED087B1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineCollectionViewCell.swift; sourceTree = "<group>"; };
 		64ED087D1BCE5F4400578646 /* TimeLineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineModel.swift; sourceTree = "<group>"; };
 		9B779E691BCFBC360062F9D7 /* PostServidor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostServidor.swift; sourceTree = "<group>"; };
+		9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +222,7 @@
 		64B41EC01BC93031008D932B /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
+				9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */,
 				6487DBDD1BCCEEE900DC9C12 /* FavoritosViewController.swift */,
 				647D685B1BC7D3D20086A3A7 /* ListadoChat.swift */,
 				648921F11BC6A78F00D91EA0 /* AjustesViewController.swift */,
@@ -393,6 +396,7 @@
 				64ED087C1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift in Sources */,
 				648921FE1BC6D40800D91EA0 /* RecuperarPassController.swift in Sources */,
 				64B41ED11BC9320A008D932B /* ResizeImage.swift in Sources */,
+				9B779E6E1BCFD9D00062F9D7 /* NavBarViewController.swift in Sources */,
 				64B41ECD1BC93145008D932B /* AddConversacionController.swift in Sources */,
 				648921F41BC6ABF500D91EA0 /* LogOut.swift in Sources */,
 				6487DBE81BCD12DE00DC9C12 /* visorPdfController.swift in Sources */,

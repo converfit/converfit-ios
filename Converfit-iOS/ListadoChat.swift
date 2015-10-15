@@ -37,7 +37,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         desactivarBotonEdit()//Deshabilitamos los botones por defecto por si no se produce la carga
         crearBotonesCabecera()
     }
-
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         //self.navigationController?.navigationBar.barTintColor = Utils.returnRedConverfit()

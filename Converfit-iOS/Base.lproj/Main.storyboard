@@ -306,10 +306,10 @@
             </objects>
             <point key="canvasLocation" x="1039" y="285"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Nav Bar View Controller-->
         <scene sceneID="puS-rk-hv6">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Nea-ao-i0m" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Nea-ao-i0m" customClass="NavBarViewController" customModule="Converfit_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="NotificationsIcon" id="UCr-aZ-sc4"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WQh-ad-wRd">
@@ -326,10 +326,10 @@
             </objects>
             <point key="canvasLocation" x="1852" y="-774"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Nav Bar View Controller-->
         <scene sceneID="O7U-E8-KcS">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pgp-sl-rtG" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pgp-sl-rtG" customClass="NavBarViewController" customModule="Converfit_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" image="UserIcon" id="bso-bb-3Xr"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ohr-Nz-iwi">
@@ -346,12 +346,13 @@
             </objects>
             <point key="canvasLocation" x="1859" y="-65"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Nav Bar View Controller-->
         <scene sceneID="iPa-z1-CyP">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AGm-nd-bps" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AGm-nd-bps" customClass="NavBarViewController" customModule="Converfit_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" image="ChatIcon" id="c0d-XR-kH3"/>
                     <toolbarItems/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0el-6F-elj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -452,10 +453,10 @@
             </objects>
             <point key="canvasLocation" x="2664" y="1383"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Nav Bar View Controller-->
         <scene sceneID="fNM-s5-Khv">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="C0D-YS-6j6" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="C0D-YS-6j6" customClass="NavBarViewController" customModule="Converfit_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" image="OptionsIcon" id="MNr-A4-Xe9"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DSD-R9-eNe">

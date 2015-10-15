@@ -51,6 +51,10 @@ class LoginController: UIViewController {
         ocultar(ocultarLogIn)
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
     //MARK: - KeyBoard
     func dissmisKeyBoard(){
         self.view.endEditing(true)
