@@ -15,6 +15,8 @@ let sistema = "android"
 let app = "converfit"
 var ocultarLogIn = false
 var coreDataStack = MMGCoreDataStack2(modelName: "Model")
+var bloquearSistema = false
+var errorCheckSession = ""
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

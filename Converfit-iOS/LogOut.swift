@@ -7,6 +7,7 @@
 //
 
 import UIKit
+var dbErrorContador = 0
 
 class LogOut {
 
@@ -40,7 +41,7 @@ class LogOut {
     }
     
     //Funcion para cuando la sessionKey no es valida te desloguea
-    static func desLoguearBorrarDatos(){
+    static func desLoguearBorrarDatos(vista:UIViewController){
         //Borramos el badgeIcon de la App
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         //Borramos el sessionkey que teniamos guardado
@@ -51,6 +52,7 @@ class LogOut {
         defaults.removeObjectForKey("conversations_last_update")
         defaults.removeObjectForKey("last_update_brands_notifications")
         borrarAllCoreData()
+        vista.dismissViewControllerAnimated(true, completion: nil)
     }
     
     //Funcion para borarr los datos de CoreData
@@ -59,6 +61,41 @@ class LogOut {
         User.borrarAllUsers()
         Messsage.borrarAllMessages()
         TimeLine.borrarAllPost()
+    }
+
+    //Funcion para comprobar si nos deslogueamos segun el errorCode
+    static func comprobarDesloguear(errorCode:String) -> Bool{
+        var desloguear = false
+        
+        switch errorCode{
+        case "session_key_not_valid":
+            errorCheckSession = "session_key_not_valid"
+            desloguear = true
+            break
+        case "system_closed":
+            bloquearSistema = true
+            errorCheckSession = "system_closed"
+            desloguear = true
+            break
+        case "version_not_valid":
+            bloquearSistema = true
+            errorCheckSession = "version_not_valid"
+            desloguear = true
+            break
+        case "db_connection_error":
+            dbErrorContador += 1
+            if(dbErrorContador == 5){
+                desloguear = true
+            }
+            break
+        case "admin_not_active":
+            errorCheckSession = "admin_not_active"
+            desloguear = true
+            break
+        default:
+            break
+        }
+        return desloguear
     }
 
     
