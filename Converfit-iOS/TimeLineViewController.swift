@@ -19,7 +19,14 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     
     //MARK: - Outlets
     @IBOutlet weak var miCollectionView: UICollectionView!
-
+    
+    //MARK: - Actions
+    
+    @IBAction func tapButon(sender: AnyObject) {
+        print("tap")
+    }
+    
+    //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false

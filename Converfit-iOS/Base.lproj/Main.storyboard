@@ -269,6 +269,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="Converfit" id="qMc-iF-jOt">
                         <barButtonItem key="backBarButtonItem" title="Volver" id="QaE-BS-Gzy"/>
+                        <barButtonItem key="leftBarButtonItem" image="quickView" id="cwa-Cc-im8">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="tapButon:" destination="ZX4-iV-F5o" id="g9Z-YQ-3N0"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="miCollectionView" destination="CEq-mj-Ixc" id="8Sj-a0-YtK"/>
@@ -2141,6 +2147,7 @@
         <image name="OptionsIcon" width="50" height="50"/>
         <image name="Play" width="50" height="50"/>
         <image name="UserIcon" width="50" height="50"/>
+        <image name="quickView" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tv0-I0-Dfb"/>
