@@ -284,29 +284,6 @@ class Utils {
         }
         return lastUpFavoritos
     }
-
-    //MARK: - LogOut
-    //Funcion para cuando la sessionKey no es valida te desloguea
-    static func desLoguear(){
-        //Borramos el badgeIcon de la App
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-        //Borramos el sessionkey que teniamos guardado
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.removeObjectForKey("session_key")
-        defaults.removeObjectForKey("last_update")
-        defaults.removeObjectForKey("last_update_follower")
-        defaults.removeObjectForKey("conversations_last_update")
-        defaults.removeObjectForKey("last_update_brands_notifications")
-        borrarAllCoreData()
-    }
-    
-    //Funcion para borarr los datos de CoreData
-    static func borrarAllCoreData(){
-        Conversation.borrarAllConversations()
-        User.borrarAllUsers()
-        Messsage.borrarAllMessages()
-        TimeLine.borrarAllPost()
-    }
     
     //MARK: - Strings
     static func removerEspaciosBlanco(textoConEspacios:String) ->String{
