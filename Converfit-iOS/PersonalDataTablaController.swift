@@ -33,12 +33,35 @@ class PersonalDataTablaController: UITableViewController {
     }
     
     //MARK: - LifeCycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         modificarUI()
+        //Nos damos de alta para responder a la notificacion enviada por push
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
     }
     
     //MARK: - Utils
+    //Funcion para cambiar el badge cuando nos llega una notificacion
+    func cambiarBadge(){
+        let tabArray =  self.tabBarController?.tabBar.items as NSArray!
+        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        let numeroMensajesSinLeer = Conversation.numeroMensajesSinLeer()
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            if(numeroMensajesSinLeer > 0){
+                tabItem.badgeValue = "\(numeroMensajesSinLeer)"
+                UIApplication.sharedApplication().applicationIconBadgeNumber = numeroMensajesSinLeer
+            }else{
+                tabItem.badgeValue = nil
+                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            }
+        })
+    }
+    
     func modificarUI(){
         self.tabBarController?.tabBar.hidden = true
         //Creamos un footer con un UIView para eliminar los separator extras

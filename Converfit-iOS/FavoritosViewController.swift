@@ -65,6 +65,9 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
                 //Tenemos que forzar la recarga para que cuando cambiemos con el tabBar se recargue correctamente
                 miTablaPersonalizada.reloadData()
             }
+            //Nos damos de alta para responder a la notificacion enviada por push
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
+
         }
     }
     
@@ -72,6 +75,8 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         super.viewWillDisappear(animated)
         miSearchBar.showsCancelButton = false
         resetContexto()
+        //Nos damos de baja de la notificacion
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
     }
     
     override func didReceiveMemoryWarning() {

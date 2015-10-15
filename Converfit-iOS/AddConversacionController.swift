@@ -132,6 +132,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
             hacerFoto = false
         }
         addTap()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "recargarPantalla", name:notificationChat, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -148,6 +149,8 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         dissmisKeyboard()
         bottomConstratitVistaTeclado.constant = 0
         vieneDeListadoMensajes = true
+        //Nos damos de baja de la notificacion
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {

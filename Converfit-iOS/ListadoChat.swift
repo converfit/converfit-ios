@@ -67,6 +67,8 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         
             self.setEditing(false, animated: true)
             addBadgeCount()
+            //Nos damos de alta para responder a la notificacion enviada por push
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "recargarPantalla", name:notificationChat, object: nil)
         }
     }
     
@@ -76,11 +78,27 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         resetContexto()
         miTabla.reloadData()
         //Nos damos de baja de la notificacion
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
+        //Nos damos de baja de la notificacion
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: - Recargar Pantalla cuando llega una Push
+    func recargarPantalla(){//Funcion a la que llamamos cuando se recibe una notificacion para recargar la pantalla
+        isPush = true
+        //Reseteamos los valores a los originales
+        listadoConversaciones.removeAll(keepCapacity: false)
+        //Obtenemos los datos
+        listadoConversaciones = Conversation.devolverListConversations()
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.miTabla.reloadData()
+            self.addBadgeCount()
+            self.desactivarBotonEdit()
+        })
     }
     
     //MARK: - ComunicacionServidor
@@ -263,19 +281,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         listadoVacio = false
         mostrarAlert = true
     }
-    
-    func recargarPantalla(){//Funcion a la que llamamos cuando se recibe una notificacion para recargar la pantalla
-        isPush = true
-        //Reseteamos los valores a los originales
-        listadoConversaciones.removeAll(keepCapacity: false)
-        listadoConversaciones = Conversation.devolverListConversations()
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.miTabla.reloadData()
-            self.addBadgeCount()
-            self.desactivarBotonEdit()
-        })
-    }
-    
+        
     func desactivarBotonEdit(){
         if(listadoConversaciones.count == 0){
             self.editButtonItem().enabled = false

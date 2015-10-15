@@ -17,6 +17,7 @@ var coreDataStack = MMGCoreDataStack2(modelName: "Model")
 var bloquearSistema = false
 var errorCheckSession = ""
 var irPantallaLogin = false
+let notificationChat = "com.converfit.notificacionChat"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -118,6 +119,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         let dictNotification = userInfo as NSDictionary
+        var action = ""
+        var actionData = ""
+        //var body = ""
+        if let dictAps =  dictNotification.objectForKey("aps") as? NSDictionary{
+            if let dictAlert = dictAps.objectForKey("alert") as? NSDictionary{
+                if let actionDict = dictAlert.objectForKey("action") as? String{
+                    action = actionDict
+                }
+                
+                if let actionDataDict = dictAlert.objectForKey("actionData") as? String{
+                    actionData = actionDataDict
+                }
+                
+                /*if let bodyDict = dictAlert.objectForKey("body") as? String{
+                    body = bodyDict
+                }*/
+            }
+        }
+        
+        if(action == "new_message"){
+            PostServidor.getConversacion(actionData)
+        }
        // updatePush(dictNotification)
     }
 
