@@ -70,26 +70,31 @@ class LogOut {
         case "session_key_not_valid":
             errorCheckSession = "session_key_not_valid"
             desloguear = true
+            irPantallaLogin = true
             break
         case "system_closed":
             bloquearSistema = true
             errorCheckSession = "system_closed"
             desloguear = true
+            irPantallaLogin = true
             break
         case "version_not_valid":
             bloquearSistema = true
             errorCheckSession = "version_not_valid"
             desloguear = true
+            irPantallaLogin = true
             break
         case "db_connection_error":
             dbErrorContador += 1
             if(dbErrorContador == 5){
                 desloguear = true
+                irPantallaLogin = true
             }
             break
         case "admin_not_active":
             errorCheckSession = "admin_not_active"
             desloguear = true
+            irPantallaLogin = true
             break
         default:
             break

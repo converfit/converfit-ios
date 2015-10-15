@@ -104,19 +104,28 @@ class ChangePasswordTableController: UITableViewController {
         }
         let alertError = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.Alert)
         alertError.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
-        //Añadimos un bonton al alert y lo que queramos que haga en la clausura
-        if(formatoCamposOk){
-            alertError.addAction(UIAlertAction(title: "Aceptar", style: .Default, handler: { action in
+        //Añadimos un bonton al alert y lo que queramos que haga en la clausur
+        if(desLoguear){
+            desLoguear = false
+            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
+                LogOut.desLoguearBorrarDatos()
+                self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                })
+            }))
+        }else{        //Añadimos un bonton al alert y lo que queramos que haga en la clausura
+            if(formatoCamposOk){
+                alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { action in
                     self.txtPassActual.text = ""
                     self.txtPassNew.text = ""
                     self.rightButton.enabled = false
                 }))
             }else{
-                alertError.addAction(UIAlertAction(title: "Aceptar", style: .Default, handler: { action in
+                alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { action in
                     self.txtPassActual.text = ""
                     self.txtPassNew.text = ""
                     self.rightButton.enabled = false
                 }))
+            }
         }
         //mostramos el alert
         self.presentViewController(alertError, animated: true) { () -> Void in
@@ -163,6 +172,7 @@ class ChangePasswordTableController: UITableViewController {
                         }else{
                             self.formatoCamposOk = false
                             if let codigoError = json.objectForKey("error_code") as? String{
+                                self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
                                 self.mostrarAlerta()
                             }

@@ -24,7 +24,14 @@ class AjustesViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewWillAppear(animated: Bool) {
        super.viewWillAppear(animated)
         vieneDeListadoMensajes = false
-        Utils.customAppear(self)
+        if(irPantallaLogin){
+            irPantallaLogin = false
+            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                
+            })
+        }else{
+            Utils.customAppear(self)
+        }
     }
     
     func modificarUI(){

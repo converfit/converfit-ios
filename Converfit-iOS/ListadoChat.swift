@@ -43,24 +43,31 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         //self.navigationController?.navigationBar.barTintColor = Utils.returnRedConverfit()
         Utils.customAppear(self)
         vieneDeListadoMensajes = false
-        self.editButtonItem().title = "Editar"
-        listadoConversaciones = Conversation.devolverListConversations()
-        if(listadoConversaciones.isEmpty){
-            listadoVacio = true
-        }else{
-            datosRecibidosServidor = true
-            miTabla.reloadData()
-        }
-        recuperarConversaciones()
+        if(irPantallaLogin){
+            irPantallaLogin = false
+            /*self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                
+            })*/
+       }else{
+            self.editButtonItem().title = "Editar"
+            listadoConversaciones = Conversation.devolverListConversations()
+            if(listadoConversaciones.isEmpty){
+                listadoVacio = true
+            }else{
+                datosRecibidosServidor = true
+                miTabla.reloadData()
+            }
+            recuperarConversaciones()
        
-        //Creamos un footer con un UIView para eliminar los separator extras
-        miTabla.tableFooterView = UIView()
-        self.tabBarController?.tabBar.hidden = false
+            //Creamos un footer con un UIView para eliminar los separator extras
+            miTabla.tableFooterView = UIView()
+            self.tabBarController?.tabBar.hidden = false
         
-        //Establecemos el titulo de la pestaña origin y el  indicador a true para indicar que vamos desde una de las pantallas iniciales del tabBar
+            //Establecemos el titulo de la pestaña origin y el  indicador a true para indicar que vamos desde una de las pantallas iniciales del tabBar
         
-        self.setEditing(false, animated: true)
-        addBadgeCount()
+            self.setEditing(false, animated: true)
+            addBadgeCount()
+        }
     }
     
     

@@ -259,8 +259,18 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.view.endEditing(true)
             let alert = UIAlertController(title: self.tituloAlert, message: self.mensajeAlert, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
             //Añadimos un bonton al alert y lo que queramos que haga en la clausur
+            if(self.desLoguear){
+                self.desLoguear = false
+                alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
+                    LogOut.desLoguearBorrarDatos()
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }))
+            }else{
+                //Añadimos un bonton al alert y lo que queramos que haga en la clausur
                 alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler:nil))
+            }
             //mostramos el alert
             self.presentViewController(alert, animated: true) { () -> Void in
                 self.tituloAlert = ""
@@ -457,6 +467,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                         }//3
                         else{
                             if let codigoError = json.objectForKey("error_code") as? String{
+                                self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
                                 self.mostrarAlerta()
                             }
@@ -501,6 +512,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                             }
                         }else{
                             if let codigoError = json.objectForKey("error_code") as? String{
+                                self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
                                 self.mostrarAlerta()
                             }
@@ -562,6 +574,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                                     self.rellenarListaMensajes()
                                 })
                                 if let codigoError = json.objectForKey("error_code") as? String{
+                                    self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                     (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
                                     self.mostrarAlerta()
                                 }
@@ -613,6 +626,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                                     self.rellenarListaMensajes()
                                 })
                                 if let codigoError = json.objectForKey("error_code") as? String{
+                                    self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                     (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
                                     self.mostrarAlerta()
                                 }

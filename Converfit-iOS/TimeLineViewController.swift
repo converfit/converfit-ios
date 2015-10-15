@@ -40,9 +40,16 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         Utils.customAppear(self)
-        listadoPost = TimeLine.devolverListTimeLine()
-        miCollectionView.reloadData()
-        recuperarTimeLine()
+        if(irPantallaLogin){
+            irPantallaLogin = false
+            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                
+            })
+        }else{
+            listadoPost = TimeLine.devolverListTimeLine()
+            miCollectionView.reloadData()
+            recuperarTimeLine()
+        }
     }
 
     override func didReceiveMemoryWarning() {

@@ -17,6 +17,7 @@ class PersonalDataTablaController: UITableViewController {
     var formatoCamposOk = true
     var nombreTexto = ""
     var apellidosTexto = ""
+    var desLoguear = false
 
     //MARK: - Outlets
     @IBOutlet weak var nombre: UITextField!
@@ -99,10 +100,19 @@ class PersonalDataTablaController: UITableViewController {
         }
         let alertError = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.Alert)
         alertError.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
-        alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler:{ action in
+        //Añadimos un bonton al alert y lo que queramos que haga en la clausur
+        if(desLoguear){
+            desLoguear = false
+            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
+                LogOut.desLoguearBorrarDatos()
+                self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                })
+            }))
+        }else{
+            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler:{ action in
                     
-        }))
-        
+            }))
+        }
         self.presentViewController(alertError, animated: true, completion: nil)
         
     }

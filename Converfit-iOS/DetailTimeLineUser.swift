@@ -100,7 +100,7 @@ class DetailTimeLineUser: UIViewController, UICollectionViewDataSource,UICollect
         self.view.endEditing(true)
         let alert = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.Alert)
         //Añadimos un bonton al alert y lo que queramos que haga en la clausura
-        alert.addAction(UIAlertAction(title: "Aceptar", style: .Default, handler: { action in
+        alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { action in
             
         }))
         //mostramos el alert

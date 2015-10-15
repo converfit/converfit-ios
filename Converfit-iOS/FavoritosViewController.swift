@@ -40,24 +40,31 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.editButtonItem().title = "Editar"
-        Utils.customAppear(self)
-        if(vieneDeListadoMensajes){
-            self.tabBarController?.selectedIndex = 2
-            vieneDeListadoMensajes = false
+        if(irPantallaLogin){
+            irPantallaLogin = false
+            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                
+            })
         }else{
-            listadoUsersConectados = User.devolverUsuariosConectados()
-            listadoUsersAPP = User.devolverUsuariosAPP()
-            numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
-            numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
-            if(!listadoUsersConectados.isEmpty || !listadoUsersAPP.isEmpty){
-                datosRecibidosServidor = true
-            }
-            recuperarUserServidor()
+            self.editButtonItem().title = "Editar"
+            Utils.customAppear(self)
+            if(vieneDeListadoMensajes){
+                self.tabBarController?.selectedIndex = 2
+                vieneDeListadoMensajes = false
+            }else{
+                listadoUsersConectados = User.devolverUsuariosConectados()
+                listadoUsersAPP = User.devolverUsuariosAPP()
+                numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
+                numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
+                if(!listadoUsersConectados.isEmpty || !listadoUsersAPP.isEmpty){
+                    datosRecibidosServidor = true
+                }
+                recuperarUserServidor()
             
-            modificarUI()
-            //Tenemos que forzar la recarga para que cuando cambiemos con el tabBar se recargue correctamente
-            miTablaPersonalizada.reloadData()
+                modificarUI()
+                //Tenemos que forzar la recarga para que cuando cambiemos con el tabBar se recargue correctamente
+                miTablaPersonalizada.reloadData()
+            }
         }
     }
     

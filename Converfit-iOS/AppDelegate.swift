@@ -17,6 +17,7 @@ var ocultarLogIn = false
 var coreDataStack = MMGCoreDataStack2(modelName: "Model")
 var bloquearSistema = false
 var errorCheckSession = ""
+var irPantallaLogin = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
