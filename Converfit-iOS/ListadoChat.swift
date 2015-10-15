@@ -138,6 +138,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
                                         
                                     })
                                     if(codigoError != "list_conversations_empty"){
+                                        self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                         (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
                                         self.mostrarAlerta()
                                     }else{
@@ -198,6 +199,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
                             }else{
                                 if let codigoError = json.objectForKey("error_code") as? String{
                                     if(codigoError != "list_conversations_empty"){
+                                        self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                         (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
                                         self.mostrarAlerta()
                                     }
@@ -293,10 +295,21 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     func mostrarAlerta(){
         self.view.endEditing(true)
         let alert = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.Alert)
-        //Añadimos un bonton al alert y lo que queramos que haga en la clausura
-        alert.addAction(UIAlertAction(title: "Aceptar", style: .Default, handler: { action in
+        alert.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
+        //Añadimos un bonton al alert y lo que queramos que haga en la clausur
+        if(desLoguear){
+            desLoguear = false
+            alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
+                LogOut.desLoguearBorrarDatos()
+                self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                })
+            }))
+        }else{
+            //Añadimos un bonton al alert y lo que queramos que haga en la clausura
+            alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { action in
             
-        }))
+            }))
+        }
         //mostramos el alert
         self.presentViewController(alert, animated: true) { () -> Void in
             self.tituloAlert = ""

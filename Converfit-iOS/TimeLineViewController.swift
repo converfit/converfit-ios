@@ -18,6 +18,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     var tituloAlert = ""
     let detailTimeLineSegue = "detailTimeLineSegue"
     var indiceSeleccionado = 0
+    var desLoguear = false
     
     //MARK: - Outlets
     @IBOutlet weak var miCollectionView: UICollectionView!
@@ -142,6 +143,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
                         }else{
                             if let codigoError = json.objectForKey("error_code") as? String{
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                     (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
                                     self.mostrarAlerta()
                                 })
@@ -165,10 +167,21 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     func mostrarAlerta(){
         self.view.endEditing(true)
         let alert = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.Alert)
-        //Añadimos un bonton al alert y lo que queramos que haga en la clausura
-        alert.addAction(UIAlertAction(title: "Aceptar", style: .Default, handler: { action in
+        alert.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
+        //Añadimos un bonton al alert y lo que queramos que haga en la clausur
+        if(desLoguear){
+            desLoguear = false
+            alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
+                LogOut.desLoguearBorrarDatos()
+                self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                })
+            }))
+        }else{
+            //Añadimos un bonton al alert y lo que queramos que haga en la clausura
+            alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { action in
             
-        }))
+            }))
+        }
         //mostramos el alert
         self.presentViewController(alert, animated: true) { () -> Void in
             self.tituloAlert = ""
