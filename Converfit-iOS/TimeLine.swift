@@ -70,6 +70,24 @@ public class TimeLine: _TimeLine {
             }
             coreDataStack.saveContext()
         }
-
+    }
+    
+    //Devolvemos los post de un userKey dado
+    static func devolverPostUserKey(userKey:String) -> [TimeLineModel]{
+        var listadoTimeLine = [TimeLineModel]()
+        
+        let request = NSFetchRequest(entityName: TimeLine.entityName())
+        request.predicate = NSPredicate(format: "userKey = %@", userKey)
+        let miShorDescriptor = NSSortDescriptor(key: "created", ascending: false)
+        request.sortDescriptors = [miShorDescriptor]
+        request.returnsObjectsAsFaults = false
+        
+        let results = (try! coreDataStack.context.executeFetchRequest(request)) as! [TimeLine]
+        
+        for post in results{
+            let aux = TimeLineModel(modelo: post)
+            listadoTimeLine.append(aux)
+        }
+        return listadoTimeLine
     }
 }
