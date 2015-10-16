@@ -208,10 +208,10 @@ class LoginController: UIViewController {
     
     //MARK: - PrepareForSegue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "loginSegue"){
+        /*if(segue.identifier == "loginSegue"){
             let tabBar = segue.destinationViewController as? UITabBarController
             tabBar?.selectedIndex = 2
-        }
+        }*/
     }
     
     //MARK: - Ocultar login

@@ -26,7 +26,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     //MARK: - Actions
     
     @IBAction func tapButon(sender: AnyObject) {
-        print("tap")
+        NSNotificationCenter.defaultCenter().postNotificationName(notificationToggleMenu, object: nil)
     }
     
     //MARK: - LifeCycle
