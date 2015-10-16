@@ -19,6 +19,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     let detailTimeLineSegue = "detailTimeLineSegue"
     var indiceSeleccionado = 0
     var desLoguear = false
+    var activarCollectionViewUserInterface = true
     
     //MARK: - Outlets
     @IBOutlet weak var miCollectionView: UICollectionView!
@@ -26,6 +27,12 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     //MARK: - Actions
     
     @IBAction func tapButon(sender: AnyObject) {
+        if(activarCollectionViewUserInterface){
+            miCollectionView.userInteractionEnabled = false
+        }else{
+            miCollectionView.userInteractionEnabled = true
+        }
+        activarCollectionViewUserInterface = !activarCollectionViewUserInterface
         NSNotificationCenter.defaultCenter().postNotificationName(notificationToggleMenu, object: nil)
     }
     

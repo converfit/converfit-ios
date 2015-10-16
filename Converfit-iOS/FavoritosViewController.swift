@@ -22,7 +22,6 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     var tamañoLista = 0
     var desLoguear = false
     var mostrarAlert = true
-    //var isSubBrand = false
     let segueShowConversationUser = "showConversationUser"
     var indexSeleccionado:NSIndexPath?
     var numeroUsuarioConectados = 0
