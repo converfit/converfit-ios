@@ -30,4 +30,8 @@ class Colors {
     static func returnColorBlackNewMessage() -> UIColor{
         return UIColor(red: 17/255, green: 17/255, blue: 17/255, alpha: 1)
     }
+    
+    static func returnColor909090() -> UIColor{
+        return UIColor(red: 144/255, green: 144/255, blue: 144/255, alpha: 1)
+    }
 }

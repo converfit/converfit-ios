@@ -360,9 +360,15 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         cell.lastMessageCreation.text = Fechas.devolverTiempo(fechaLastMessage)
         //comprobamos el Flag para cambiar el color del texto
         if(listadoConversaciones[indexPath.row].flagNewMessageUser){
-            cell.lastMessageCreation.textColor = UIColor.blueColor()
+            cell.lastMessageCreation.textColor = Colors.returnColorBlackNewMessage()
+            cell.brandName.textColor = Colors.returnColorBlackNewMessage()
+            cell.brandName.font = UIFont.boldSystemFontOfSize(18)
+            cell.lastMessage.textColor = Colors.returnColorBlackNewMessage()
+            cell.lastMessage.font = UIFont.boldSystemFontOfSize(12)
         }else{
-            cell.lastMessageCreation.textColor = UIColor.blackColor()
+            cell.lastMessageCreation.textColor = Colors.returnColor909090()
+            cell.brandName.textColor = UIColor.blackColor()
+            cell.lastMessage.textColor = Colors.returnColor909090()
         }
         let conectionStatus = listadoConversaciones[indexPath.row].connectionStatus
         if(conectionStatus == "online"){

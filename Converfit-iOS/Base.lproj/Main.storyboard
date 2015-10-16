@@ -1093,7 +1093,7 @@
                                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="52" id="Bu1-pz-qwj"/>
                                                         <constraint firstAttribute="width" constant="52" id="kOa-se-VKV"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="12"/>
                                                     <color key="textColor" red="0.56470588235294117" green="0.56470588235294117" blue="0.56470588235294117" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
@@ -2080,10 +2080,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crK-LJ-if7">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="84" width="600" height="516"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="6TI-Kt-U1s">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="516"/>
                                         <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -2483,6 +2483,6 @@
         <image name="quick_view_options" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QtB-z8-61g"/>
+        <segue reference="mEW-0b-d8E"/>
     </inferredMetricsTieBreakers>
 </document>
