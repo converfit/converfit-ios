@@ -268,7 +268,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 self.desLoguear = false
                 alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
                     LogOut.desLoguearBorrarDatos()
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.navigationController?.popToRootViewControllerAnimated(false)
                 }))
             }else{
                 //Añadimos un bonton al alert y lo que queramos que haga en la clausur

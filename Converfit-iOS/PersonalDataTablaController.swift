@@ -128,8 +128,7 @@ class PersonalDataTablaController: UITableViewController {
             desLoguear = false
             alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
                 LogOut.desLoguearBorrarDatos()
-                self.dismissViewControllerAnimated(true, completion: { () -> Void in
-                })
+                self.navigationController?.popToRootViewControllerAnimated(false)
             }))
         }else{
             alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler:{ action in

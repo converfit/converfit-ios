@@ -54,6 +54,7 @@ class LogOut {
         borrarAllCoreData()
         //Cambiamos el valor a false de mostrar el menu lateral izquierdo animado
         animarMenu = false
+        irPantallaLogin = true
     }
     
     //Funcion para borarr los datos de CoreData

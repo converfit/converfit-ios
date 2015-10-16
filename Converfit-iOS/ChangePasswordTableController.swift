@@ -131,8 +131,7 @@ class ChangePasswordTableController: UITableViewController {
             desLoguear = false
             alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
                 LogOut.desLoguearBorrarDatos()
-                self.dismissViewControllerAnimated(true, completion: { () -> Void in
-                })
+                self.navigationController?.popToRootViewControllerAnimated(false)
             }))
         }else{        //Añadimos un bonton al alert y lo que queramos que haga en la clausura
             if(formatoCamposOk){

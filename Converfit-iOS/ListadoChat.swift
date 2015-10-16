@@ -45,9 +45,9 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         vieneDeListadoMensajes = false
         if(irPantallaLogin){
             irPantallaLogin = false
-            /*self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.dismissViewControllerAnimated(true, completion: { () -> Void in
                 
-            })*/
+            })
        }else{
             self.editButtonItem().title = "Editar"
             listadoConversaciones = Conversation.devolverListConversations()
