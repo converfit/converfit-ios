@@ -404,6 +404,14 @@ class Utils {
     static func returnGrisFondo() -> UIColor{
         return UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
     }
+    
+    static func returnColorHeaderLeftMEnu() -> UIColor{
+        return UIColor(red: 33/255, green: 40/255, blue: 51/255, alpha: 1)
+    }
+
+    static func returnColorTextHeaderLeftMEnu() -> UIColor{
+        return UIColor(red: 86/255, green: 93/255, blue: 111/255, alpha: 1)
+    }
 
     //Metodo para modificar la apariencia
     static func customAppear(vc:UIViewController){

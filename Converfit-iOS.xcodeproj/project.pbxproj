@@ -56,6 +56,7 @@
 		9B779E6E1BCFD9D00062F9D7 /* NavBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		9B779E711BCFEA030062F9D7 /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E701BCFEA030062F9D7 /* ContainerVC.swift */; settings = {ASSET_TAGS = (); }; };
 		9BEB30FC1BD0E8670021C5DA /* LefMenuWiewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */; settings = {ASSET_TAGS = (); }; };
+		9BEB30FF1BD0FE630021C5DA /* CeldaLeftMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +111,7 @@
 		9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarViewController.swift; sourceTree = "<group>"; };
 		9B779E701BCFEA030062F9D7 /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
 		9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LefMenuWiewController.swift; sourceTree = "<group>"; };
+		9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaLeftMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 		647D68581BC7D37E0086A3A7 /* CeldasPersonalizadas */ = {
 			isa = PBXGroup;
 			children = (
+				9BEB30FD1BD0FE2A0021C5DA /* CeldaLeftMenu */,
 				64B41EC31BC93074008D932B /* CeldasMensajes */,
 				64B41EC21BC93069008D932B /* CeldasTabBar */,
 			);
@@ -316,6 +319,14 @@
 			name = Container;
 			sourceTree = "<group>";
 		};
+		9BEB30FD1BD0FE2A0021C5DA /* CeldaLeftMenu */ = {
+			isa = PBXGroup;
+			children = (
+				9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */,
+			);
+			name = CeldaLeftMenu;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -404,6 +415,7 @@
 				647D68511BC7A94C0086A3A7 /* Messsage.swift in Sources */,
 				6482266A1BCF9581001DD5ED /* DetailTimeLineUser.swift in Sources */,
 				6467362C1BC66A65001627C7 /* LoginController.swift in Sources */,
+				9BEB30FF1BD0FE630021C5DA /* CeldaLeftMenu.swift in Sources */,
 				6487DBE11BCCF05D00DC9C12 /* CeldaListadoFavoritos.swift in Sources */,
 				647D68531BC7A94C0086A3A7 /* User.swift in Sources */,
 				647D685E1BC7D5260086A3A7 /* Fechas.swift in Sources */,

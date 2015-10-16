@@ -12,7 +12,6 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     
     //MARK: - Variables 
     let cellId = "CeldaListadoFavoritos"
-    var sessionKey = ""
     var mensajeAlert = ""
     var tituloAlert = ""
     var listadoUsersConectados = [UserModel]()
@@ -23,7 +22,7 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     var tamañoLista = 0
     var desLoguear = false
     var mostrarAlert = true
-    var isSubBrand = false
+    //var isSubBrand = false
     let segueShowConversationUser = "showConversationUser"
     var indexSeleccionado:NSIndexPath?
     var numeroUsuarioConectados = 0

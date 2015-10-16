@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LefMenuWiewController: UIViewController {
+class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
 
     //MARK: - Outlets
     @IBOutlet weak var miTablaPersonalizada: UITableView!
@@ -25,11 +25,23 @@ class LefMenuWiewController: UIViewController {
         
     }
     
+    //MARK: - Variables
+    let cellId = "CeldaMenuLeft"
+    var listadoUsersConectados = [UserModel]()
+    var listadoUsersAPP = [UserModel]()
+    var indexSeleccionado:NSIndexPath?
+    var numeroUsuarioConectados = 0
+    var numeroUsuariosAPP = 0
+    
     //MARK: - LifeCycle
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         modificarUI()
         checkStatusleftMenu()
+        listadoUsersConectados = User.devolverUsuariosConectados()
+        listadoUsersAPP = User.devolverUsuariosAPP()
+        numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
+        numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
     }
     
     //MARK: - Utils
@@ -124,4 +136,81 @@ class LefMenuWiewController: UIViewController {
             self.mensajeAlert = ""
         }
     }*/
+    
+    //MARK: - Table
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (section == 0){
+            return "CONECTADOS"
+        }else{
+            return "CITIOUS APP"
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
+        
+        let headerView = view as! UITableViewHeaderFooterView
+        headerView.textLabel?.textColor = Utils.returnColorTextHeaderLeftMEnu()
+        headerView.contentView.backgroundColor = Utils.returnColorHeaderLeftMEnu()
+        headerView.textLabel?.font = UIFont.systemFontOfSize(14)
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if(numeroUsuarioConectados == 0 && section == 0){
+            return 0.0
+        }else if(numeroUsuariosAPP == 0 && section == 1){
+            return 0.0
+        }else{
+            return 30.0
+        }
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if(section == 0){
+            return numeroUsuarioConectados
+        }else{
+            return numeroUsuariosAPP
+        }
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellId) as! CeldaLeftMenu
+        var user:UserModel
+        if(indexPath.section == 0){
+            user = listadoUsersConectados[indexPath.row]
+        }else{
+            user = listadoUsersAPP[indexPath.row]
+        }
+        cell.imagenAvatar.image = user.avatar
+        cell.name.text = user.userName
+        cell.hora.text = Fechas.devolverTiempo(user.horaConectado)
+        let conectionStatus = user.connectionStatus
+        if(conectionStatus == "online"){
+            cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Online")
+        }else if(conectionStatus == "offline"){
+            cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Offline")
+        }else if(conectionStatus == "inactive"){
+            cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Inactive")
+        }else{
+            cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Mobile_Quick")
+        }
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //Limpiamos el texto que haya en el seachBar
+        self.view.endEditing(true)
+        //miSearchBar.text = "";
+        //miSearchBar.showsCancelButton = false
+       // miSearchBar.resignFirstResponder()
+        
+        indexSeleccionado = indexPath
+        
+        //performSegueWithIdentifier(segueShowConversationUser, sender: self)
+    }
 }
