@@ -65,5 +65,6 @@ class ContainerVC: UIViewController {
     // Open is the natural state of the menu because of how the storyboard is setup.
     func openMenu(){
         miScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        NSNotificationCenter.defaultCenter().postNotificationName(notificationsOpenDrawerMenu, object: nil)
     }
 }

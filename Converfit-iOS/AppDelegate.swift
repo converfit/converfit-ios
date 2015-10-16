@@ -20,6 +20,7 @@ var irPantallaLogin = false
 let notificationChat = "com.converfit.notificacionChat"
 let notificationToggleMenu = "toggleMenu"
 let notificationItemMenuSelected = "notificationItemMenuSelected"
+let notificationsOpenDrawerMenu = "notificationsOpenDrawerMenu"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

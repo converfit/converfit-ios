@@ -42,6 +42,9 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         listadoUsersAPP = User.devolverUsuariosAPP()
         numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
         numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
+        miTablaPersonalizada.reloadData()
+        recuperarUserServidor()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "openMenu", name:notificationsOpenDrawerMenu , object: nil)
     }
     
     //MARK: - Utils
@@ -59,6 +62,17 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
             lblEstadoChat.text = "CHAT ACTIVADO"
         }
     }
+    
+    //MARK: - OpenMenu
+    func openMenu(){
+        listadoUsersConectados = User.devolverUsuariosConectados()
+        listadoUsersAPP = User.devolverUsuariosAPP()
+        numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
+        numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
+        miTablaPersonalizada.reloadData()
+        recuperarUserServidor()
+    }
+    
     
     //MARK: - Show alertSheet
     func showAlertSheet(titleAction:String){
@@ -203,7 +217,6 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //Limpiamos el texto que haya en el seachBar
         if(indexPath.section == 0){
             userKeyMenuSeleccionado = listadoUsersConectados[indexPath.row].userKey
         }else{
@@ -211,7 +224,64 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         }
         NSNotificationCenter.defaultCenter().postNotificationName(notificationToggleMenu, object: nil)
         NSNotificationCenter.defaultCenter().postNotificationName(notificationItemMenuSelected, object: nil)
-        
-        //performSegueWithIdentifier(segueShowConversationUser, sender: self)
     }
+    
+    func recuperarUserServidor(){
+        let sessionKey = Utils.getSessionKey()
+        let usersLastUpdate = Utils.getLastUpdateFollower()
+        let params = "action=list_users&session_key=\(sessionKey)&users_last_update=\(usersLastUpdate)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
+        let urlServidor = Utils.returnUrlWS("brands")
+        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
+        let session = NSURLSession.sharedSession()
+        request.HTTPMethod = "POST"
+        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        let recuperarUsersTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            guard data != nil else {
+                print("no data found: \(error)")
+                return
+            }
+            
+            do {
+                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
+                    if let resultCode = json.objectForKey("result") as? Int{
+                        if(resultCode == 1){
+                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
+                                //Guardamos el last update de favoritos
+                                if let lastUpdate = dataResultado.objectForKey("users_last_update") as? String{
+                                    Utils.saveLastUpdateFollower(lastUpdate)
+                                }
+                                //Obtenemos el need_to_update para ver si hay que actualizar la lista o no
+                                if let needUpdate = dataResultado.objectForKey("need_to_update") as? Bool{
+                                    if(needUpdate){
+                                        if let listaUsuarios = dataResultado.objectForKey("users") as? NSArray{
+                                            User.borrarAllUsers()
+                                            //Llamamos por cada elemento del array de empresas al constructor
+                                            for dict in listaUsuarios{
+                                                _=User(aDict: dict as! NSDictionary)
+                                            }
+                                        }
+                                        self.listadoUsersConectados = User.devolverUsuariosConectados()
+                                        self.numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
+                                        self.numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
+                                        self.listadoUsersAPP = User.devolverUsuariosAPP()
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            self.miTablaPersonalizada.reloadData()
+                                        })
+                                    }
+                                }
+                            }
+                        }
+                        else{
+                            /*if let codigoError = json.objectForKey("error_code") as? String{
+                                
+                            }*/
+                        }
+                    }
+                }
+            } catch{
+            }
+        }
+        recuperarUsersTask.resume()
+    }
+
 }
