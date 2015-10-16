@@ -55,6 +55,7 @@
 		9B779E6A1BCFBC360062F9D7 /* PostServidor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E691BCFBC360062F9D7 /* PostServidor.swift */; settings = {ASSET_TAGS = (); }; };
 		9B779E6E1BCFD9D00062F9D7 /* NavBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		9B779E711BCFEA030062F9D7 /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E701BCFEA030062F9D7 /* ContainerVC.swift */; settings = {ASSET_TAGS = (); }; };
+		9BEB30FC1BD0E8670021C5DA /* LefMenuWiewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +109,7 @@
 		9B779E691BCFBC360062F9D7 /* PostServidor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostServidor.swift; sourceTree = "<group>"; };
 		9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarViewController.swift; sourceTree = "<group>"; };
 		9B779E701BCFEA030062F9D7 /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
+		9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LefMenuWiewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,6 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				9B779E701BCFEA030062F9D7 /* ContainerVC.swift */,
+				9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */,
 			);
 			name = Container;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				647D685E1BC7D5260086A3A7 /* Fechas.swift in Sources */,
 				64ED087C1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift in Sources */,
 				648921FE1BC6D40800D91EA0 /* RecuperarPassController.swift in Sources */,
+				9BEB30FC1BD0E8670021C5DA /* LefMenuWiewController.swift in Sources */,
 				64B41ED11BC9320A008D932B /* ResizeImage.swift in Sources */,
 				9B779E6E1BCFD9D00062F9D7 /* NavBarViewController.swift in Sources */,
 				64B41ECD1BC93145008D932B /* AddConversacionController.swift in Sources */,
