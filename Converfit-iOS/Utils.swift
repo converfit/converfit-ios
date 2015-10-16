@@ -396,27 +396,10 @@ class Utils {
         return NSData(base64EncodedString: videoBase64, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
     }
     
-    //Funcion que devuelve el color de rojoConverfit
-    static func returnRedConverfit() -> UIColor{
-        return UIColor(red: 237/255, green: 31/255, blue: 36/255, alpha: 1)
-    }
-    
-    static func returnGrisFondo() -> UIColor{
-        return UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
-    }
-    
-    static func returnColorHeaderLeftMEnu() -> UIColor{
-        return UIColor(red: 33/255, green: 40/255, blue: 51/255, alpha: 1)
-    }
-
-    static func returnColorTextHeaderLeftMEnu() -> UIColor{
-        return UIColor(red: 86/255, green: 93/255, blue: 111/255, alpha: 1)
-    }
-
     //Metodo para modificar la apariencia
     static func customAppear(vc:UIViewController){
-        vc.navigationController?.navigationBar.barTintColor = returnRedConverfit()
+        vc.navigationController?.navigationBar.barTintColor = Colors.returnRedConverfit()
         vc.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        vc.view.backgroundColor = returnGrisFondo()
+        vc.view.backgroundColor = Colors.returnGrisFondo()
     }
 }

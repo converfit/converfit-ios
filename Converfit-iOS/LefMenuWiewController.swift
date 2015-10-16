@@ -154,8 +154,8 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         view.tintColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
         let headerView = view as! UITableViewHeaderFooterView
-        headerView.textLabel?.textColor = Utils.returnColorTextHeaderLeftMEnu()
-        headerView.contentView.backgroundColor = Utils.returnColorHeaderLeftMEnu()
+        headerView.textLabel?.textColor = Colors.returnColorTextHeaderLeftMEnu()
+        headerView.contentView.backgroundColor = Colors.returnColorHeaderLeftMEnu()
         headerView.textLabel?.font = UIFont.systemFontOfSize(14)
     }
     

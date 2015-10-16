@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func customizeAppearance(){
-        window!.tintColor = Utils.returnRedConverfit()
+        window!.tintColor = Colors.returnRedConverfit()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
     }
     

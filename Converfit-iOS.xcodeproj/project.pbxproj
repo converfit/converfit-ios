@@ -57,6 +57,7 @@
 		9B779E711BCFEA030062F9D7 /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E701BCFEA030062F9D7 /* ContainerVC.swift */; settings = {ASSET_TAGS = (); }; };
 		9BEB30FC1BD0E8670021C5DA /* LefMenuWiewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */; settings = {ASSET_TAGS = (); }; };
 		9BEB30FF1BD0FE630021C5DA /* CeldaLeftMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */; settings = {ASSET_TAGS = (); }; };
+		9BEB31011BD10E3C0021C5DA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB31001BD10E3C0021C5DA /* Colors.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +113,7 @@
 		9B779E701BCFEA030062F9D7 /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
 		9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LefMenuWiewController.swift; sourceTree = "<group>"; };
 		9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaLeftMenu.swift; sourceTree = "<group>"; };
+		9BEB31001BD10E3C0021C5DA /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				648921F31BC6ABF500D91EA0 /* LogOut.swift */,
 				647D685D1BC7D5260086A3A7 /* Fechas.swift */,
 				9B779E691BCFBC360062F9D7 /* PostServidor.swift */,
+				9BEB31001BD10E3C0021C5DA /* Colors.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				648921FE1BC6D40800D91EA0 /* RecuperarPassController.swift in Sources */,
 				9BEB30FC1BD0E8670021C5DA /* LefMenuWiewController.swift in Sources */,
 				64B41ED11BC9320A008D932B /* ResizeImage.swift in Sources */,
+				9BEB31011BD10E3C0021C5DA /* Colors.swift in Sources */,
 				9B779E6E1BCFD9D00062F9D7 /* NavBarViewController.swift in Sources */,
 				64B41ECD1BC93145008D932B /* AddConversacionController.swift in Sources */,
 				648921F41BC6ABF500D91EA0 /* LogOut.swift in Sources */,
