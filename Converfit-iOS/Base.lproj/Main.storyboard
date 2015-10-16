@@ -2378,7 +2378,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="M4B-lb-lbG">
-                                <rect key="frame" x="0.0" y="44" width="600" height="507"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="0.0" right="2"/>
@@ -2466,7 +2466,7 @@
                             <constraint firstAttribute="trailing" secondItem="M4B-lb-lbG" secondAttribute="trailing" id="7Nw-FN-I86"/>
                             <constraint firstItem="M4B-lb-lbG" firstAttribute="leading" secondItem="gU8-gk-N9O" secondAttribute="leading" id="9Ji-ql-5cg"/>
                             <constraint firstItem="43e-yh-mpu" firstAttribute="top" secondItem="M4B-lb-lbG" secondAttribute="bottom" id="RcU-4M-QNM"/>
-                            <constraint firstItem="M4B-lb-lbG" firstAttribute="top" secondItem="591-Fw-mB5" secondAttribute="bottom" id="XUk-jX-kRo"/>
+                            <constraint firstItem="M4B-lb-lbG" firstAttribute="top" secondItem="591-Fw-mB5" secondAttribute="bottom" constant="20" id="XUk-jX-kRo"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aCc-y6-gzQ">

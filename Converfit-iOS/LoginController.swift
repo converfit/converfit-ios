@@ -179,6 +179,7 @@ class LoginController: UIViewController {
                                     self.emailTxt.text = ""
                                     self.passwordTxt.text = ""
                                     self.performSegueWithIdentifier("loginSegue", sender: self)
+                                    PostServidor.getStatusChat()
                                 })
                             }
                         }else{

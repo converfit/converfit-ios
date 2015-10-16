@@ -58,6 +58,44 @@ class PostServidor {
         actualizarDeviceTask.resume()
     }
     
+    //MARK: - Enable or disable Chat
+    static func getStatusChat(){
+        let sessionKey = Utils.getSessionKey()
+        let params = "action=brand_webchat_status&session_key=\(sessionKey)"
+        let urlServidor = Utils.returnUrlWS("webchat")
+        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
+        let session = NSURLSession.sharedSession()
+        request.HTTPMethod = "POST"
+        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        let estatusMenuLeftTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            guard data != nil else {
+                print("no data found: \(error)")
+                return
+            }
+            
+            do {
+                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
+                    if let resultCode = json.objectForKey("result") as? Int{
+                        if(resultCode == 1){
+                            dbErrorContador = 0
+                            if let data = json.objectForKey("data") as? NSDictionary{
+                                if let menuLeftStatus = data.objectForKey("brand_webchat_status") as? String{
+                                    Utils.saveStatusLeftMenu(menuLeftStatus)
+                                }
+                            }
+                        }else{
+                            //MostrarAlerta error
+                        }
+                    }
+                }
+            } catch{
+                
+            }
+        }
+        estatusMenuLeftTask.resume()
+    }
+
+    
     /*
     //Cambiamos el valor de new_messsage_flag en la BBDD a true
     static func updateNewMessageFlag(conversationKey:String){
