@@ -204,12 +204,8 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //Limpiamos el texto que haya en el seachBar
-        self.view.endEditing(true)
-        //miSearchBar.text = "";
-        //miSearchBar.showsCancelButton = false
-       // miSearchBar.resignFirstResponder()
-        
         indexSeleccionado = indexPath
+        NSNotificationCenter.defaultCenter().postNotificationName(notificationToggleMenu, object: nil)
         
         //performSegueWithIdentifier(segueShowConversationUser, sender: self)
     }
