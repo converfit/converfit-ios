@@ -7,6 +7,7 @@
 //
 
 import UIKit
+var userKeyMenuSeleccionado = ""
 
 class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
 
@@ -29,7 +30,6 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     let cellId = "CeldaMenuLeft"
     var listadoUsersConectados = [UserModel]()
     var listadoUsersAPP = [UserModel]()
-    var indexSeleccionado:NSIndexPath?
     var numeroUsuarioConectados = 0
     var numeroUsuariosAPP = 0
     
@@ -204,8 +204,13 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //Limpiamos el texto que haya en el seachBar
-        indexSeleccionado = indexPath
+        if(indexPath.section == 0){
+            userKeyMenuSeleccionado = listadoUsersConectados[indexPath.row].userKey
+        }else{
+            userKeyMenuSeleccionado = listadoUsersAPP[indexPath.row].userKey
+        }
         NSNotificationCenter.defaultCenter().postNotificationName(notificationToggleMenu, object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(notificationItemMenuSelected, object: nil)
         
         //performSegueWithIdentifier(segueShowConversationUser, sender: self)
     }

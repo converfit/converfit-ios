@@ -57,6 +57,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
             miCollectionView.reloadData()
             recuperarTimeLine()
              NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "itemMenuSelected", name:notificationItemMenuSelected , object: nil)
         }
     }
     
@@ -64,8 +65,14 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationItemMenuSelected, object: nil)
     }
 
+    //MARK: - Notification Oberser cuando clickamos en el menuLateral
+    func itemMenuSelected(){
+        print(userKeyMenuSeleccionado)
+    }
+    
     func cambiarBadge(){
         let tabArray =  self.tabBarController?.tabBar.items as NSArray!
         let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem

@@ -19,6 +19,7 @@ var errorCheckSession = ""
 var irPantallaLogin = false
 let notificationChat = "com.converfit.notificacionChat"
 let notificationToggleMenu = "toggleMenu"
+let notificationItemMenuSelected = "notificationItemMenuSelected"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
