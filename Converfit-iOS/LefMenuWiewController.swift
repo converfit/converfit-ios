@@ -10,9 +10,35 @@ import UIKit
 
 class LefMenuWiewController: UIViewController {
 
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        //self.view.backgroundColor = Utils.returnRedConverfit()
+    //MARK: - Outlets
+    @IBOutlet weak var miTablaPersonalizada: UITableView!
+    @IBOutlet weak var lblEstadoChat: UILabel!
+    
+    //MARK: - Actions
+    @IBAction func tapQuickOptions(sender: AnyObject) {
+        
     }
     
+    //MARK: - LifeCycle
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        modificarUI()
+        checkStatusleftMenu()
+    }
+    
+    //MARK: - Utils
+    func modificarUI(){
+        miTablaPersonalizada.tableFooterView = UIView()
+        miTablaPersonalizada.backgroundColor = UIColor.clearColor()
+    }
+    
+    //MARK: - Check status left menu
+    func checkStatusleftMenu(){
+        let status = Utils.getStatusLeftMenu()
+        if(status == "0"){
+            lblEstadoChat.text = "CHAT DESACTIVADO"
+        }else{
+            lblEstadoChat.text = "CHAT ACTIVADO"
+        }
+    }
 }

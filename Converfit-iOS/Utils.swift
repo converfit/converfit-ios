@@ -300,6 +300,22 @@ class Utils {
         return deviceKey
     }
     
+    
+    //MARK: - Save status left menu
+    static func saveStatusLeftMenu(saveStatusLeftMenu:String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(saveStatusLeftMenu, forKey: "statusLeftMenu")
+    }
+    
+    static func getStatusLeftMenu() -> String{
+        var statusLeftMenu = "0"
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let status = defaults.stringForKey("statusLeftMenu"){
+            statusLeftMenu = status
+        }
+        return statusLeftMenu
+    }
+    
     //MARK: - Strings
     static func removerEspaciosBlanco(textoConEspacios:String) ->String{
         var cadena = textoConEspacios
