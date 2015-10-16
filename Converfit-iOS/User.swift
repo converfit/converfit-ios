@@ -48,24 +48,7 @@ public class User: _User {
         
         coreDataStack.saveContext()
     }
-    /*
-    //Metodo que devuelve la lista de todos los Users
-    static func devolverListaUsers() -> [UserModel]{
-        var listadoUsers = [UserModel]()
-        let request = NSFetchRequest(entityName: User.entityName())
-        let miShorDescriptor = NSSortDescriptor(key: "horaConectado", ascending: false)
-        request.sortDescriptors = [miShorDescriptor]
-        request.returnsObjectsAsFaults = false
-        
-        let results = (try! coreDataStack.context.executeFetchRequest(request)) as! [User]
-        
-        for user in results{
-            let aux = UserModel(modelo: user)
-            listadoUsers.append(aux)
-        }
-        return listadoUsers
-    }
-    */
+    
     //Metodo que devuelve el numero total de Usuarios de la APP
     static func devolverUsuariosAPP() -> [UserModel]{
         var listadoUsers = [UserModel]()

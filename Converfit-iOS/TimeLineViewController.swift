@@ -17,6 +17,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     var mensajeAlert = ""
     var tituloAlert = ""
     let detailTimeLineSegue = "detailTimeLineSegue"
+    let segueShowMessagesTimeLine = "segueShowMessagesTimeLine"
     var indiceSeleccionado = 0
     var desLoguear = false
     var activarCollectionViewUserInterface = true
@@ -27,12 +28,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     //MARK: - Actions
     
     @IBAction func tapButon(sender: AnyObject) {
-        if(activarCollectionViewUserInterface){
-            miCollectionView.userInteractionEnabled = false
-        }else{
-            miCollectionView.userInteractionEnabled = true
-        }
-        activarCollectionViewUserInterface = !activarCollectionViewUserInterface
+        enableUserInterface()
         NSNotificationCenter.defaultCenter().postNotificationName(notificationToggleMenu, object: nil)
     }
     
@@ -53,11 +49,16 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
                 
             })
         }else{
-            listadoPost = TimeLine.devolverListTimeLine()
-            miCollectionView.reloadData()
-            recuperarTimeLine()
-             NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "itemMenuSelected", name:notificationItemMenuSelected , object: nil)
+            if(vieneDeListadoMensajes){
+                self.tabBarController?.selectedIndex = 2
+                vieneDeListadoMensajes = false
+            }else{
+                listadoPost = TimeLine.devolverListTimeLine()
+                miCollectionView.reloadData()
+                recuperarTimeLine()
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: "itemMenuSelected", name:notificationItemMenuSelected , object: nil)
+            }
         }
     }
     
@@ -70,7 +71,8 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
 
     //MARK: - Notification Oberser cuando clickamos en el menuLateral
     func itemMenuSelected(){
-        print(userKeyMenuSeleccionado)
+        enableUserInterface()
+        performSegueWithIdentifier(segueShowMessagesTimeLine, sender: self)
     }
     
     func cambiarBadge(){
@@ -91,6 +93,16 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: - Enable or disable userInterface in collectionView
+    func enableUserInterface(){
+        if(activarCollectionViewUserInterface){
+            miCollectionView.userInteractionEnabled = false
+        }else{
+            miCollectionView.userInteractionEnabled = true
+        }
+        activarCollectionViewUserInterface = !activarCollectionViewUserInterface
     }
     
     //MARK: - CollectionViewDataSource
@@ -274,6 +286,18 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
             let detailTimeLineVC = segue.destinationViewController as! DetailTimeLineUser
             detailTimeLineVC.titleUsuario = listadoPost[indiceSeleccionado].userName
             detailTimeLineVC.userKey = listadoPost[indiceSeleccionado].userKey
+        }else if(segue.identifier == segueShowMessagesTimeLine){
+            let messagesVC = segue.destinationViewController as! AddConversacionController
+            let (userHasConversation, conversationKey) = Conversation.existeConversacionDeUsuario(userKeyMenuSeleccionado)
+            if(userHasConversation){
+                messagesVC.conversacionNueva = false
+                messagesVC.conversationKey = conversationKey
+                
+            }else{
+                messagesVC.conversacionNueva = true
+            }
+            messagesVC.userKey = userKeyMenuSeleccionado
+            messagesVC.userName = User.obtenerUser(userKeyMenuSeleccionado)?.userName
         }
     }
 }
