@@ -96,6 +96,49 @@ class PostServidor {
     }
 
     
+    //Cambiamos el valor de new_messsage_flag en la BBDD a true
+    static func updateNewMessageFlag(conversationKey:String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let sessionKey = defaults.stringForKey("session_key")!
+        let urlServidor = Utils.returnUrlWS("conversations")
+        let params = "action=update_conversation_flag&session_key=\(sessionKey)&conversation_key=\(conversationKey)&new_message_flag=\(0)&app_version=\(appVersion)&app=\(app)"
+        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
+        let session = NSURLSession.sharedSession()
+        request.HTTPMethod = "POST"
+        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        let updateNewMessageFlagTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            if(data != nil){
+                if(error != nil){
+                    if(error!.code == -1005){
+                        self.updateNewMessageFlag(conversationKey)
+                    }
+                }else{
+                    do {
+                        if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
+                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
+                                if let lastUpdate = dataResultado.objectForKey("last_update") as? String{
+                                    Utils.saveLastUpdate(lastUpdate)
+                                }
+                            }
+                            if let resultCode = json.objectForKey("result") as? Int{
+                                if(resultCode == 1){
+                                    //No hacemos nada
+                                }else{//resultCode == 0
+                                    if let _ = json.objectForKey("error_code") as? String{
+                                        //No hacemos nada
+                                    }
+                                }
+                            }
+                        }
+                    } catch{
+                        
+                    }
+                }
+            }
+        }
+        updateNewMessageFlagTask.resume()
+    }
+    
     /*
     //Cambiamos el valor de new_messsage_flag en la BBDD a true
     static func updateNewMessageFlag(conversationKey:String){

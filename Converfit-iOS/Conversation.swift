@@ -161,7 +161,7 @@ public class Conversation: _Conversation {
             for result: Conversation in conversacion{
                 if(result.flagNewUserMessage == true){
                     result.flagNewUserMessage = false
-                    //PostServidor.updateNewMessageFlag(conversationKey)
+                    PostServidor.updateNewMessageFlag(conversationKey)
                 }else{
                     result.flagNewUserMessage = nuevo
                 }
