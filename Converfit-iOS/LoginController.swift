@@ -24,6 +24,7 @@ class LoginController: UIViewController {
     @IBOutlet weak var passwordTxt: UITextField!
     @IBOutlet weak var versionLabelLogin: UILabel!
     @IBOutlet weak var logoConverfitLogin: UIImageView!
+    @IBOutlet weak var verticalCenterYconstrait: NSLayoutConstraint!
     
     //MARK: - Actions
     @IBAction func viewContainerTap(sender: AnyObject) {
@@ -42,13 +43,20 @@ class LoginController: UIViewController {
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        roundViews()
-        addTapActions()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //ocultar(ocultarLogIn)
+        roundViews()
+        addTapActions()
+        startObservingKeyBoard()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopObservingKeyBoard()
+        verticalCenterYconstrait.constant = 0
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -215,21 +223,34 @@ class LoginController: UIViewController {
         }*/
     }
     
-    //MARK: - Ocultar login
-    func ocultar(ocultar:Bool){
-        dispatch_async(dispatch_get_main_queue()) {
-            self.viewEmailPassword.hidden = ocultar
-            self.emailTxt.hidden = ocultar
-            self.passwordTxt.hidden = ocultar
-            self.loginButton.hidden = ocultar
-            self.lostPasswordLabel.hidden = ocultar
-            self.singUpLabel.hidden = ocultar
-            self.versionLabelLogin.hidden = ocultar
-            self.logoConverfitLogin.hidden = ocultar
-            if(ocultar){
-                self.performSegueWithIdentifier("loginSegue", sender: self)
-            }
-        }
+    //MARK: - Ocultar teclado
+    func startObservingKeyBoard(){
+        //Funcion para darnos de alta como observador en las notificaciones de teclado
+        let nc:NSNotificationCenter = NSNotificationCenter.defaultCenter()
+        nc.addObserver(self, selector: "notifyThatKeyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: "notifyThatKeyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    //Funcion para darnos de alta como observador en las notificaciones de teclado
+    func stopObservingKeyBoard(){
+        let nc:NSNotificationCenter = NSNotificationCenter.defaultCenter()
+        nc.removeObserver(self)
+    }
+    
+    //Funcion que se ejecuta cuando aparece el teclado
+    func notifyThatKeyboardWillAppear(notification:NSNotification){
+        verticalCenterYconstrait.constant = -100
+        UIView.animateWithDuration(0.25, animations:  {
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    //Funcion que se ejecuta cuando desaparece el teclado
+    func notifyThatKeyboardWillDisappear(notification:NSNotification){
+        verticalCenterYconstrait.constant = 0
+        UIView.animateWithDuration(0.25, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+        })
     }
 
 }

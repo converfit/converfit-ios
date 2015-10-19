@@ -307,10 +307,10 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoginIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ZZg-xK-cAF">
-                                <rect key="frame" x="50" y="100" width="500" height="128"/>
+                                <rect key="frame" x="30" y="48" width="540" height="180"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="ZZg-xK-cAF" secondAttribute="height" multiplier="125:32" id="cg1-3z-qJ4"/>
+                                    <constraint firstAttribute="width" secondItem="ZZg-xK-cAF" secondAttribute="height" multiplier="3:1" id="cg1-3z-qJ4"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5G5-kZ-8hV">
@@ -372,13 +372,13 @@
                             <constraint firstItem="9HY-bF-qqR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dPT-NI-c8B"/>
                             <constraint firstItem="KAG-gg-Pag" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="dwA-fe-vu9"/>
                             <constraint firstItem="rpY-P3-l9V" firstAttribute="top" secondItem="5G5-kZ-8hV" secondAttribute="bottom" constant="20" id="ilX-0r-D3g"/>
-                            <constraint firstItem="ZZg-xK-cAF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="50" id="kMp-6Y-hHZ"/>
+                            <constraint firstItem="ZZg-xK-cAF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="30" id="kMp-6Y-hHZ"/>
                             <constraint firstItem="ZZg-xK-cAF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="n4K-eH-D6Y"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lwZ-bJ-GDs" secondAttribute="bottom" constant="8" id="oE5-wK-oYE"/>
                             <constraint firstAttribute="trailing" secondItem="5G5-kZ-8hV" secondAttribute="trailing" constant="20" id="qvE-Eg-9gW"/>
                             <constraint firstItem="lwZ-bJ-GDs" firstAttribute="top" secondItem="9HY-bF-qqR" secondAttribute="bottom" constant="30" id="sdP-Y3-k7M"/>
                             <constraint firstAttribute="trailing" secondItem="KAG-gg-Pag" secondAttribute="trailing" constant="20" id="xRV-2Z-neY"/>
-                            <constraint firstAttribute="trailing" secondItem="ZZg-xK-cAF" secondAttribute="trailing" constant="50" id="y8F-K3-7kt"/>
+                            <constraint firstAttribute="trailing" secondItem="ZZg-xK-cAF" secondAttribute="trailing" constant="30" id="y8F-K3-7kt"/>
                         </constraints>
                         <connections>
                             <action selector="viewContainerTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3mF-hR-tCB"/>
@@ -392,6 +392,7 @@
                         <outlet property="passwordTxt" destination="Y2q-Ac-h6J" id="gwD-1C-C03"/>
                         <outlet property="singUpLabel" destination="9HY-bF-qqR" id="Ckz-3G-kRD"/>
                         <outlet property="versionLabelLogin" destination="lwZ-bJ-GDs" id="Jsz-0z-Ehf"/>
+                        <outlet property="verticalCenterYconstrait" destination="dwA-fe-vu9" id="g6d-mZ-Amp"/>
                         <outlet property="viewEmailPassword" destination="KAG-gg-Pag" id="fRk-sR-eyn"/>
                         <segue destination="ZMk-9x-qdk" kind="presentation" identifier="loginSegue" id="KTS-zB-d2s"/>
                     </connections>
@@ -2507,6 +2508,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="mEW-0b-d8E"/>
-        <segue reference="Ujd-N0-BjN"/>
+        <segue reference="KTS-zB-d2s"/>
     </inferredMetricsTieBreakers>
 </document>
