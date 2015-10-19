@@ -9,8 +9,8 @@
 import UIKit
 
 let appVersion = "1.0.0"
-//let sistema = "ios"
-let sistema = "android"
+let sistema = "ios"
+//let sistema = "android"
 let app = "converfit"
 var ocultarLogIn = false
 var coreDataStack = MMGCoreDataStack2(modelName: "Model")
@@ -34,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(setting)
         UIApplication.sharedApplication().registerForRemoteNotifications()
-        comprobarCheckSession()
         customizeAppearance()
         return true
     }
@@ -61,48 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-    //MARK: - Comprobar checkSession
-    func comprobarCheckSession(){
-        let sessionKey = Utils.getSessionKey()
-        let lastUpdate = Utils.getLastUpdate()
-        let deviceKey = Utils.getDeviceKey()
-        let params = "action=check_session&session_key=\(sessionKey)&device_key=\(deviceKey)&last_update=\(lastUpdate)&system=\(sistema)&app_version=\(appVersion)&app=\(app)"
-        let urlServidor = Utils.returnUrlWS("access")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let semaphore = dispatch_semaphore_create(0)
-        let checkSessionTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
-            /*guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            */
-            if(data != nil){
-                do {
-                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                        if let resultCode = json.objectForKey("result") as? Int{
-                            if(resultCode == 1){
-                                if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                    if let lastUpdate = dataResultado.objectForKey("last_update") as? String{
-                                    Utils.saveLastUpdate(lastUpdate)
-                                    ocultarLogIn = true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } catch{
-                
-                }
-            }
-            dispatch_semaphore_signal(semaphore)
-        }
-        checkSessionTask.resume()
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
-    }
-    
     func customizeAppearance(){
         window!.tintColor = Colors.returnRedConverfit()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]

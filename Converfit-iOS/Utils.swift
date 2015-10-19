@@ -35,15 +35,15 @@ class Utils {
         default:
             let rutaServidor = "http://server.converfit.com/"
             if(modelo == "access"){
-                resultado = rutaServidor + "android/1.0.0/models/access/model.php"
+                resultado = rutaServidor + "ios/1.0.0/models/access/model.php"
             }else if(modelo == "conversations"){
-                resultado = rutaServidor + "android/1.0.0/models/conversations/model.php"
+                resultado = rutaServidor + "ios/1.0.0/models/conversations/model.php"
             }else if(modelo == "brand_notifications"){
-                resultado = rutaServidor + "android/1.0.0/models/brand_notifications/model.php"
+                resultado = rutaServidor + "ios/1.0.0/models/brand_notifications/model.php"
             }else if(modelo == "brands"){
-                resultado = rutaServidor + "android/1.0.0/models/users/model.php"
+                resultado = rutaServidor + "ios/1.0.0/models/users/model.php"
             }else if(modelo == "webchat"){
-                resultado = rutaServidor + "android/1.0.0/models/brands/model.php"
+                resultado = rutaServidor + "ios/1.0.0/models/brands/model.php"
             }else if(modelo == "pdf"){
                 resultado = rutaServidor + "resources/message_files/"
             }

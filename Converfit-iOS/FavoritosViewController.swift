@@ -197,7 +197,9 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
                                     if(codigoError != "list_users_empty"){
                                          self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                         (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                        self.mostrarAlerta()
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            self.mostrarAlerta()
+                                        })
                                     }else{
                                         self.mostrarAlert = false
                                     }
@@ -213,7 +215,9 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
                     
                 })*/
                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                self.mostrarAlerta()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.mostrarAlerta()
+                })
             }
         }
         recuperarUsersTask.resume()

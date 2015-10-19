@@ -48,7 +48,7 @@ class LoginController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        ocultar(ocultarLogIn)
+        //ocultar(ocultarLogIn)
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {

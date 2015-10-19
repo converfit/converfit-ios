@@ -472,14 +472,18 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                             if let codigoError = json.objectForKey("error_code") as? String{
                                 self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                self.mostrarAlerta()
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.mostrarAlerta()
+                                })
                             }
                         }
                     }
                 }
             } catch{
                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                self.mostrarAlerta()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.mostrarAlerta()
+                })
             }
         }
         recuperarListadoMensajesTask.resume()
@@ -517,14 +521,18 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                             if let codigoError = json.objectForKey("error_code") as? String{
                                 self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                self.mostrarAlerta()
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.mostrarAlerta()
+                                })
                             }
                         }
                     }
                 }
             } catch{
                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                self.mostrarAlerta()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.mostrarAlerta()
+                })
             }
             dispatch_semaphore_signal(semaphore)
         }
@@ -579,7 +587,9 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                                 if let codigoError = json.objectForKey("error_code") as? String{
                                     self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                     (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                    self.mostrarAlerta()
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        self.mostrarAlerta()
+                                    })
                                 }
 
                             }
@@ -588,7 +598,9 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 }
             } catch{
                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                self.mostrarAlerta()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.mostrarAlerta()
+                })
             }
         }
         addMensajeTask.resume()
@@ -631,7 +643,9 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                                 if let codigoError = json.objectForKey("error_code") as? String{
                                     self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                     (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                    self.mostrarAlerta()
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        self.mostrarAlerta()
+                                    })
                                 }
                             }
                         }
@@ -639,7 +653,9 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 }
             } catch{
                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                self.mostrarAlerta()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.mostrarAlerta()
+                })
             }
         }
         udpateMensajeTask.resume()

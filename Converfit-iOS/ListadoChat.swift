@@ -178,12 +178,20 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
                         }
                     }else{
                         (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                        self.mostrarAlerta()
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.mostrarAlerta()
+                            })
+                        })
                     }
                 }
             } catch{
                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                self.mostrarAlerta()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.mostrarAlerta()
+                    })
+                })
             }
         }
         recuperarConversacionesTask.resume()
@@ -226,7 +234,9 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
                                     if(codigoError != "list_conversations_empty"){
                                         self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                         (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                        self.mostrarAlerta()
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            self.mostrarAlerta()
+                                        })
                                     }
                                 }
                             }
@@ -235,7 +245,9 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
                 }
             }catch{
                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                self.mostrarAlerta()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.mostrarAlerta()
+                })
             }
         }
         borrarConversacionTask.resume()
