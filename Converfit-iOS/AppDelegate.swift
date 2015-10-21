@@ -101,8 +101,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if(action == "new_message"){
             PostServidor.getConversacion(actionData)
         }
-       // updatePush(dictNotification)
     }
-
 }
 
