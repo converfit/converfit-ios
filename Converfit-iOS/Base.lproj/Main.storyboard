@@ -52,29 +52,29 @@
                                     <constraint firstItem="z1u-Cd-T9E" firstAttribute="centerY" secondItem="KnW-hB-aDp" secondAttribute="centerY" id="uzo-hH-l5U"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="30" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="7J9-AR-qXk">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="30" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="7J9-AR-qXk">
                                 <rect key="frame" x="0.0" y="56" width="260" height="544"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" red="0.12941176470588234" green="0.15686274509803921" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="ListadoConversaciones" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CeldaMenuLeft" rowHeight="50" id="a63-tG-0Ox" customClass="CeldaLeftMenu" customModule="Converfit_iOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="30" width="260" height="50"/>
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="ListadoConversaciones" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CeldaMenuLeft" rowHeight="44" id="a63-tG-0Ox" customClass="CeldaLeftMenu" customModule="Converfit_iOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="30" width="260" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a63-tG-0Ox" id="0zd-8u-D2x">
-                                            <rect key="frame" x="0.0" y="0.0" width="260" height="49"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ipa-2f-5o7">
-                                                    <rect key="frame" x="8" y="7" width="36" height="36"/>
+                                                    <rect key="frame" x="8" y="7" width="30" height="30"/>
                                                     <animations/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="36" id="y7B-Xa-PLA"/>
-                                                        <constraint firstAttribute="width" constant="36" id="ysx-VK-bTA"/>
+                                                        <constraint firstAttribute="height" constant="30" id="y7B-Xa-PLA"/>
+                                                        <constraint firstAttribute="width" constant="30" id="ysx-VK-bTA"/>
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JfX-hw-5cW">
-                                                    <rect key="frame" x="238" y="18" width="14" height="14"/>
+                                                    <rect key="frame" x="238" y="15" width="14" height="14"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="14" id="639-gL-WnK"/>
@@ -82,7 +82,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="45 años" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7El-s1-aDc">
-                                                    <rect key="frame" x="190" y="19" width="45" height="12"/>
+                                                    <rect key="frame" x="190" y="16" width="45" height="12"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="45" id="l2g-xB-2mv"/>
@@ -92,7 +92,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zmh-dd-iGd">
-                                                    <rect key="frame" x="52" y="18" width="130" height="15"/>
+                                                    <rect key="frame" x="46" y="15" width="136" height="15"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -178,11 +178,6 @@
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cJC-ef-ALl" userLabel="rightContainer">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <animations/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
-                                                <real key="value" value="0.80000000000000004"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="KPo-cc-LLy" kind="embed" identifier="tabBarSegue" id="aSO-GK-umA"/>
                                         </connections>

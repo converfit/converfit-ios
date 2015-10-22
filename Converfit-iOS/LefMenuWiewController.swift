@@ -229,19 +229,21 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
                                 //Obtenemos el need_to_update para ver si hay que actualizar la lista o no
                                 if let needUpdate = dataResultado.objectForKey("need_to_update") as? Bool{
                                     if(needUpdate){
-                                        if let listaUsuarios = dataResultado.objectForKey("users") as? NSArray{
-                                            User.borrarAllUsers()
-                                            //Llamamos por cada elemento del array de empresas al constructor
-                                            for dict in listaUsuarios{
-                                                _=User(aDict: dict as! NSDictionary)
-                                            }
-                                        }
-                                        self.listadoUsersConectados = User.devolverUsuariosConectados()
-                                        self.numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
-                                        self.numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
-                                        self.listadoUsersAPP = User.devolverUsuariosAPP()
                                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            self.miTablaPersonalizada.reloadData()
+                                            if let listaUsuarios = dataResultado.objectForKey("users") as? NSArray{
+                                                User.borrarAllUsers()
+                                                //Llamamos por cada elemento del array de empresas al constructor
+                                                for dict in listaUsuarios{
+                                                    _=User(aDict: dict as! NSDictionary)
+                                                }
+                                            }
+                                            self.listadoUsersConectados = User.devolverUsuariosConectados()
+                                            self.numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
+                                            self.numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
+                                            self.listadoUsersAPP = User.devolverUsuariosAPP()
+                                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                                self.miTablaPersonalizada.reloadData()
+                                            })
                                         })
                                     }
                                 }

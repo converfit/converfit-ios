@@ -182,16 +182,18 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
                                 }
                                 if let needUpdate = data.objectForKey("need_to_update") as? Bool{
                                     if(needUpdate){
-                                        TimeLine.borrarAllPost()
-                                        if let listPost = data.objectForKey("brand_notifications") as? [NSDictionary]{
-                                            for post in listPost{
-                                                _=TimeLine(aDict: post)
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            TimeLine.borrarAllPost()
+                                            if let listPost = data.objectForKey("brand_notifications") as? [NSDictionary]{
+                                                for post in listPost{
+                                                    _=TimeLine(aDict: post)
+                                                }
+                                                self.listadoPost = TimeLine.devolverListTimeLine()
+                                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                                    self.miCollectionView.reloadData()
+                                                })
                                             }
-                                            self.listadoPost = TimeLine.devolverListTimeLine()
-                                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                                self.miCollectionView.reloadData()
-                                            })
-                                        }
+                                        })
                                     }
                                 }
                             }

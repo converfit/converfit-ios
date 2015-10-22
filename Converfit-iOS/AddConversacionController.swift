@@ -68,9 +68,11 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
             if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
                 photoPicker.sourceType = UIImagePickerControllerSourceType.Camera
                 //Lo mostramos
-                self.presentViewController(photoPicker, animated: true, completion: { () -> Void in
-                    
-                })
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.presentViewController(photoPicker, animated: true, completion: { () -> Void in
+                        
+                    })
+                }
             }
         }))
         
@@ -80,9 +82,11 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 photoPicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
                 photoPicker.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(UIImagePickerControllerSourceType.Camera)!
                 //Lo mostramos
-                self.presentViewController(photoPicker, animated: true, completion: { () -> Void in
-                    
-                })
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.presentViewController(photoPicker, animated: true, completion: { () -> Void in
+                        
+                    })
+                }
             }
         }))
         
@@ -94,9 +98,11 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 photoPicker.allowsEditing = false
                 //photoPicker.videoMaximumDuration = 10.0
                 //Lo mostramos
-                self.presentViewController(photoPicker, animated: true, completion: { () -> Void in
-                    
-                })
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.presentViewController(photoPicker, animated: true, completion: { () -> Void in
+                        
+                    })
+                }
             }
         }))
 
@@ -107,8 +113,10 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         }))
 
         //mostramos el alert
-        self.presentViewController(alert, animated: true) { () -> Void in
-            
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alert, animated: true) { () -> Void in
+                
+            }
         }
     }
     
@@ -188,6 +196,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     func rellenarListaMensajes(){
         //Recogemos los datos en segundo plano para no bloquear la interfaz
         //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.listaMensajes = Messsage.devolverListMessages(self.conversationKey)
             
             if(!self.listaMensajes.isEmpty){
@@ -209,6 +218,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 self.spinner.stopAnimating()
             }
         //})
+            })
     }
     
     func recargarPantalla(){//Recargamos la pantalla cuando nos llegue una notificacion
@@ -1112,6 +1122,7 @@ extension AddConversacionController: UINavigationControllerDelegate, UIImagePick
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
             
         })
@@ -1127,6 +1138,7 @@ extension AddConversacionController: UINavigationControllerDelegate, UIImagePick
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
             
         })
