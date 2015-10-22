@@ -65,7 +65,6 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
             }
             //Nos damos de alta para responder a la notificacion enviada por push
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
-
         }
     }
     
@@ -75,6 +74,7 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         resetContexto()
         //Nos damos de baja de la notificacion
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
+        miTablaPersonalizada.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
     }
     
     override func didReceiveMemoryWarning() {

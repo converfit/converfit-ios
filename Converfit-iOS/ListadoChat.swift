@@ -70,6 +70,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
             //Nos damos de alta para responder a la notificacion enviada por push
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "recargarPantalla", name:notificationChat, object: nil)
         }
+
     }
     
     
@@ -79,7 +80,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         miTabla.reloadData()
         //Nos damos de baja de la notificacion
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
-        //Nos damos de baja de la notificacion
+        miTabla.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
     }
     
     override func didReceiveMemoryWarning() {

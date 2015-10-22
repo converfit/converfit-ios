@@ -62,27 +62,11 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         //}
     }
 
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        /*if(listadoUsers.isEmpty && !datosRecibidosServidor && mostrarAlert){
-            mostrarAlert = false
-            spinner.color = UIColor.blackColor()
-            spinner.frame = CGRectMake(0, 12, 100, 44)
-            spinner.hidden = false
-            spinner.startAnimating()
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.alertCargando.view.addSubview(self.spinner)
-                self.presentViewController(self.alertCargando, animated: true) { () -> Void in
-                    
-                }
-            })
-        }*/
-    }
-    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         miSearchBar.showsCancelButton = false
         resetContexto()
+        miTablaPersonalizada.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
     }
     
     override func didReceiveMemoryWarning() {
