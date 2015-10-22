@@ -7,14 +7,13 @@
 //
 
 import UIKit
-var animarMenu = false
 
 class ContainerVC: UIViewController {
 
     //MARK:- Variables
     let tabBarSegue = "tabBarSegue"
     // This value matches the left menu's width in the Storyboard
-    let leftMenuWidth:CGFloat = 260
+    let leftMenuWidth:CGFloat = -260
     
     //MARK: - Outlets
     @IBOutlet weak var miScrollView: UIScrollView!
@@ -29,7 +28,7 @@ class ContainerVC: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         dispatch_async(dispatch_get_main_queue()) {
-            self.toggleMenu()
+           // self.toggleMenu()
         }
     }
     
@@ -41,7 +40,7 @@ class ContainerVC: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == tabBarSegue){
             let tabBar = segue.destinationViewController as? UITabBarController
-            tabBar?.selectedIndex = 2
+            tabBar?.selectedIndex = 0
         }
     }
 
@@ -56,10 +55,7 @@ class ContainerVC: UIViewController {
     
     // Use scrollview content offset-x to slide the menu.
     func closeMenu(){
-        miScrollView.setContentOffset(CGPoint(x: leftMenuWidth, y: 0), animated: animarMenu)
-        if(!animarMenu){
-            animarMenu = true
-        }
+        miScrollView.setContentOffset(CGPoint(x: leftMenuWidth, y: 0), animated: true)
     }
     
     // Open is the natural state of the menu because of how the storyboard is setup.

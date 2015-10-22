@@ -187,7 +187,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     
     func rellenarListaMensajes(){
         //Recogemos los datos en segundo plano para no bloquear la interfaz
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+        //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             self.listaMensajes = Messsage.devolverListMessages(self.conversationKey)
             
             if(!self.listaMensajes.isEmpty){
@@ -208,7 +208,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 self.miTabla.reloadData()
                 self.spinner.stopAnimating()
             }
-        })
+        //})
     }
     
     func recargarPantalla(){//Recargamos la pantalla cuando nos llegue una notificacion
@@ -1124,6 +1124,12 @@ extension AddConversacionController: UINavigationControllerDelegate, UIImagePick
                 convertToMp4(urlVideo)
             }
         }
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            
+        })
     }
     
     // Funcion que codifica la imagen

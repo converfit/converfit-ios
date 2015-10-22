@@ -104,3 +104,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+/*
+extension UITabBarController{
+    public override func viewWillLayoutSubviews() {
+        var tabFrame = self.tabBar.frame;
+        tabFrame.size.height = 35;
+        tabFrame.origin.y = self.view.frame.size.height - 35;
+        self.tabBar.frame = tabFrame;
+    }
+}
+*/

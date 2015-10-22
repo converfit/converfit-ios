@@ -52,8 +52,6 @@ class LogOut {
         defaults.removeObjectForKey("conversations_last_update")
         defaults.removeObjectForKey("last_update_brands_notifications")
         borrarAllCoreData()
-        //Cambiamos el valor a false de mostrar el menu lateral izquierdo animado
-        animarMenu = false
         irPantallaLogin = false
     }
     

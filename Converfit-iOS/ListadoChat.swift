@@ -129,18 +129,19 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
                                     if(needToUpdate){
                                         if let conversations = dataResultado.objectForKey("conversations") as? [NSDictionary]{
                                             //Borramos las conversaciones que tengamos guardadas y no esten en el array devuelvo por el WS
-                                            self.borrarConversacionesSobrantes(conversations)
-                                            //Llamamos por cada elemento del array de empresas al constructor
-                                            for dict in conversations{
-                                                let conversationKey = self.obtenerConversationKey(dict)
-                                                let lastUpdateConversacion = Conversation.obtenerLastUpdate(conversationKey)
-                                                let existe = Conversation.existeConversacion(conversationKey)
-                                                Conversation.borrarConversationConSessionKey(conversationKey, update: true)
-                                                _ = Conversation(aDict: dict , aLastUpdate: lastUpdateConversacion, existe: existe)
-                                            }
-                                            self.listadoConversaciones = Conversation.devolverListConversations()
-                                            self.datosRecibidosServidor = true
                                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                                self.borrarConversacionesSobrantes(conversations)
+                                                //Llamamos por cada elemento del array de empresas al constructor
+                                                for dict in conversations{
+                                                    let conversationKey = self.obtenerConversationKey(dict)
+                                                    let lastUpdateConversacion = Conversation.obtenerLastUpdate(conversationKey)
+                                                    let existe = Conversation.existeConversacion(conversationKey)
+                                                    Conversation.borrarConversationConSessionKey(conversationKey, update: true)
+                                                    _ = Conversation(aDict: dict , aLastUpdate: lastUpdateConversacion, existe: existe)
+                                                }
+                                                self.listadoConversaciones = Conversation.devolverListConversations()
+                                                self.datosRecibidosServidor = true
+                                            //dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                                 self.miTabla.reloadData()
                                             })
                                         }
