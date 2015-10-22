@@ -127,30 +127,6 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         enableTask.resume()
     }
     
-    /*
-    func mostrarAlerta(){
-        self.view.endEditing(true)
-        let alert = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
-        //Añadimos un bonton al alert y lo que queramos que haga en la clausur
-        if(desLoguear){
-            desLoguear = false
-            alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
-                LogOut.desLoguearBorrarDatos()
-                self.dismissViewControllerAnimated(true, completion: { () -> Void in
-                })
-            }))
-        }else{
-            //Añadimos un bonton al alert y lo que queramos que haga en la clausur
-            alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler:nil))
-        }
-        //mostramos el alert
-        self.navigationController?.presentViewController(alert, animated: true) { () -> Void in
-            self.tituloAlert = ""
-            self.mensajeAlert = ""
-        }
-    }*/
-    
     //MARK: - Table
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
@@ -170,7 +146,7 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         let headerView = view as! UITableViewHeaderFooterView
         headerView.textLabel?.textColor = Colors.returnColorTextHeaderLeftMEnu()
         headerView.contentView.backgroundColor = Colors.returnColorHeaderLeftMEnu()
-        headerView.textLabel?.font = UIFont.systemFontOfSize(14)
+        headerView.textLabel?.font = UIFont.systemFontOfSize(12)
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
