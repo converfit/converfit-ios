@@ -278,7 +278,8 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 self.desLoguear = false
                 alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
                     LogOut.desLoguearBorrarDatos()
-                    self.navigationController?.popToRootViewControllerAnimated(false)
+                    //self.navigationController?.popToRootViewControllerAnimated(false)
+                    self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
                 }))
             }else{
                 //Añadimos un bonton al alert y lo que queramos que haga en la clausur
@@ -458,25 +459,27 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
                     if let resultCode = json.objectForKey("result") as? Int{
                         if(resultCode == 1){
-                            if let dataResultado = json.objectForKey("data") as? NSDictionary{//4
-                                if let lastUp = dataResultado.objectForKey("last_update") as? String{//5
-                                    Conversation.modificarLastUpdate(self.conversationKey, aLastUpdate: lastUp)
-                                }//5
-                                if let needToUpdate = dataResultado.objectForKey("need_to_update") as? Bool{//6
-                                    if (needToUpdate){//7
-                                        Messsage.borrarMensajesConConverstaionKey(self.conversationKey)
-                                        if let messagesArray = dataResultado.objectForKey("messages") as? [NSDictionary]{//8
-                                            //Llamamos por cada elemento del array de empresas al constructor
-                                            for dict in messagesArray{//9
-                                                _ = Messsage(aDict: dict, aConversationKey: self.conversationKey)
-                                            }//9
-                                        }//8
-                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            self.rellenarListaMensajes()
-                                        })
-                                    }//7
-                                }//6
-                            }//4
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                if let dataResultado = json.objectForKey("data") as? NSDictionary{//4
+                                    if let lastUp = dataResultado.objectForKey("last_update") as? String{//5
+                                        Conversation.modificarLastUpdate(self.conversationKey, aLastUpdate: lastUp)
+                                    }//5
+                                    if let needToUpdate = dataResultado.objectForKey("need_to_update") as? Bool{//6
+                                        if (needToUpdate){//7
+                                            Messsage.borrarMensajesConConverstaionKey(self.conversationKey)
+                                            if let messagesArray = dataResultado.objectForKey("messages") as? [NSDictionary]{//8
+                                                //Llamamos por cada elemento del array de empresas al constructor
+                                                for dict in messagesArray{//9
+                                                    _ = Messsage(aDict: dict, aConversationKey: self.conversationKey)
+                                                }//9
+                                            }//8
+                                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                                self.rellenarListaMensajes()
+                                            })
+                                        }//7
+                                    }//6
+                                }//4
+                            })
                         }//3
                         else{
                             if let codigoError = json.objectForKey("error_code") as? String{
@@ -573,35 +576,38 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                             if(resultCode == 1){
                                 //Se ha insertado  el mensaje correctamente y por lo tanto guardamos el lastUpdate
                                 if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                    if let lastUpd = dataResultado.objectForKey("last_update") as?String{
-                                        var hora = NSString(string: Messsage.devolverHoraUltimoMensaje(self.conversationKey)).doubleValue
-                                        if(NSString(string: lastUpd).doubleValue < hora){
-                                            hora = hora + 3
-                                        }
-                                        Messsage.actualizarFechaMensaje(self.conversationKey, messageKey: messageKey, fecha: "\(hora)")
-                                    }
-                                    if let messageKeyServidor = dataResultado.objectForKey("message_key") as?String {
-                                        Messsage.updateMessageKeyTemporal(self.conversationKey, messageKey: messageKey, messageKeyServidor: messageKeyServidor)
-                                        self.updateMessage(messageKeyServidor, content: contenido,tipo: tipo)
-                                    }
-                                }
-                            }else{
-                                Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: "false")
-                                let anUltimoMensajeEnviado = Messsage.devolverUltimoMensajeEnviadoOk(self.conversationKey)
-                                if let ultimoMensajeEnviado = anUltimoMensajeEnviado{
-                                    Conversation.updateLastMesssageConversation(ultimoMensajeEnviado.conversationKey, ultimoMensaje: ultimoMensajeEnviado.content, fechaCreacion: ultimoMensajeEnviado.created)
-                                }
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    self.rellenarListaMensajes()
-                                })
-                                if let codigoError = json.objectForKey("error_code") as? String{
-                                    self.desLoguear = LogOut.comprobarDesloguear(codigoError)
-                                    (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
                                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        self.mostrarAlerta()
+                                        if let lastUpd = dataResultado.objectForKey("last_update") as?String{
+                                            var hora = NSString(string: Messsage.devolverHoraUltimoMensaje(self.conversationKey)).doubleValue
+                                            if(NSString(string: lastUpd).doubleValue < hora){
+                                                hora = hora + 3
+                                            }
+                                            Messsage.actualizarFechaMensaje(self.conversationKey, messageKey: messageKey, fecha: "\(hora)")
+                                        }
+                                        if let messageKeyServidor = dataResultado.objectForKey("message_key") as?String {
+                                            Messsage.updateMessageKeyTemporal(self.conversationKey, messageKey: messageKey, messageKeyServidor: messageKeyServidor)
+                                            self.updateMessage(messageKeyServidor, content: contenido,tipo: tipo)
+                                        }
                                     })
                                 }
-
+                            }else{
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: "false")
+                                    let anUltimoMensajeEnviado = Messsage.devolverUltimoMensajeEnviadoOk(self.conversationKey)
+                                    if let ultimoMensajeEnviado = anUltimoMensajeEnviado{
+                                        Conversation.updateLastMesssageConversation(ultimoMensajeEnviado.conversationKey, ultimoMensaje: ultimoMensajeEnviado.content, fechaCreacion: ultimoMensajeEnviado.created)
+                                    }
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        self.rellenarListaMensajes()
+                                    })
+                                    if let codigoError = json.objectForKey("error_code") as? String{
+                                        self.desLoguear = LogOut.comprobarDesloguear(codigoError)
+                                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            self.mostrarAlerta()
+                                        })
+                                    }
+                                })
                             }
                         }
                     }
@@ -641,22 +647,24 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                             if(resultCode == 1){
                             //LogOutCorrecto
                             }else{
-                                self.listaMessagesKeyFallidos.append(messageKey)
-                                Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: "false")
-                                let anUltimoMensajeEnviado = Messsage.devolverUltimoMensajeEnviadoOk(self.conversationKey)
-                                if let ultimoMensajeEnviado = anUltimoMensajeEnviado{
-                                    Conversation.updateLastMesssageConversation(ultimoMensajeEnviado.conversationKey, ultimoMensaje: ultimoMensajeEnviado.content, fechaCreacion: ultimoMensajeEnviado.created)
-                                }
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    self.rellenarListaMensajes()
-                                })
-                                if let codigoError = json.objectForKey("error_code") as? String{
-                                    self.desLoguear = LogOut.comprobarDesloguear(codigoError)
-                                    (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                                    self.listaMessagesKeyFallidos.append(messageKey)
+                                    Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: "false")
+                                    let anUltimoMensajeEnviado = Messsage.devolverUltimoMensajeEnviadoOk(self.conversationKey)
+                                    if let ultimoMensajeEnviado = anUltimoMensajeEnviado{
+                                        Conversation.updateLastMesssageConversation(ultimoMensajeEnviado.conversationKey, ultimoMensaje: ultimoMensajeEnviado.content, fechaCreacion: ultimoMensajeEnviado.created)
+                                    }
                                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        self.mostrarAlerta()
+                                        self.rellenarListaMensajes()
                                     })
-                                }
+                                    if let codigoError = json.objectForKey("error_code") as? String{
+                                        self.desLoguear = LogOut.comprobarDesloguear(codigoError)
+                                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            self.mostrarAlerta()
+                                        })
+                                    }
+                                })
                             }
                         }
                     }
