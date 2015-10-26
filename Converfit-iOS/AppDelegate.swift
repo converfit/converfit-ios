@@ -90,7 +90,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if let actionDataDict = dictAlert.objectForKey("actionData") as? String{
                     actionData = actionDataDict
                 }
-                
                 /*if let bodyDict = dictAlert.objectForKey("body") as? String{
                     body = bodyDict
                 }*/
