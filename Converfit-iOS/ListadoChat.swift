@@ -381,8 +381,10 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
             cell.lastMessage.font = UIFont.boldSystemFontOfSize(12)
         }else{
             cell.lastMessageCreation.textColor = Colors.returnColor909090()
+            cell.brandName.font = UIFont.systemFontOfSize(18)
             cell.brandName.textColor = UIColor.blackColor()
             cell.lastMessage.textColor = Colors.returnColor909090()
+            cell.lastMessage.font = UIFont.systemFontOfSize(12)
         }
         let conectionStatus = listadoConversaciones[indexPath.row].connectionStatus
         if(conectionStatus == "online"){
