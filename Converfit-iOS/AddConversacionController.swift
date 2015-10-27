@@ -45,6 +45,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     let pdfSegue = "pdfSegue"
     let showUsersChat = "showUsersChat"
     var indiceSeleccionado = 0
+    var codError = ""
     
     //MARK: - Outlets
     @IBOutlet weak var escribirMensajeOutlet: UITextField!
@@ -278,12 +279,15 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 self.desLoguear = false
                 alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
                     LogOut.desLoguearBorrarDatos()
-                    //self.navigationController?.popToRootViewControllerAnimated(false)
                     self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
                 }))
             }else{
                 //Añadimos un bonton al alert y lo que queramos que haga en la clausur
-                alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler:nil))
+                alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
+                    if(self.codError == "list_messages_empty"){
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    }
+                }))
             }
             //mostramos el alert
             self.presentViewController(alert, animated: true) { () -> Void in
@@ -483,6 +487,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                         }//3
                         else{
                             if let codigoError = json.objectForKey("error_code") as? String{
+                                self.codError = codigoError
                                 self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in

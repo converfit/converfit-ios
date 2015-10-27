@@ -60,8 +60,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func customizeAppearance(){
-        window!.tintColor = Colors.returnRedConverfit()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let barButtonAppearence = UIBarButtonItem.appearance()
+        barButtonAppearence.tintColor = UIColor.whiteColor()
     }
     
     //MARK: - Push Notifications
