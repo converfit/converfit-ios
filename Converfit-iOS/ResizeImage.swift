@@ -109,6 +109,5 @@ class ResizeImage {
         else{
             return UIImage(named: "NoImage")!
         }
-        
     }
 }

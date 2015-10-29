@@ -42,6 +42,8 @@ class LogOut {
     
     //Funcion para cuando la sessionKey no es valida te desloguea
     static func desLoguearBorrarDatos(){
+        //Paramos el timer
+        myTimer.invalidate()
         //Borramos el badgeIcon de la App
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         //Borramos el sessionkey que teniamos guardado

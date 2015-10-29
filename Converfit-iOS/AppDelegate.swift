@@ -10,7 +10,6 @@ import UIKit
 
 let appVersion = "1.0.0"
 let sistema = "ios"
-//let sistema = "android"
 let app = "converfit"
 var ocultarLogIn = false
 var coreDataStack = MMGCoreDataStack2(modelName: "Model")
@@ -96,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }*/
             }
         }
-        if(action == "new_message"){
+        if(action == "conversations"){
             PostServidor.getConversacion(actionData)
         }
     }

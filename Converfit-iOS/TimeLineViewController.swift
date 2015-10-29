@@ -8,6 +8,8 @@
 
 import UIKit
 
+var myTimer = NSTimer.init()
+
 class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UIWebViewDelegate {
     
     //MARK: - Variables
@@ -36,8 +38,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     override func viewDidLoad() {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
-
-        // Do any additional setup after loading the view.
+        myTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recargarTimeLine", userInfo: nil, repeats: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -55,7 +56,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
             }else{
                 listadoPost = TimeLine.devolverListTimeLine()
                 miCollectionView.reloadData()
-                recuperarTimeLine()
+                //recuperarTimeLine()
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: "itemMenuSelected", name:notificationItemMenuSelected , object: nil)
             }
@@ -302,5 +303,10 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
             messagesVC.userKey = userKeyMenuSeleccionado
             messagesVC.userName = User.obtenerUser(userKeyMenuSeleccionado)?.userName
         }
+    }
+    
+    //MARK: - Timer RecargarTimeLine
+    func recargarTimeLine(){
+        recuperarTimeLine()
     }
 }
