@@ -38,7 +38,6 @@ class AjustesViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
     }
     
     func modificarUI(){

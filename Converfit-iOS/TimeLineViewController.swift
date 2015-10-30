@@ -59,6 +59,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
                 //recuperarTimeLine()
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: "itemMenuSelected", name:notificationItemMenuSelected , object: nil)
+                miCollectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
             }
         }
     }
@@ -68,7 +69,6 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationItemMenuSelected, object: nil)
-        miCollectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
     }
 
     //MARK: - Notification Oberser cuando clickamos en el menuLateral
