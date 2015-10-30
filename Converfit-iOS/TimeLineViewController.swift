@@ -8,8 +8,6 @@
 
 import UIKit
 
-var myTimer = NSTimer.init()
-
 class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UIWebViewDelegate {
     
     //MARK: - Variables
@@ -23,6 +21,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     var indiceSeleccionado = 0
     var desLoguear = false
     var activarCollectionViewUserInterface = true
+    var myTimer = NSTimer.init()
     
     //MARK: - Outlets
     @IBOutlet weak var miCollectionView: UICollectionView!
@@ -38,11 +37,11 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     override func viewDidLoad() {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
-        myTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recargarTimeLine", userInfo: nil, repeats: true)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        myTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recargarTimeLine", userInfo: nil, repeats: true)
         Utils.customAppear(self)
         if(irPantallaLogin){
             irPantallaLogin = false
@@ -69,6 +68,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationItemMenuSelected, object: nil)
+        myTimer.invalidate()
     }
 
     //MARK: - Notification Oberser cuando clickamos en el menuLateral
