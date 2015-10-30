@@ -851,14 +851,14 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 cell.hora.text = Fechas.devolverTiempo(listaMensajesOrdenadas[indexPath.row ].created)
                 cell.senderBrandName.text = listaMensajesOrdenadas[indexPath.row].fname + " " + listaMensajesOrdenadas[indexPath.row].lname
                 if(listaMensajesOrdenadas[indexPath.row].enviado == "true"){
-                    cell.traillingContraitNombre.constant = 2
+                    cell.traillingContraitNombre.constant = 10
                     cell.traillingConstraitImagen.constant = 8
-                    cell.traillingConstraitHora.constant = 2
+                    cell.traillingConstraitHora.constant = 10
                     cell.botonReenviarMensaje.hidden = true
                 }else{
                     cell.traillingConstraitImagen.constant = 36
-                    cell.traillingConstraitHora.constant = 30
-                    cell.traillingContraitNombre.constant = 30
+                    cell.traillingConstraitHora.constant = 38
+                    cell.traillingContraitNombre.constant = 38
                     cell.botonReenviarMensaje.hidden = false
                 }
                 cell.botonReenviarMensaje.tag = indexPath.row
@@ -909,7 +909,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 cell.hora.text = Fechas.devolverTiempo(listaMensajesOrdenadas[indexPath.row ].created)
               
                 cell.traillingConstraitImagen.constant = 8
-                cell.traillingConstraitHora.constant = 2
+                cell.traillingConstraitHora.constant = 10
                 cell.botonReenviarMensaje.hidden = true
                 
                 let activityIndicator = Utils.crearActivityLoading(160, heigth: 160)
@@ -924,14 +924,14 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                 cell.hora.text = Fechas.devolverTiempo(listaMensajesOrdenadas[indexPath.row ].created)
                 cell.senderBrandName.text = listaMensajesOrdenadas[indexPath.row].fname + " " + listaMensajesOrdenadas[indexPath.row].lname
                 if(listaMensajesOrdenadas[indexPath.row].enviado == "true"){
-                    cell.traillingContraitNombre.constant = 2
+                    cell.traillingContraitNombre.constant = 10
                     cell.traillingConstraitImagen.constant = 8
-                    cell.traillingConstraitHora.constant = 2
+                    cell.traillingConstraitHora.constant = 10
                     cell.botonReenviarMensaje.hidden = true
                 }else{
                     cell.traillingConstraitImagen.constant = 36
-                    cell.traillingConstraitHora.constant = 30
-                    cell.traillingContraitNombre.constant = 30
+                    cell.traillingConstraitHora.constant = 38
+                    cell.traillingContraitNombre.constant = 38
                     cell.botonReenviarMensaje.hidden = false
                 }
                 cell.botonReenviarMensaje.tag = indexPath.row
