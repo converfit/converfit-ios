@@ -65,6 +65,7 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     
     //MARK: - OpenMenu
     func openMenu(){
+        miTablaPersonalizada.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false)
         listadoUsersConectados = User.devolverUsuariosConectados()
         listadoUsersAPP = User.devolverUsuariosAPP()
         numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
