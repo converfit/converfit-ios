@@ -70,8 +70,8 @@ class DetailTimeLineUser: UIViewController, UICollectionViewDataSource,UICollect
         cell.time.text = devolverHoraFormateada(hora)
         cell.html.loadHTMLString(listadoPost[indexPath.row].content, baseURL: nil)
         
-        cell.html.scrollView.scrollEnabled = false
-        cell.html.scrollView.bounces = false
+        //cell.html.scrollView.scrollEnabled = false
+        //cell.html.scrollView.bounces = false
         cell.html.delegate = self
         
         return cell
