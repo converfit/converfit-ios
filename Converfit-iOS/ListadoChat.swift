@@ -27,6 +27,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     var isSubBrand = false
     var tapPosicionConversacion = 0
     let showUsersChatSegue = "showUsersChat"
+    var myTimer = NSTimer.init()
     
     //MARK: - Outlets
     @IBOutlet weak var miTabla: UITableView!
@@ -40,7 +41,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //self.navigationController?.navigationBar.barTintColor = Utils.returnRedConverfit()
+        myTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recuperarConversacionesTimer", userInfo: nil, repeats: true)
         Utils.customAppear(self)
         vieneDeListadoMensajes = false
         if(irPantallaLogin){
@@ -80,6 +81,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         miTabla.reloadData()
         //Nos damos de baja de la notificacion
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
+        myTimer.invalidate()
     }
     
     override func didReceiveMemoryWarning() {
@@ -470,5 +472,10 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
             messagesVC.userName = listadoConversaciones[tapPosicionConversacion].fname +
                 " " + listadoConversaciones[tapPosicionConversacion].lname
         }
+    }
+    
+    //MARK: - recuperarConversacionesTimer
+    func recuperarConversacionesTimer(){
+        recuperarConversaciones()
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 var userKeyMenuSeleccionado = ""
 
 class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
-
+    
     //MARK: - Outlets
     @IBOutlet weak var miTablaPersonalizada: UITableView!
     @IBOutlet weak var lblEstadoChat: UILabel!
@@ -23,7 +23,6 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         }else{
             showAlertSheet("Desactivar chat")
         }
-        
     }
     
     //MARK: - Variables
@@ -262,5 +261,4 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         }
         recuperarUsersTask.resume()
     }
-
 }

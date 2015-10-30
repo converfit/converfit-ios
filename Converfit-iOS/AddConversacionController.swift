@@ -46,6 +46,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     let showUsersChat = "showUsersChat"
     var indiceSeleccionado = 0
     var codError = ""
+    var myTimer = NSTimer.init()
     
     //MARK: - Outlets
     @IBOutlet weak var escribirMensajeOutlet: UITextField!
@@ -124,6 +125,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     //MARK: - LifeCycle
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        myTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recuperarListadoMensajesTimer", userInfo: nil, repeats: true)
         vistaContenedoraTeclado.layer.borderWidth = 0.5
         vistaContenedoraTeclado.layer.borderColor = UIColor(red:0/255.0, green:0/255.0, blue:0/255.0, alpha: 0.3).CGColor
         //Nos damos de alta para responder a la notificacion enviada por push
@@ -160,6 +162,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         vieneDeListadoMensajes = true
         //Nos damos de baja de la notificacion
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
+        myTimer.invalidate()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -997,6 +1000,11 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         moverUltimaFila = false
         mostrarMensajesAnteriores = true
+    }
+    
+    //MARK: - recuperarListadoMensajesTimer
+    func recuperarListadoMensajesTimer(){
+        recuperarListadoMensajes()
     }
 }
 

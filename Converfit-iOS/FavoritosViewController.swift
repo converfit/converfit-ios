@@ -26,6 +26,7 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     var indexSeleccionado:NSIndexPath?
     var numeroUsuarioConectados = 0
     var numeroUsuariosAPP = 0
+    var myTimer = NSTimer.init()
     
     //MARK: - Outlets
     @IBOutlet weak var miTablaPersonalizada: UITableView!
@@ -38,6 +39,7 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        myTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recuperarUserServidorTimer", userInfo: nil, repeats: true)
         if(irPantallaLogin){
             irPantallaLogin = false
             self.dismissViewControllerAnimated(true, completion: { () -> Void in
@@ -57,8 +59,7 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
                 if(!listadoUsersConectados.isEmpty || !listadoUsersAPP.isEmpty){
                     datosRecibidosServidor = true
                 }
-                recuperarUserServidor()
-            
+                //recuperarUserServidor()
                 modificarUI()
                 //Tenemos que forzar la recarga para que cuando cambiemos con el tabBar se recargue correctamente
                 miTablaPersonalizada.reloadData()
@@ -75,6 +76,7 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         resetContexto()
         //Nos damos de baja de la notificacion
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
+        myTimer.invalidate()
     }
     
     override func didReceiveMemoryWarning() {
@@ -335,6 +337,11 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
             messagesVC.userKey = user.userKey
             messagesVC.userName = user.userName
         }
+    }
+    
+    //MARK:- recuperarUserServidorTimer
+    func recuperarUserServidorTimer(){
+        recuperarUserServidor()
     }
 }
 

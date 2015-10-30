@@ -28,6 +28,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
     var indexSeleccionado:NSIndexPath?
     var numeroUsuarioConectados = 0
     var numeroUsuariosAPP = 0
+    var myTimer = NSTimer.init()
     
     //MARK: - Outlets
     @IBOutlet weak var miTablaPersonalizada: UITableView!
@@ -40,7 +41,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //self.tabBarController?.tabBar.hidden = false
+        myTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recuperarUserServidorTimer", userInfo: nil, repeats: true)
         self.editButtonItem().title = "Editar"
         if(vieneDeListadoMensajes){
             self.tabBarController?.selectedIndex = 2
@@ -54,7 +55,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
             if(!listadoUsersConectados.isEmpty || !listadoUsersAPP.isEmpty){
                 datosRecibidosServidor = true
             }
-            recuperarUserServidor()
+            //recuperarUserServidor()
             
             modificarUI()
             //Tenemos que forzar la recarga para que cuando cambiemos con el tabBar se recargue correctamente
@@ -67,6 +68,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         miSearchBar.showsCancelButton = false
         resetContexto()
         miTablaPersonalizada.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
+        myTimer.invalidate()
     }
     
     override func didReceiveMemoryWarning() {
@@ -327,6 +329,11 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
             messagesVC.userKey = user.userKey
             messagesVC.userName = user.userName
         }
+    }
+    
+    //MARK: - recuperarUserServidorTimer
+    func recuperarUserServidorTimer(){
+        recuperarUserServidor()
     }
 }
 
