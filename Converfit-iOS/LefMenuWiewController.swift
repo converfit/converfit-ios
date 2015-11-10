@@ -8,6 +8,7 @@
 
 import UIKit
 var userKeyMenuSeleccionado = ""
+var myTimerLeftMenu = NSTimer.init()
 
 class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
     
@@ -44,6 +45,7 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         miTablaPersonalizada.reloadData()
         recuperarUserServidor()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "openMenu", name:notificationsOpenDrawerMenu , object: nil)
+        myTimerLeftMenu = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recuperarUserServidorTimer", userInfo: nil, repeats: true)
     }
     
     //MARK: - Utils
@@ -70,6 +72,10 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
         numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
         miTablaPersonalizada.reloadData()
+    }
+    
+    //MARK:- recuperarUserServidorTimer
+    func recuperarUserServidorTimer(){
         recuperarUserServidor()
     }
     

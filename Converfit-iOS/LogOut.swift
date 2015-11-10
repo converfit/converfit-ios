@@ -53,6 +53,7 @@ class LogOut {
         defaults.removeObjectForKey("last_update_brands_notifications")
         borrarAllCoreData()
         irPantallaLogin = false
+        myTimerLeftMenu.invalidate()
     }
     
     //Funcion para borarr los datos de CoreData
