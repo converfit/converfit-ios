@@ -734,6 +734,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="caritaTristeView" destination="ia8-ne-kIn" id="EGM-IZ-tc6"/>
+                        <outlet property="manualTextLbl" destination="aKY-jn-elN" id="0p9-34-pS2"/>
                         <outlet property="miCollectionView" destination="CEq-mj-Ixc" id="8Sj-a0-YtK"/>
                         <outlet property="openManualLbl" destination="ia8-ne-kIn" id="lv6-GJ-UAd"/>
                         <segue destination="MxT-5H-ERK" kind="show" identifier="detailTimeLineSegue" id="fwK-2X-aRh"/>

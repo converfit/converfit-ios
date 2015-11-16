@@ -27,6 +27,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     @IBOutlet weak var miCollectionView: UICollectionView!
     @IBOutlet weak var caritaTristeView: UIView!
     @IBOutlet weak var openManualLbl: UIView!
+    @IBOutlet weak var manualTextLbl: UILabel!
     
     //MARK: - Actions
     
@@ -45,6 +46,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         super.viewWillAppear(animated)
         myTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recargarTimeLine", userInfo: nil, repeats: true)
         Utils.customAppear(self)
+        customizeopenManualTextLbl()
         addManualTap()
         if(irPantallaLogin){
             irPantallaLogin = false
@@ -337,5 +339,13 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         if let requestUrl = NSURL(string: "http://www.converfit.com/app/es/signup/index.html") {
             UIApplication.sharedApplication().openURL(requestUrl)
         }
+    }
+    
+    //MARK : - openManualLbl customize
+    func customizeopenManualTextLbl(){
+        let manualText = "No podemos mostrarte la información de tu web. Comprueba que has integrado el código correctamente para acceder a los datos de tus usuarios. Para mas información consulta nuestro manual de integración."
+        let myMutableString = NSMutableAttributedString(string: manualText)
+        myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blueColor(), range: NSRange(location:manualText.characters.count - 22 , length: 22))
+        manualTextLbl.attributedText = myMutableString
     }
 }
