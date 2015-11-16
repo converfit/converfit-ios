@@ -56,6 +56,7 @@
 		9B779E6A1BCFBC360062F9D7 /* PostServidor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E691BCFBC360062F9D7 /* PostServidor.swift */; };
 		9B779E6E1BCFD9D00062F9D7 /* NavBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */; };
 		9B779E711BCFEA030062F9D7 /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E701BCFEA030062F9D7 /* ContainerVC.swift */; };
+		9BDE4A211BF9C2120096EBE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */; };
 		9BEB30FC1BD0E8670021C5DA /* LefMenuWiewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */; };
 		9BEB30FF1BD0FE630021C5DA /* CeldaLeftMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */; };
 		9BEB31011BD10E3C0021C5DA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB31001BD10E3C0021C5DA /* Colors.swift */; };
@@ -113,6 +114,7 @@
 		9B779E691BCFBC360062F9D7 /* PostServidor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostServidor.swift; sourceTree = "<group>"; };
 		9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarViewController.swift; sourceTree = "<group>"; };
 		9B779E701BCFEA030062F9D7 /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
+		9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LefMenuWiewController.swift; sourceTree = "<group>"; };
 		9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaLeftMenu.swift; sourceTree = "<group>"; };
 		9BEB31001BD10E3C0021C5DA /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 			children = (
 				9B3660141BD516BE00C4B666 /* InitialViewController.swift */,
 				6467362B1BC66A65001627C7 /* LoginController.swift */,
+				9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				647D684A1BC7A8D90086A3A7 /* _TimeLine.swift in Sources */,
 				64B41ECB1BC930F3008D932B /* CeldaCargarMensajesAnteriores.swift in Sources */,
 				6487DBE61BCD0F9C00DC9C12 /* VideoViewController.swift in Sources */,
+				9BDE4A211BF9C2120096EBE1 /* SignUpViewController.swift in Sources */,
 				6467362A1BC6600C001627C7 /* MMGCoreDataStack2.swift in Sources */,
 				648921F21BC6A78F00D91EA0 /* AjustesViewController.swift in Sources */,
 				64B41ECA1BC930F3008D932B /* CeldaImagenMensajes.swift in Sources */,

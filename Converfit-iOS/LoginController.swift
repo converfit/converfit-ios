@@ -14,6 +14,7 @@ class LoginController: UIViewController {
     var alertTitle = ""
     var alertMessage = ""
     var showAppleStore = false
+    let createUserSegue = "createUserSegue"
     
     //MARK: - Outlets
     @IBOutlet weak var viewEmailPassword: UIView!
@@ -87,9 +88,10 @@ class LoginController: UIViewController {
     }
     
     func tappedSignUp(){//Show singUp converfit web
-        if let requestUrl = NSURL(string: "http://www.converfit.com/app/es/signup/index.html") {
-            UIApplication.sharedApplication().openURL(requestUrl)
-        }
+        //if let requestUrl = NSURL(string: "http://www.converfit.com/app/es/signup/index.html") {
+          //  UIApplication.sharedApplication().openURL(requestUrl)
+        //}
+        performSegueWithIdentifier(createUserSegue, sender: self)
     }
     
     func tappedLostPassword(){//Show recover_password converfit web
