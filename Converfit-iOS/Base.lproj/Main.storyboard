@@ -500,7 +500,7 @@
                                     <constraint firstAttribute="trailing" secondItem="n7y-G7-qzo" secondAttribute="trailing" id="xeU-n0-T1M"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="converfitLogoRed" translatesAutoresizingMaskIntoConstraints="NO" id="jft-jF-MSp">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="converfitLogoRed" translatesAutoresizingMaskIntoConstraints="NO" id="jft-jF-MSp">
                                 <rect key="frame" x="20" y="29" width="560" height="187"/>
                                 <animations/>
                                 <constraints>
@@ -2719,7 +2719,7 @@
                                     <outlet property="delegate" destination="dvW-l9-Wrv" id="iX2-yp-efl"/>
                                 </connections>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="converfitLogoRed" translatesAutoresizingMaskIntoConstraints="NO" id="qfw-ep-7RR">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="converfitLogoRed" translatesAutoresizingMaskIntoConstraints="NO" id="qfw-ep-7RR">
                                 <rect key="frame" x="20" y="85" width="560" height="187"/>
                                 <animations/>
                                 <constraints>

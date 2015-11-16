@@ -142,7 +142,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Create User Server
     func createUser(brandName:String, email: String, password:String){
         let params = "action=signup&brand_name=\(brandName)&email=\(email)&password=\(password)&app=\(app)"
-        let urlServidor = "http://www.converfit.com/server//app/1.0.0/models/access/model.php"
+        let urlServidor = "http://www.converfit.com/server/app/1.0.0/models/access/model.php"
         let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
         let session = NSURLSession.sharedSession()
         request.HTTPMethod = "POST"
