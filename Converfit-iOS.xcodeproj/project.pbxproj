@@ -57,6 +57,7 @@
 		9B779E6E1BCFD9D00062F9D7 /* NavBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */; };
 		9B779E711BCFEA030062F9D7 /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E701BCFEA030062F9D7 /* ContainerVC.swift */; };
 		9BDE4A211BF9C2120096EBE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */; };
+		9BDE4A231BF9D1420096EBE1 /* MyCustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A221BF9D1420096EBE1 /* MyCustomNavigationController.swift */; };
 		9BEB30FC1BD0E8670021C5DA /* LefMenuWiewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */; };
 		9BEB30FF1BD0FE630021C5DA /* CeldaLeftMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */; };
 		9BEB31011BD10E3C0021C5DA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB31001BD10E3C0021C5DA /* Colors.swift */; };
@@ -115,6 +116,7 @@
 		9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarViewController.swift; sourceTree = "<group>"; };
 		9B779E701BCFEA030062F9D7 /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
 		9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		9BDE4A221BF9D1420096EBE1 /* MyCustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCustomNavigationController.swift; sourceTree = "<group>"; };
 		9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LefMenuWiewController.swift; sourceTree = "<group>"; };
 		9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaLeftMenu.swift; sourceTree = "<group>"; };
 		9BEB31001BD10E3C0021C5DA /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				9B3660141BD516BE00C4B666 /* InitialViewController.swift */,
 				6467362B1BC66A65001627C7 /* LoginController.swift */,
 				9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */,
+				9BDE4A221BF9D1420096EBE1 /* MyCustomNavigationController.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				6487DBE81BCD12DE00DC9C12 /* visorPdfController.swift in Sources */,
 				64D947031BC65B4600B524C3 /* AppDelegate.swift in Sources */,
 				648922001BC6D74C00D91EA0 /* ChangePasswordTableController.swift in Sources */,
+				9BDE4A231BF9D1420096EBE1 /* MyCustomNavigationController.swift in Sources */,
 				648921F61BC6BF3000D91EA0 /* ProfileMenuController.swift in Sources */,
 				647D68501BC7A94C0086A3A7 /* Conversation.swift in Sources */,
 				648921FA1BC6C33100D91EA0 /* PersonalDataTablaController.swift in Sources */,

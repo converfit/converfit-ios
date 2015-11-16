@@ -36,6 +36,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     //MARK: - LifeCycle
     override func viewWillAppear(animated: Bool) {
         super.viewWillDisappear(animated)
+        self.navigationController?.navigationBarHidden = false
+        customizeNavigationBar()
         customizeSingUpButton()
         startObservingKeyBoard()
         modelIphoneName = UIDevice.currentDevice().modelName
@@ -120,6 +122,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         createUserButton.layer.cornerRadius = 5
         createUserButton.layer.borderWidth = 0.5
         createUserButton.layer.borderColor = Colors.returnColorBorderButtons().CGColor
+    }
+    
+    //MARK: - Customize NavigationBar
+    func customizeNavigationBar(){
+        self.navigationController?.navigationBar.barTintColor = Colors.returnRedConverfit()
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
     
     //MARK: - UITextFieldDelegate

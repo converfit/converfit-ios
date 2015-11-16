@@ -53,6 +53,7 @@ class LoginController: UIViewController {
         roundViews()
         addTapActions()
         startObservingKeyBoard()
+        self.navigationController?.navigationBarHidden = true
     }
     
     override func viewWillDisappear(animated: Bool) {
