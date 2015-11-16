@@ -281,6 +281,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
             //Añadimos un bonton al alert y lo que queramos que haga en la clausur
             if(self.desLoguear){
                 self.desLoguear = false
+                myTimerLeftMenu.invalidate()
                 alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
                     LogOut.desLoguearBorrarDatos()
                     self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)

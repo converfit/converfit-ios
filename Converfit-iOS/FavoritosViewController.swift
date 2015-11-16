@@ -126,6 +126,8 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
         if(desLoguear){
             desLoguear = false
+            myTimerLeftMenu.invalidate()
+            myTimer.invalidate()
             alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
                 LogOut.desLoguearBorrarDatos()
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in

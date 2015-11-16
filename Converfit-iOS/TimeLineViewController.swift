@@ -25,6 +25,8 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     
     //MARK: - Outlets
     @IBOutlet weak var miCollectionView: UICollectionView!
+    @IBOutlet weak var caritaTristeView: UIView!
+    @IBOutlet weak var openManualLbl: UIView!
     
     //MARK: - Actions
     
@@ -43,6 +45,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         super.viewWillAppear(animated)
         myTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recargarTimeLine", userInfo: nil, repeats: true)
         Utils.customAppear(self)
+        addManualTap()
         if(irPantallaLogin){
             irPantallaLogin = false
             self.dismissViewControllerAnimated(true, completion: { () -> Void in
@@ -55,7 +58,6 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
             }else{
                 listadoPost = TimeLine.devolverListTimeLine()
                 miCollectionView.reloadData()
-                //recuperarTimeLine()
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: "itemMenuSelected", name:notificationItemMenuSelected , object: nil)
                 miCollectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
@@ -178,6 +180,10 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
                 if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
                     if let resultCode = json.objectForKey("result") as? Int{
                         if(resultCode == 1){
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.caritaTristeView.alpha = 0
+                                self.openManualLbl.userInteractionEnabled = false
+                            })
                             if let data = json.objectForKey("data") as? NSDictionary{
                                 if let brandNotiLastUp = data.objectForKey("brand_notifications_last_update") as? String{
                                     Utils.saveLastUpdateBrandsNotifications(brandNotiLastUp)
@@ -207,6 +213,11 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
                                         (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
                                         self.mostrarAlerta()
                                     })
+                                }else{
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        self.caritaTristeView.alpha = 1
+                                        self.openManualLbl.userInteractionEnabled = true
+                                    })
                                 }
                             }
 
@@ -215,10 +226,11 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
                 }
             } catch{
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.caritaTristeView.alpha = 0
+                    self.openManualLbl.userInteractionEnabled = false
                     (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
                     self.mostrarAlerta()
                 })
-
             }
         }
         recuperarTimeLineTask.resume()
@@ -232,6 +244,8 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
         if(desLoguear){
             desLoguear = false
+            myTimerLeftMenu.invalidate()
+            myTimer.invalidate()
             alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
                 LogOut.desLoguearBorrarDatos()
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
@@ -265,7 +279,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
                 cadena = "minuto"
             }
             fechaFormateada = unixTimeString.stringByReplacingOccurrencesOfString("min", withString: cadena, options: [], range: nil)
-        }else if(unixTimeString.containsString("h")){
+        }else if(unixTimeString.containsString("h") && unixTimeString != "Ahora"){
             var cadena = "horas"
             if(unixTimeString == "1 h"){
                 cadena = "hora"
@@ -310,5 +324,18 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     //MARK: - Timer RecargarTimeLine
     func recargarTimeLine(){
         recuperarTimeLine()
+    }
+    
+    //MARK: - addManualTap
+    func addManualTap(){
+        let tapManualLabel =  UITapGestureRecognizer()
+        tapManualLabel.addTarget(self, action: "tappedManual")
+        openManualLbl.addGestureRecognizer(tapManualLabel)
+    }
+    
+    func tappedManual(){
+        if let requestUrl = NSURL(string: "http://www.converfit.com/app/es/signup/index.html") {
+            UIApplication.sharedApplication().openURL(requestUrl)
+        }
     }
 }

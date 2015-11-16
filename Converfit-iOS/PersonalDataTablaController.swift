@@ -126,6 +126,7 @@ class PersonalDataTablaController: UITableViewController {
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
         if(desLoguear){
             desLoguear = false
+            myTimerLeftMenu.invalidate()
             alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
                 LogOut.desLoguearBorrarDatos()
                 //self.navigationController?.popToRootViewControllerAnimated(false)
