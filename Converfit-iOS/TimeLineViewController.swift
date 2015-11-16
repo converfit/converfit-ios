@@ -336,7 +336,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     }
     
     func tappedManual(){
-        if let requestUrl = NSURL(string: "http://www.converfit.com/app/es/signup/index.html") {
+        if let requestUrl = NSURL(string: "http://www.converfit.com/es/integration/index.html") {
             UIApplication.sharedApplication().openURL(requestUrl)
         }
     }
