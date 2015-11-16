@@ -58,6 +58,8 @@
 		9B779E711BCFEA030062F9D7 /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E701BCFEA030062F9D7 /* ContainerVC.swift */; };
 		9BDE4A211BF9C2120096EBE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */; };
 		9BDE4A231BF9D1420096EBE1 /* MyCustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A221BF9D1420096EBE1 /* MyCustomNavigationController.swift */; };
+		9BDE4A251BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A241BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift */; };
+		9BDE4A271BF9E7A70096EBE1 /* PaddingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A261BF9E7A70096EBE1 /* PaddingTextField.swift */; };
 		9BEB30FC1BD0E8670021C5DA /* LefMenuWiewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */; };
 		9BEB30FF1BD0FE630021C5DA /* CeldaLeftMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */; };
 		9BEB31011BD10E3C0021C5DA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB31001BD10E3C0021C5DA /* Colors.swift */; };
@@ -117,6 +119,8 @@
 		9B779E701BCFEA030062F9D7 /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
 		9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		9BDE4A221BF9D1420096EBE1 /* MyCustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCustomNavigationController.swift; sourceTree = "<group>"; };
+		9BDE4A241BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoverPassowrdLoginViewController.swift; sourceTree = "<group>"; };
+		9BDE4A261BF9E7A70096EBE1 /* PaddingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingTextField.swift; sourceTree = "<group>"; };
 		9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LefMenuWiewController.swift; sourceTree = "<group>"; };
 		9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaLeftMenu.swift; sourceTree = "<group>"; };
 		9BEB31001BD10E3C0021C5DA /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -155,6 +159,7 @@
 				647D685D1BC7D5260086A3A7 /* Fechas.swift */,
 				9B779E691BCFBC360062F9D7 /* PostServidor.swift */,
 				9BEB31001BD10E3C0021C5DA /* Colors.swift */,
+				9BDE4A261BF9E7A70096EBE1 /* PaddingTextField.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -235,6 +240,7 @@
 				6467362B1BC66A65001627C7 /* LoginController.swift */,
 				9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */,
 				9BDE4A221BF9D1420096EBE1 /* MyCustomNavigationController.swift */,
+				9BDE4A241BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -417,6 +423,7 @@
 				9BDE4A211BF9C2120096EBE1 /* SignUpViewController.swift in Sources */,
 				6467362A1BC6600C001627C7 /* MMGCoreDataStack2.swift in Sources */,
 				648921F21BC6A78F00D91EA0 /* AjustesViewController.swift in Sources */,
+				9BDE4A271BF9E7A70096EBE1 /* PaddingTextField.swift in Sources */,
 				64B41ECA1BC930F3008D932B /* CeldaImagenMensajes.swift in Sources */,
 				6487DBE41BCD0A6400DC9C12 /* ImageDetailController.swift in Sources */,
 				9B3660151BD516BE00C4B666 /* InitialViewController.swift in Sources */,
@@ -458,6 +465,7 @@
 				9B779E711BCFEA030062F9D7 /* ContainerVC.swift in Sources */,
 				64B41ECF1BC931D6008D932B /* MessageModel.swift in Sources */,
 				64B41EC91BC930F3008D932B /* CeldaPdfEncuesta.swift in Sources */,
+				9BDE4A251BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift in Sources */,
 				647D68491BC7A8D90086A3A7 /* _Messsage.swift in Sources */,
 				647D685C1BC7D3D20086A3A7 /* ListadoChat.swift in Sources */,
 				647D68571BC7D0DC0086A3A7 /* ConversationsModel.swift in Sources */,

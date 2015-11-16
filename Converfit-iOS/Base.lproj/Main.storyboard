@@ -394,6 +394,7 @@
                         <outlet property="viewEmailPassword" destination="KAG-gg-Pag" id="fRk-sR-eyn"/>
                         <segue destination="ZMk-9x-qdk" kind="presentation" identifier="loginSegue" id="KTS-zB-d2s"/>
                         <segue destination="kex-US-g0w" kind="show" identifier="createUserSegue" id="Msp-UJ-s6J"/>
+                        <segue destination="dvW-l9-Wrv" kind="show" identifier="recoverPasswordSegue" id="5bY-Wq-ceO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -2672,6 +2673,87 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yas-IB-uj0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="316" y="427"/>
+        </scene>
+        <!--Recover Passowrd Login View Controller-->
+        <scene sceneID="fw8-Mr-dIi">
+            <objects>
+                <viewController id="dvW-l9-Wrv" customClass="RecoverPassowrdLoginViewController" customModule="Converfit_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LjT-Pd-WDK"/>
+                        <viewControllerLayoutGuide type="bottom" id="exX-gS-bMN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="YM3-rV-FtH" customClass="UIControl">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XvB-q4-zZh">
+                                <rect key="frame" x="20" y="328" width="560" height="40"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="eUy-yU-upd"/>
+                                </constraints>
+                                <state key="normal" title="Recuperar contraseña">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="recoverPassTap:" destination="dvW-l9-Wrv" eventType="touchUpInside" id="qZY-iX-CyK"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Correo Electrónico" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yji-D7-Oom" customClass="PaddingTextField" customModule="Converfit_iOS" customModuleProvider="target">
+                                <rect key="frame" x="20" y="280" width="560" height="40"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="dF4-ZH-6Q3"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="delegate" destination="dvW-l9-Wrv" id="iX2-yp-efl"/>
+                                </connections>
+                            </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="converfitLogoRed" translatesAutoresizingMaskIntoConstraints="NO" id="qfw-ep-7RR">
+                                <rect key="frame" x="20" y="85" width="560" height="187"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="qfw-ep-7RR" secondAttribute="height" multiplier="3:1" id="sLm-Fr-CsA"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Yji-D7-Oom" firstAttribute="centerX" secondItem="YM3-rV-FtH" secondAttribute="centerX" id="CMf-63-IXJ"/>
+                            <constraint firstAttribute="trailing" secondItem="Yji-D7-Oom" secondAttribute="trailing" constant="20" id="CT3-dU-cCN"/>
+                            <constraint firstItem="Yji-D7-Oom" firstAttribute="leading" secondItem="YM3-rV-FtH" secondAttribute="leading" constant="20" id="Elw-eU-Gn4"/>
+                            <constraint firstItem="Yji-D7-Oom" firstAttribute="centerY" secondItem="YM3-rV-FtH" secondAttribute="centerY" id="HaD-Gj-Ucc"/>
+                            <constraint firstAttribute="trailing" secondItem="qfw-ep-7RR" secondAttribute="trailing" constant="20" id="UvH-0y-xaN"/>
+                            <constraint firstItem="XvB-q4-zZh" firstAttribute="top" secondItem="Yji-D7-Oom" secondAttribute="bottom" constant="8" id="fpS-QD-CeM"/>
+                            <constraint firstAttribute="right" secondItem="XvB-q4-zZh" secondAttribute="right" constant="20" id="hSM-V8-W7q"/>
+                            <constraint firstItem="qfw-ep-7RR" firstAttribute="leading" secondItem="YM3-rV-FtH" secondAttribute="leading" constant="20" id="irg-PW-739"/>
+                            <constraint firstItem="XvB-q4-zZh" firstAttribute="left" secondItem="YM3-rV-FtH" secondAttribute="left" constant="20" id="nIp-gl-WGH"/>
+                            <constraint firstItem="Yji-D7-Oom" firstAttribute="top" secondItem="qfw-ep-7RR" secondAttribute="bottom" constant="8" id="tCV-cc-dLs"/>
+                        </constraints>
+                        <connections>
+                            <action selector="superControlTap:" destination="dvW-l9-Wrv" eventType="valueChanged" id="tUR-74-uhu"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="emailTxt" destination="Yji-D7-Oom" id="kuQ-vL-2qq"/>
+                        <outlet property="iconImage" destination="qfw-ep-7RR" id="NAd-yG-Pce"/>
+                        <outlet property="recoverPassButton" destination="XvB-q4-zZh" id="AVU-Y6-GqM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IsW-ZG-ovE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="663" y="1209"/>
         </scene>
     </scenes>
     <resources>
