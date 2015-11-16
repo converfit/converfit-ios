@@ -20,14 +20,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailTxt: UITextField!
     @IBOutlet weak var nameTxt: UITextField!
     @IBOutlet weak var converfitIcon: UIImageView!
+    @IBOutlet weak var containerView: UIView!
     
     //MARK: - Actions
     @IBAction func superControlTap(sender: AnyObject) {
         dismissKeyBoard()
     }
-    @IBAction func childControlTap(sender: AnyObject) {
-        dismissKeyBoard()
-    }
+   
     @IBAction func singUpPress(sender: AnyObject) {
         dismissKeyBoard()
     }
@@ -37,8 +36,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBarHidden = false
+        containerView.layer.cornerRadius = 5
+        createUserButton.layer.cornerRadius = 5
         customizeNavigationBar()
-        customizeSingUpButton()
         startObservingKeyBoard()
         modelIphoneName = UIDevice.currentDevice().modelName
         addImageTap()
@@ -115,13 +115,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     func tappedImage(){
         dismissKeyBoard()
-    }
-    
-    //MARK: - Customize SingUpButton
-    func customizeSingUpButton(){
-        createUserButton.layer.cornerRadius = 5
-        createUserButton.layer.borderWidth = 0.5
-        createUserButton.layer.borderColor = Colors.returnColorBorderButtons().CGColor
     }
     
     //MARK: - Customize NavigationBar
