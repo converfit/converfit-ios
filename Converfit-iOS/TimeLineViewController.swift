@@ -201,11 +201,13 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
                             }
                         }else{
                             if let codigoError = json.objectForKey("error_code") as? String{
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    self.desLoguear = LogOut.comprobarDesloguear(codigoError)
-                                    (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                    self.mostrarAlerta()
-                                })
+                                if(codigoError != "brand_activities_empty"){
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        self.desLoguear = LogOut.comprobarDesloguear(codigoError)
+                                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                                        self.mostrarAlerta()
+                                    })
+                                }
                             }
 
                         }

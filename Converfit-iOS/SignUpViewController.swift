@@ -12,6 +12,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     //MARK:- Variables
     var modelIphoneName = ""
+    var alertTitle = ""
+    var alertMessage = ""
+    var showAppleStore = false
+    var desLoguear = false
+    var userCreatedOk = false
 
     //MARK: - Outlets
     @IBOutlet weak var centerYconstraint: NSLayoutConstraint!
@@ -29,6 +34,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
    
     @IBAction func singUpPress(sender: AnyObject) {
         dismissKeyBoard()
+        if(checkFormats()){//formats ok... call the WS
+            createUser(nameTxt.text!, email: emailTxt.text!, password: passwordTxt.text!)
+        }else{
+            showAlert()
+        }
     }
     
     
@@ -127,5 +137,93 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         dismissKeyBoard()
         return true
+    }
+    
+    //MARK: - Create User Server
+    func createUser(brandName:String, email: String, password:String){
+        let params = "action=signup&brand_name=\(brandName)&email=\(email)&password=\(password)&app=\(app)"
+        let urlServidor = "http://www.converfit.com/server//app/1.0.0/models/access/model.php"
+        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
+        let session = NSURLSession.sharedSession()
+        request.HTTPMethod = "POST"
+        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        let createUserTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            guard data != nil else {
+                print("no data found: \(error)")
+                return
+            }
+            
+            do {
+                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
+                    if let resultCode = json.objectForKey("result") as? Int{
+                        if(resultCode == 1){
+                            self.userCreatedOk = true
+                            self.alertMessage = "Gracias por registrarte. Puedes verificar tu correo electrónico en el email que te hemos enviado. Puede que el correo llegue a su cuenta de Spam."
+                        }else{
+                            if let codigoError = json.objectForKey("error_code") as? String{
+                                self.desLoguear = LogOut.comprobarDesloguear(codigoError)
+                                (self.alertTitle,self.alertMessage) = Utils.returnTitleAndMessageAlert(codigoError)
+                            }
+                        }
+                    }
+                }
+            } catch{
+                (self.alertTitle,self.alertMessage) = Utils.returnTitleAndMessageAlert("error")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.showAlert()
+                })
+            }
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.showAlert()
+            })
+        }
+        createUserTask.resume()
+    }
+
+    //MARK: - Show Alert
+    func showAlert(){
+        if(userCreatedOk){
+            alertTitle = "Revise su correco electrónico"
+        }
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
+        if(showAppleStore){
+            alert.addAction(UIAlertAction(title: "IR A APP STORE", style: .Default, handler: { (action) -> Void in
+                //Falta implementar el boto para mostrar pero de momento no tenemos id
+                print("IR A APP STORE")/*
+                let url  = NSURL(string: "itms-apps://itunes.apple.com/app/id1024941703")
+                if UIApplication.sharedApplication().canOpenURL(url!) == true  {
+                UIApplication.sharedApplication().openURL(url!)
+                }*/
+            }))
+        }else{
+            if(userCreatedOk){
+                alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
+                    self.navigationController?.popToRootViewControllerAnimated(true)
+                }))
+            }else{
+                alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler:nil))
+            }
+        }
+        self.presentViewController(alert, animated: true) { () -> Void in
+            self.alertTitle = ""
+            self.alertMessage = ""
+        }
+    }
+    
+    //MARK: - Check Formats
+    func checkFormats() -> Bool{//Check if the email and password are in correct format
+        var formatCorrect = true
+        if(emailTxt.text!.isEmpty || passwordTxt.text!.isEmpty || nameTxt.text!.isEmpty){
+            (alertTitle, alertMessage) = Utils.returnTitleAndMessageAlert("campos_vacios")
+            formatCorrect = false
+        }else if(!Utils.emailIsValid(emailTxt.text!) || emailTxt.text!.characters.count > 155){
+            (alertTitle, alertMessage) = Utils.returnTitleAndMessageAlert("formato_email")
+            formatCorrect = false
+        }else if(passwordTxt.text!.characters.count < 4 || passwordTxt.text!.characters.count > 25){
+            (alertTitle, alertMessage) = Utils.returnTitleAndMessageAlert("formato_contraseña")
+            formatCorrect = false
+        }
+        return formatCorrect
     }
 }

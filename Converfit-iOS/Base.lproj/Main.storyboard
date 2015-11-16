@@ -526,8 +526,8 @@
                         <constraints>
                             <constraint firstItem="tK9-N1-LXQ" firstAttribute="centerX" secondItem="7sy-Yt-IuK" secondAttribute="centerX" id="AAT-8w-s01"/>
                             <constraint firstItem="jft-jF-MSp" firstAttribute="leading" secondItem="7sy-Yt-IuK" secondAttribute="leading" constant="20" id="AXa-4n-VNW"/>
-                            <constraint firstItem="hKT-8o-9rZ" firstAttribute="trailing" secondItem="7sy-Yt-IuK" secondAttribute="trailingMargin" id="FGg-Zv-Xlf"/>
-                            <constraint firstItem="hKT-8o-9rZ" firstAttribute="leading" secondItem="7sy-Yt-IuK" secondAttribute="leadingMargin" id="P4E-gl-jlo"/>
+                            <constraint firstAttribute="right" secondItem="hKT-8o-9rZ" secondAttribute="right" constant="20" id="FGg-Zv-Xlf"/>
+                            <constraint firstItem="hKT-8o-9rZ" firstAttribute="left" secondItem="7sy-Yt-IuK" secondAttribute="left" constant="20" id="P4E-gl-jlo"/>
                             <constraint firstItem="tK9-N1-LXQ" firstAttribute="leading" secondItem="7sy-Yt-IuK" secondAttribute="leading" constant="20" id="Wxg-vV-Aqm"/>
                             <constraint firstItem="tK9-N1-LXQ" firstAttribute="top" secondItem="jft-jF-MSp" secondAttribute="bottom" constant="8" id="aTz-VE-pNn"/>
                             <constraint firstItem="tK9-N1-LXQ" firstAttribute="centerY" secondItem="7sy-Yt-IuK" secondAttribute="centerY" id="dgI-dl-RUg"/>
