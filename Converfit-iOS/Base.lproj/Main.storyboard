@@ -399,19 +399,19 @@
             </objects>
             <point key="canvasLocation" x="316" y="427"/>
         </scene>
-        <!--View Controller-->
+        <!--Sign Up View Controller-->
         <scene sceneID="9ba-tX-Pt8">
             <objects>
-                <viewController id="kex-US-g0w" sceneMemberID="viewController">
+                <viewController id="kex-US-g0w" customClass="SignUpViewController" customModule="Converfit_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SDE-g0-mhU"/>
                         <viewControllerLayoutGuide type="bottom" id="MYb-CF-DdU"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="7sy-Yt-IuK">
+                    <view key="view" contentMode="scaleToFill" id="7sy-Yt-IuK" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v66-fC-ZWH">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v66-fC-ZWH" customClass="UIControl">
                                 <rect key="frame" x="20" y="202" width="560" height="197"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nombre de la empresa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WhE-JZ-U5K">
@@ -426,6 +426,9 @@
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="kex-US-g0w" id="tBp-JQ-gt0"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Correo Electrónico" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="93Y-fJ-CQc">
                                         <rect key="frame" x="8" y="71" width="544" height="17"/>
@@ -439,6 +442,9 @@
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="kex-US-g0w" id="o6s-0g-QiC"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contraseña" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fNz-GW-lBH">
                                         <rect key="frame" x="8" y="134" width="544" height="17"/>
@@ -452,10 +458,13 @@
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="kex-US-g0w" id="nyx-dt-I2r"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="4rp-6G-Bqg" secondAttribute="trailing" constant="8" id="2hs-D9-Dy4"/>
                                     <constraint firstAttribute="bottom" secondItem="4rp-6G-Bqg" secondAttribute="bottom" constant="8" id="2pi-DK-tII"/>
@@ -484,8 +493,11 @@
                                         <exclude reference="9i6-Gp-rob"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="childControlTap:" destination="kex-US-g0w" eventType="touchUpInside" id="oBe-vR-PCt"/>
+                                </connections>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoginIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Jvf-c3-zRZ">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="converfitLogoRed" translatesAutoresizingMaskIntoConstraints="NO" id="Jvf-c3-zRZ">
                                 <rect key="frame" x="8" y="48" width="584" height="146"/>
                                 <animations/>
                                 <constraints>
@@ -500,11 +512,16 @@
                                     <constraint firstAttribute="height" constant="30" id="IV4-uh-ywI"/>
                                     <constraint firstAttribute="width" constant="110" id="cVd-x5-ece"/>
                                 </constraints>
-                                <state key="normal" title="Darse de Alta"/>
+                                <state key="normal" title="Darse de Alta">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="singUpPress:" destination="kex-US-g0w" eventType="touchUpInside" id="5gh-fC-PZH"/>
+                                </connections>
                             </button>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Jvf-c3-zRZ" firstAttribute="leading" secondItem="7sy-Yt-IuK" secondAttribute="leading" constant="8" id="0jR-Ji-z9V"/>
                             <constraint firstItem="9Ys-m1-aa3" firstAttribute="centerX" secondItem="7sy-Yt-IuK" secondAttribute="centerX" id="FCu-S3-KmO"/>
@@ -516,7 +533,18 @@
                             <constraint firstItem="v66-fC-ZWH" firstAttribute="leading" secondItem="7sy-Yt-IuK" secondAttribute="leading" constant="20" id="oJT-2i-xay"/>
                             <constraint firstItem="v66-fC-ZWH" firstAttribute="top" secondItem="Jvf-c3-zRZ" secondAttribute="bottom" constant="8" id="pL3-G9-nbj"/>
                         </constraints>
+                        <connections>
+                            <action selector="superControlTap:" destination="kex-US-g0w" eventType="touchUpInside" id="jvX-dc-NBY"/>
+                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="centerYconstraint" destination="Wdf-xW-JlX" id="V7s-U8-KXB"/>
+                        <outlet property="converfitIcon" destination="Jvf-c3-zRZ" id="3y4-7O-T5d"/>
+                        <outlet property="createUserButton" destination="9Ys-m1-aa3" id="4lg-Fo-qdF"/>
+                        <outlet property="emailTxt" destination="Esh-Mz-TGn" id="y7K-uJ-f97"/>
+                        <outlet property="nameTxt" destination="g0X-MF-kWz" id="QXE-h2-bK2"/>
+                        <outlet property="passwordTxt" destination="4rp-6G-Bqg" id="tg5-WT-ZGQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vj0-NC-TDO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2632,6 +2660,7 @@
         <image name="OptionsIcon" width="50" height="50"/>
         <image name="Play" width="50" height="50"/>
         <image name="UserIcon" width="50" height="50"/>
+        <image name="converfitLogoRed" width="320" height="114"/>
         <image name="quickView" width="50" height="50"/>
         <image name="quick_view_options" width="50" height="50"/>
     </resources>

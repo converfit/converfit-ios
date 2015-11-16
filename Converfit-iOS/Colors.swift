@@ -34,4 +34,8 @@ class Colors {
     static func returnColor909090() -> UIColor{
         return UIColor(red: 144/255, green: 144/255, blue: 144/255, alpha: 1)
     }
+    
+    static func returnColorBorderButtons()-> UIColor{
+        return UIColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1)
+    }
 }
