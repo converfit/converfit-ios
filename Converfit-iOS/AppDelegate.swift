@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SocketIOClientSwift
 
 let appVersion = "1.0.0"
 let sistema = "ios"
@@ -20,6 +21,7 @@ let notificationChat = "com.converfit.notificacionChat"
 let notificationToggleMenu = "toggleMenu"
 let notificationItemMenuSelected = "notificationItemMenuSelected"
 let notificationsOpenDrawerMenu = "notificationsOpenDrawerMenu"
+var socket:SocketIOClient?
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -33,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().registerUserNotificationSettings(setting)
         UIApplication.sharedApplication().registerForRemoteNotifications()
         customizeAppearance()
+        socket = SocketIOClient(socketURL: NSURL(string: "")!, options: [.Log(true), .ForcePolling(true)])
+        socket?.connect()
         return true
     }
 

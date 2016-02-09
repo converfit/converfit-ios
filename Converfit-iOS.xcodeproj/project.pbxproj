@@ -24,6 +24,7 @@
 		647D685A1BC7D3AE0086A3A7 /* CeldaListaConversacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D68591BC7D3AE0086A3A7 /* CeldaListaConversacion.swift */; };
 		647D685C1BC7D3D20086A3A7 /* ListadoChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D685B1BC7D3D20086A3A7 /* ListadoChat.swift */; };
 		647D685E1BC7D5260086A3A7 /* Fechas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D685D1BC7D5260086A3A7 /* Fechas.swift */; };
+		647E75FA1C69F41D0050A41E /* SocketIOClientSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 647E75F91C69F41D0050A41E /* SocketIOClientSwift.framework */; };
 		6482266A1BCF9581001DD5ED /* DetailTimeLineUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648226691BCF9581001DD5ED /* DetailTimeLineUser.swift */; };
 		6487DBDE1BCCEEE900DC9C12 /* FavoritosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6487DBDD1BCCEEE900DC9C12 /* FavoritosViewController.swift */; };
 		6487DBE11BCCF05D00DC9C12 /* CeldaListadoFavoritos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6487DBE01BCCF05D00DC9C12 /* CeldaListadoFavoritos.swift */; };
@@ -63,9 +64,12 @@
 		9BEB30FC1BD0E8670021C5DA /* LefMenuWiewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */; };
 		9BEB30FF1BD0FE630021C5DA /* CeldaLeftMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */; };
 		9BEB31011BD10E3C0021C5DA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB31001BD10E3C0021C5DA /* Colors.swift */; };
+		A0AE95B80EFF77D0C8EA754B /* Pods_Converfit_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20227465BB18029B4FB94F45 /* Pods_Converfit_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		20227465BB18029B4FB94F45 /* Pods_Converfit_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Converfit_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CD1179805FF737A4B9BC6CA /* Pods-Converfit-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Converfit-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Converfit-iOS/Pods-Converfit-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		6457ECD31BCAAE93009F2A50 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		646736291BC6600C001627C7 /* MMGCoreDataStack2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMGCoreDataStack2.swift; sourceTree = "<group>"; };
 		6467362B1BC66A65001627C7 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
@@ -83,6 +87,7 @@
 		647D68591BC7D3AE0086A3A7 /* CeldaListaConversacion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaListaConversacion.swift; sourceTree = "<group>"; };
 		647D685B1BC7D3D20086A3A7 /* ListadoChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListadoChat.swift; sourceTree = "<group>"; };
 		647D685D1BC7D5260086A3A7 /* Fechas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fechas.swift; sourceTree = "<group>"; };
+		647E75F91C69F41D0050A41E /* SocketIOClientSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIOClientSwift.framework; path = "Pods/../build/Debug-iphoneos/SocketIOClientSwift.framework"; sourceTree = "<group>"; };
 		648226691BCF9581001DD5ED /* DetailTimeLineUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTimeLineUser.swift; sourceTree = "<group>"; };
 		6487DBDD1BCCEEE900DC9C12 /* FavoritosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritosViewController.swift; sourceTree = "<group>"; };
 		6487DBE01BCCF05D00DC9C12 /* CeldaListadoFavoritos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaListadoFavoritos.swift; sourceTree = "<group>"; };
@@ -124,6 +129,7 @@
 		9BEB30FB1BD0E8670021C5DA /* LefMenuWiewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LefMenuWiewController.swift; sourceTree = "<group>"; };
 		9BEB30FE1BD0FE630021C5DA /* CeldaLeftMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CeldaLeftMenu.swift; sourceTree = "<group>"; };
 		9BEB31001BD10E3C0021C5DA /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		A2C7504D09B6F9DD261CC7A3 /* Pods-Converfit-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Converfit-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Converfit-iOS/Pods-Converfit-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,12 +137,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				647E75FA1C69F41D0050A41E /* SocketIOClientSwift.framework in Frameworks */,
+				A0AE95B80EFF77D0C8EA754B /* Pods_Converfit_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		499FEB88C3576A7376896320 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A2C7504D09B6F9DD261CC7A3 /* Pods-Converfit-iOS.debug.xcconfig */,
+				5CD1179805FF737A4B9BC6CA /* Pods-Converfit-iOS.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		6467362D1BC66A7A001627C7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +310,8 @@
 			children = (
 				64D947011BC65B4600B524C3 /* Converfit-iOS */,
 				64D947001BC65B4600B524C3 /* Products */,
+				499FEB88C3576A7376896320 /* Pods */,
+				BE3C7C0AF2E4B73F2B3904D4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -345,6 +364,15 @@
 			name = CeldaLeftMenu;
 			sourceTree = "<group>";
 		};
+		BE3C7C0AF2E4B73F2B3904D4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				647E75F91C69F41D0050A41E /* SocketIOClientSwift.framework */,
+				20227465BB18029B4FB94F45 /* Pods_Converfit_iOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -352,9 +380,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 64D947111BC65B4600B524C3 /* Build configuration list for PBXNativeTarget "Converfit-iOS" */;
 			buildPhases = (
+				F6A29E35C8E28ADFB0B06965 /* Check Pods Manifest.lock */,
 				64D946FB1BC65B4600B524C3 /* Sources */,
 				64D946FC1BC65B4600B524C3 /* Frameworks */,
 				64D946FD1BC65B4600B524C3 /* Resources */,
+				19F2A707E115677186273455 /* Embed Pods Frameworks */,
+				6993BD97086AAAEA9B32798A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -410,6 +441,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		19F2A707E115677186273455 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Converfit-iOS/Pods-Converfit-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6993BD97086AAAEA9B32798A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Converfit-iOS/Pods-Converfit-iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F6A29E35C8E28ADFB0B06965 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		64D946FB1BC65B4600B524C3 /* Sources */ = {
@@ -581,9 +660,11 @@
 		};
 		64D947121BC65B4600B524C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2C7504D09B6F9DD261CC7A3 /* Pods-Converfit-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Converfit-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.converfit.Converfit-iOS";
@@ -594,9 +675,11 @@
 		};
 		64D947131BC65B4600B524C3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5CD1179805FF737A4B9BC6CA /* Pods-Converfit-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Converfit-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.converfit.Converfit-iOS";
