@@ -46,7 +46,7 @@ class ResizeImage {
             
             // Comprobamos si es mas alto que ancho para el recuadro que usaremos
             var newSize: CGSize
-            if(widthRatio > heightRatio) {
+            if widthRatio > heightRatio{
                 newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
             } else {
                 newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
@@ -83,12 +83,12 @@ class ResizeImage {
         let originalHeight = miImagen.size.height
     
         if originalWidth > originalHeight {
-            if(originalWidth > anchoPantalla){
+            if originalWidth > anchoPantalla{
                 reducir = true
                 tamaño = CGSize(width: largoPantalla * 2, height: anchoPantalla * 2)
             }
         }else{
-            if(originalHeight > largoPantalla){
+            if originalHeight > largoPantalla{
                 reducir = true
                 tamaño = CGSize(width: anchoPantalla * 2, height: largoPantalla * 2)
             }
@@ -99,7 +99,7 @@ class ResizeImage {
     //Funcion para decodificar una imagen a partir de un String
     static func decodificarImagen (_ dataImage:String) -> UIImage{
         if let decodedData = Data(base64Encoded: dataImage, options: .encodingEndLineWithCarriageReturn){
-            if(decodedData.count > 0){
+            if decodedData.count > 0{
                 return UIImage(data: decodedData)!
             }
             else{

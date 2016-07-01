@@ -277,7 +277,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     }
         
     func desactivarBotonEdit(){
-        if(listadoConversaciones.count == 0){
+        if listadoConversaciones.count == 0{
             self.editButtonItem().isEnabled = false
             self.editButtonItem().title = ""
             self.setEditing(false, animated: true)
@@ -304,7 +304,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         let alert = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.alert)
         alert.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
-        if(desLoguear){
+        if desLoguear{
             desLoguear = false
             myTimerLeftMenu.invalidate()
             myTimer.invalidate()
@@ -331,7 +331,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         let tabArray =  self.tabBarController?.tabBar.items as NSArray!
         let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         numeroMensajesSinLeer = Conversation.numeroMensajesSinLeer()
-        if(numeroMensajesSinLeer > 0){
+        if numeroMensajesSinLeer > 0{
             tabItem.badgeValue = "\(numeroMensajesSinLeer)"
             UIApplication.shared().applicationIconBadgeNumber = numeroMensajesSinLeer
         }else{
@@ -395,7 +395,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
             listadoConversaciones = Conversation.devolverListConversations()
             addBadgeCount()
             miTabla.reloadData()
-            if(listadoConversaciones.count == 0){
+            if listadoConversaciones.count == 0{
                 desactivarBotonEdit()
             }
         }
@@ -445,7 +445,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "showConversation"){
+        if segue.identifier == "showConversation"{
             let messagesVC = segue.destinationViewController as! AddConversacionController
             messagesVC.conversacionNueva = false
             messagesVC.conversationKey = listadoConversaciones[tapPosicionConversacion].conversationKey

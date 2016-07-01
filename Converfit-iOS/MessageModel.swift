@@ -34,14 +34,14 @@ class MessageModel {
         fname = modelo.fname
         lname = modelo.lname
         
-        if(type == "jpeg_base64"){
+        if type == "jpeg_base64"{
             let imagenGrande = ResizeImage.decodificarImagen(content)
             let tamaño = CGSize(width: 400, height: 400)
             miniImagen = ResizeImage().RedimensionarImagenContamaño(imagenGrande, targetSize: tamaño)
-        }else if(type == "mp4_base64"){
-            if(!content.isEmpty){
+        }else if type == "mp4_base64"{
+            if !content.isEmpty{
                 if let videoData = decodificarVideoBase64(content){
-                    if(videoData.count > 0){
+                    if videoData.count > 0{
                         let filePath = applicationDocumentsDirectory().appendingPathComponent("\(messageKey).mp4")
                         _=try? videoData.write(to: URL(fileURLWithPath: filePath), options: [.dataWritingAtomic])
                         let url = URL(fileURLWithPath: filePath)

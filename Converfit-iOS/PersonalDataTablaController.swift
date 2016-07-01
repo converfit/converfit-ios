@@ -52,7 +52,7 @@ class PersonalDataTablaController: UITableViewController {
         let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         let numeroMensajesSinLeer = Conversation.numeroMensajesSinLeer()
         DispatchQueue.main.async(execute: { () -> Void in
-            if(numeroMensajesSinLeer > 0){
+            if numeroMensajesSinLeer > 0{
                 tabItem.badgeValue = "\(numeroMensajesSinLeer)"
                 UIApplication.shared().applicationIconBadgeNumber = numeroMensajesSinLeer
             }else{
@@ -91,7 +91,7 @@ class PersonalDataTablaController: UITableViewController {
         nombreTexto = Utils.removerEspaciosBlanco(nombre.text!)
         apellidosTexto = Utils.removerEspaciosBlanco(apellidos.text!)
         comprobarFormatos()
-        if(formatoCamposOk){
+        if formatoCamposOk{
             updateData()
         }else{
             mostrarAlerta()
@@ -99,7 +99,7 @@ class PersonalDataTablaController: UITableViewController {
     }
 
     func activarBotonGuardarCambios(){
-        if(nombre.text!.isEmpty || apellidos.text!.isEmpty){
+        if nombre.text!.isEmpty || apellidos.text!.isEmpty{
             rightButton.isEnabled = false
         }else{
             rightButton.isEnabled = true
@@ -107,24 +107,24 @@ class PersonalDataTablaController: UITableViewController {
     }
     
     func comprobarFormatos(){
-        if(nombre.text!.characters.count < 3 || nombre.text!.characters.count > 50){
+        if nombre.text!.characters.count < 3 || nombre.text!.characters.count > 50{
             (tituloAlert,mensajeAlert) = Utils.returnTitleAndMessageAlert("formato_nombre")
             formatoCamposOk = false
-        }else if(apellidos.text!.characters.count < 3                      || apellidos.text!.characters.count > 50){
+        }else if apellidos.text!.characters.count < 3 || apellidos.text!.characters.count > 50{
             (tituloAlert,mensajeAlert) = Utils.returnTitleAndMessageAlert("formato_apellidos")
             formatoCamposOk = false
         }
     }
     
     func mostrarAlerta(){
-        if(formatoCamposOk){
+        if formatoCamposOk{
             tituloAlert = "Cambios guardados"
             mensajeAlert = "Su información ha sido almacenada correctamente."
         }
         let alertError = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.alert)
         alertError.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
-        if(desLoguear){
+        if desLoguear{
             desLoguear = false
             myTimerLeftMenu.invalidate()
             alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { (action) -> Void in

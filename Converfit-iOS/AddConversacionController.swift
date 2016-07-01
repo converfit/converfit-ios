@@ -747,7 +747,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     {
         let initialViewRect: CGRect = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: self.view.frame.size.height)
         
-        if (!initialViewRect.equalTo(self.view.frame))
+        if !initialViewRect.equalTo(self.view.frame)
         {
             UIView.animate(withDuration: 0.2, animations: {
                 self.view.frame = initialViewRect

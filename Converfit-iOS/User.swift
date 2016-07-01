@@ -140,7 +140,7 @@ public class User: _User {
         
         var results = (try! coreDataStack.context.fetch(request)) as! [User]
         
-        if (results.count > 0){
+        if results.count > 0{
             return UserModel(modelo: results[0])
         }else{
             return nil
@@ -158,7 +158,7 @@ public class User: _User {
         request.returnsObjectsAsFaults = false
         
         let results = (try! coreDataStack.context.fetch(request)) as! [User]
-        if(results.count > 0){
+        if results.count > 0{
             usuariosAPP = results.count
         }
         return usuariosAPP
@@ -175,7 +175,7 @@ public class User: _User {
         request.returnsObjectsAsFaults = false
         
         let results = (try! coreDataStack.context.fetch(request)) as! [User]
-        if(results.count > 0){
+        if results.count > 0{
             usuariosConectados = results.count
         }
         

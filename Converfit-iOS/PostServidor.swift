@@ -113,7 +113,7 @@ class PostServidor {
                                 Utils.saveLastUpdate(lastUpdate)
                             }
                             let resultCode = json["result"] as? Int ?? 0
-                            if(resultCode == 1){
+                            if resultCode == 1{
                                 //No hacemos nada
                             }else{//resultCode == 0
                                 //let errorCode = json["error_code"] as? String ?? ""

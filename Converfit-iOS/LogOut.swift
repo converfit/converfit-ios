@@ -28,7 +28,7 @@ class LogOut {
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data!, options: [JSONSerialization.ReadingOptions.mutableContainers]) as? Dictionary<String, AnyObject> {
                         let resultCode = json["result"] as? Int ?? 0
-                        if(resultCode == 1){
+                        if resultCode == 1{
                             //LogOutCorrecto
                         }
                     }
@@ -87,7 +87,7 @@ class LogOut {
             break
         case "db_connection_error":
             dbErrorContador += 1
-            if(dbErrorContador == 5){
+            if dbErrorContador == 5{
                 desloguear = true
                 irPantallaLogin = true
             }

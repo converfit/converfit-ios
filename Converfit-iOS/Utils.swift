@@ -18,33 +18,33 @@ class Utils {
         switch accesoServidor{
         case "pruebas":
             let rutaServidor = "http://server.converfit.com/"
-            if(modelo == "access"){
+            if modelo == "access"{
                 resultado = rutaServidor + "ios/1.0.0/models/access/model.php"
-            }else if(modelo == "conversations"){
+            }else if modelo == "conversations"{
                 resultado = rutaServidor + "ios/1.0.0/models/conversations/model.php"
-            }else if(modelo == "brand_notifications"){
+            }else if modelo == "brand_notifications"{
                 resultado = rutaServidor + "ios/1.0.0/models/brand_notifications/model.php"
-            }else if(modelo == "brands"){
+            }else if modelo == "brands"{
                 resultado = rutaServidor + "ios/1.0.0/models/users/model.php"
-            }else if(modelo == "webchat"){
+            }else if modelo == "webchat"{
                 resultado = rutaServidor + "ios/1.0.0/models/brands/model.php"
-            }else if(modelo == "pdf"){
+            }else if modelo == "pdf"{
                 resultado = rutaServidor + "resources/message_files/"
             }
             break
         default:
             let rutaServidor = "http://server.converfit.com/"
-            if(modelo == "access"){
+            if modelo == "access"{
                 resultado = rutaServidor + "ios/1.0.0/models/access/model.php"
-            }else if(modelo == "conversations"){
+            }else if modelo == "conversations"{
                 resultado = rutaServidor + "ios/1.0.0/models/conversations/model.php"
-            }else if(modelo == "brand_notifications"){
+            }else if modelo == "brand_notifications"{
                 resultado = rutaServidor + "ios/1.0.0/models/brand_notifications/model.php"
-            }else if(modelo == "brands"){
+            }else if modelo == "brands"{
                 resultado = rutaServidor + "ios/1.0.0/models/users/model.php"
-            }else if(modelo == "webchat"){
+            }else if modelo == "webchat"{
                 resultado = rutaServidor + "ios/1.0.0/models/brands/model.php"
-            }else if(modelo == "pdf"){
+            }else if modelo == "pdf"{
                 resultado = rutaServidor + "resources/message_files/"
             }
             break

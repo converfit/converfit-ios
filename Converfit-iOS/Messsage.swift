@@ -142,15 +142,15 @@ public class Messsage: _Messsage {
         var conversacion = (try! coreDataStack.context.fetch(request)) as! [Messsage]
         let message = MessageModel(modelo: conversacion[0])
         //Cambiamos el el mensaje en caso de que sea pdf, encuesta o imagen
-        if(message.type == "document_pdf"){
+        if message.type == "document_pdf"{
             message.content = "📎"
-        }else if(message.type == "poll" || message.type == "poll_closed"){
+        }else if message.type == "poll" || message.type == "poll_closed"{
             message.content = "📋"
-        }else if(message.type == "jpeg_base64"){
+        }else if message.type == "jpeg_base64"{
             message.content = "📷"
-        }else if (message.type == "mp4_base64"){
+        }else if message.type == "mp4_base64"{
             message.content = "📹"
-        }else if (message.type == "mp4_base64"){
+        }else if message.type == "mp4_base64"{
             message.content = "📹"
         }
         
@@ -170,7 +170,7 @@ public class Messsage: _Messsage {
         request.returnsObjectsAsFaults = false
         
         let messageList = (try! coreDataStack.context.fetch(request)) as! [Messsage]
-        if(messageList.count > 0){
+        if messageList.count > 0{
             for encuesta in messageList{
                 encuesta.setValue("poll_closed", forKey: "type")
                 coreDataStack.saveContext()
@@ -201,7 +201,7 @@ public class Messsage: _Messsage {
         request.returnsObjectsAsFaults = false
         
         let messageList = (try! coreDataStack.context.fetch(request)) as! [Messsage]
-        if(messageList.count > 0){
+        if messageList.count > 0{
             for encuesta in messageList{
                 encuesta.setValue(enviado, forKey: "enviado")
                 coreDataStack.saveContext()
@@ -245,7 +245,7 @@ public class Messsage: _Messsage {
         request.returnsObjectsAsFaults = false
         
         let messageList = (try! coreDataStack.context.fetch(request)) as! [Messsage]
-        if(messageList.count > 0){
+        if messageList.count > 0{
             for message in messageList{
                 message.created = fecha
                 coreDataStack.saveContext()
@@ -265,16 +265,16 @@ public class Messsage: _Messsage {
         request.returnsObjectsAsFaults = false
         
         var results = (try! coreDataStack.context.fetch(request)) as! [Messsage]
-        if(results.count > 0){
+        if results.count > 0{
             let message = MessageModel(modelo: results[results.count - 1])
             //Cambiamos el el mensaje en caso de que sea pdf, encuesta o imagen
-            if(message.type == "document_pdf"){
+            if message.type == "document_pdf"{
                 message.content = "📎"
-            }else if(message.type == "poll" || message.type == "poll_closed"){
+            }else if message.type == "poll" || message.type == "poll_closed"{
                 message.content = "📋"
-            }else if(message.type == "jpeg_base64"){
+            }else if message.type == "jpeg_base64"{
                 message.content = "📷"
-            }else if (message.type == "mp4_base64"){
+            }else if message.type == "mp4_base64"{
                 message.content = "📹"
             }
             return message
@@ -312,7 +312,7 @@ public class Messsage: _Messsage {
         request.returnsObjectsAsFaults = false
         
         let messageList = (try! coreDataStack.context.fetch(request)) as! [Messsage]
-        if(messageList.count > 0){
+        if messageList.count > 0{
             for encuesta in messageList{
                 encuesta.setValue(messageKeyServidor, forKey: "messageKey")
                 coreDataStack.saveContext()

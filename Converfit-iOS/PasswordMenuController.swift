@@ -35,7 +35,7 @@ class PasswordMenuController: UIViewController {
         let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         let numeroMensajesSinLeer = Conversation.numeroMensajesSinLeer()
         DispatchQueue.main.async(execute: { () -> Void in
-            if(numeroMensajesSinLeer > 0){
+            if numeroMensajesSinLeer > 0{
                 tabItem.badgeValue = "\(numeroMensajesSinLeer)"
                 UIApplication.shared().applicationIconBadgeNumber = numeroMensajesSinLeer
             }else{

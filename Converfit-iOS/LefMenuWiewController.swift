@@ -19,7 +19,7 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     //MARK: - Actions
     @IBAction func tapQuickOptions(_ sender: AnyObject) {
         let status = Utils.getStatusLeftMenu()
-        if(status == "0"){
+        if status == "0"{
             showAlertSheet("Activar chat")
         }else{
             showAlertSheet("Desactivar chat")
@@ -57,7 +57,7 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     //MARK: - Check status left menu
     func checkStatusleftMenu(){
         let status = Utils.getStatusLeftMenu()
-        if(status == "0"){
+        if status == "0"{
             lblEstadoChat.text = "CHAT DESACTIVADO"
         }else{
             lblEstadoChat.text = "CHAT ACTIVADO"
@@ -138,7 +138,7 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (section == 0){
+        if section == 0{
             return "CONECTADOS"
         }else{
             return "CITIOUS APP"
@@ -155,9 +155,9 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if(numeroUsuarioConectados == 0 && section == 0){
+        if numeroUsuarioConectados == 0 && section == 0{
             return 0.0
-        }else if(numeroUsuariosAPP == 0 && section == 1){
+        }else if numeroUsuariosAPP == 0 && section == 1{
             return 0.0
         }else{
             return 30.0
@@ -165,7 +165,7 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(section == 0){
+        if section == 0{
             return numeroUsuarioConectados
         }else{
             return numeroUsuariosAPP

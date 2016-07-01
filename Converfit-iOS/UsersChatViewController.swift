@@ -43,7 +43,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         super.viewWillAppear(animated)
         myTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.recuperarUserServidorTimer), userInfo: nil, repeats: true)
         self.editButtonItem().title = "Editar"
-        if(vieneDeListadoMensajes){
+        if vieneDeListadoMensajes{
             self.tabBarController?.selectedIndex = 2
             vieneDeListadoMensajes = false
             
@@ -52,7 +52,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
             listadoUsersAPP = User.devolverUsuariosAPP()
             numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
             numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
-            if(!listadoUsersConectados.isEmpty || !listadoUsersAPP.isEmpty){
+            if !listadoUsersConectados.isEmpty || !listadoUsersAPP.isEmpty{
                 datosRecibidosServidor = true
             }
             //recuperarUserServidor()
@@ -95,7 +95,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         let numeroMensajesSinLeer = Conversation.numeroMensajesSinLeer()
         DispatchQueue.main.async(execute: { () -> Void in
-            if(numeroMensajesSinLeer > 0){
+            if numeroMensajesSinLeer > 0{
                 tabItem.badgeValue = "\(numeroMensajesSinLeer)"
                 UIApplication.shared().applicationIconBadgeNumber = numeroMensajesSinLeer
             }else{
@@ -115,7 +115,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         let alert = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.alert)
         alert.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
-        if(desLoguear){
+        if desLoguear{
             desLoguear = false
             myTimerLeftMenu.invalidate()
             alert.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { (action) -> Void in
@@ -181,7 +181,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
                         let codigoError = json["error_code"] as? String ?? ""
                         self.datosRecibidosServidor = true
                         DispatchQueue.main.async(execute: { () -> Void in
-                            if(codigoError != "list_users_empty"){
+                            if codigoError != "list_users_empty"{
                                 self.desLoguear = LogOut.comprobarDesloguear(codigoError)
                                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
                                 self.mostrarAlerta()
@@ -211,7 +211,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (section == 0){
+        if section == 0{
             return "CONECTADOS"
         }else{
             return "CITIOUS APP"
@@ -227,9 +227,9 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if(numeroUsuarioConectados == 0 && section == 0){
+        if numeroUsuarioConectados == 0 && section == 0{
             return 0.0
-        }else if(numeroUsuariosAPP == 0 && section == 1){
+        }else if numeroUsuariosAPP == 0 && section == 1{
             return 0.0
         }else{
             return 30.0
@@ -237,7 +237,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(section == 0){
+        if section == 0{
             return numeroUsuarioConectados
         }else{
             return numeroUsuariosAPP
@@ -285,7 +285,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         //Usamos este metodo para ver si el indexPath es igual a la ultima celda
-        if((indexPath == tableView.indexPathsForVisibleRows?.last) && datosRecibidosServidor){
+        if indexPath == tableView.indexPathsForVisibleRows?.last && datosRecibidosServidor{
             datosRecibidosServidor = false
             spinner.stopAnimating()
             /*alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
@@ -295,17 +295,17 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == segueShowMessageUserChat){
+        if segue.identifier == segueShowMessageUserChat{
             let indice = indexSeleccionado?.row
             var user:UserModel
-            if(indexSeleccionado!.section == 0){
+            if indexSeleccionado!.section == 0{
                 user = listadoUsersConectados[indice!]
             }else{
                 user = listadoUsersAPP[indice!]
             }
             let (userHasConversation, conversationKey) = Conversation.existeConversacionDeUsuario(user.userKey)
              let messagesVC = segue.destinationViewController as! AddConversacionController
-            if(userHasConversation){
+            if userHasConversation{
                 messagesVC.conversacionNueva = false
                 messagesVC.conversationKey = conversationKey
 
@@ -328,7 +328,7 @@ extension UsersChatControllerViewController: UISearchBarDelegate{
     //Funcion que se ejecuta cada vez que se cambia el texto de busqueda
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         var textoBuscado = searchBar.text!
-        if(!Utils.quitarEspacios(textoBuscado).isEmpty){
+        if !Utils.quitarEspacios(textoBuscado).isEmpty{
             //listadoUsersConectados.removeAll(keepCapacity: false)
             //listadoUsersAPP.removeAll(keepCapacity: false)
             //Eliminamos los espacios al final del texto
@@ -366,7 +366,7 @@ extension UsersChatControllerViewController: UISearchBarDelegate{
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
         self.view.endEditing(true)
-        if(!searchBar.text!.isEmpty){
+        if !searchBar.text!.isEmpty{
             searchBar.text = ""
             //listadoUsersConectados.removeAll(keepCapacity: false)
             //listadoUsersAPP.removeAll(keepCapacity: false)

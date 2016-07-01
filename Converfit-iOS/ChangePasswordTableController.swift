@@ -102,7 +102,7 @@ class ChangePasswordTableController: UITableViewController {
     }
     
     func activarBotonGuardarCambios(){
-        if(txtPassNew.text!.isEmpty || txtPassActual.text!.isEmpty){
+        if txtPassNew.text!.isEmpty || txtPassActual.text!.isEmpty{
             rightButton.isEnabled = false
         }else{
             rightButton.isEnabled = true
@@ -110,24 +110,24 @@ class ChangePasswordTableController: UITableViewController {
     }
     
     func comprobarFormatos(){
-        if(passActu.characters.count < 4 || passActu.characters.count > 25){
+        if passActu.characters.count < 4 || passActu.characters.count > 25{
             (tituloAlert,mensajeAlert) = Utils.returnTitleAndMessageAlert("pass_actual")
             formatoCamposOk = false
-        }else if(passNew.characters.count < 4 || passNew.characters.count > 25){
+        }else if passNew.characters.count < 4 || passNew.characters.count > 25{
             (tituloAlert,mensajeAlert) = Utils.returnTitleAndMessageAlert("pass_nueva")
             formatoCamposOk = false
         }
     }
     
     func mostrarAlerta(){
-        if(formatoCamposOk && !desLoguear){
+        if formatoCamposOk && !desLoguear{
             tituloAlert = "Cambios guardados"
             mensajeAlert = "Su información ha sido almacenada correctamente."
         }
         let alertError = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.alert)
         alertError.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
-        if(desLoguear){
+        if desLoguear{
             desLoguear = false
             myTimerLeftMenu.invalidate()
             alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { (action) -> Void in
@@ -136,7 +136,7 @@ class ChangePasswordTableController: UITableViewController {
                 self.presentingViewController!.dismiss(animated: true, completion: nil)
             }))
         }else{        //Añadimos un bonton al alert y lo que queramos que haga en la clausura
-            if(formatoCamposOk){
+            if formatoCamposOk{
                 alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { action in
                     self.txtPassActual.text = ""
                     self.txtPassNew.text = ""

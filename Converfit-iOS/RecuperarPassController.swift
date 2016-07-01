@@ -42,7 +42,7 @@ class RecuperarPassController: UIViewController {
         let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         let numeroMensajesSinLeer = Conversation.numeroMensajesSinLeer()
         DispatchQueue.main.async(execute: { () -> Void in
-            if(numeroMensajesSinLeer > 0){
+            if numeroMensajesSinLeer > 0{
                 tabItem.badgeValue = "\(numeroMensajesSinLeer)"
                 UIApplication.shared().applicationIconBadgeNumber = numeroMensajesSinLeer
             }else{
@@ -76,7 +76,7 @@ class RecuperarPassController: UIViewController {
     }
     
     func mostrarAlerta(){
-        if(formatoCamposOk && !desLoguear){
+        if formatoCamposOk && !desLoguear{
             tituloAlert = "Revise su correo electrónico"
             mensajeAlert = "Siga las instrucciones que se indican en el correo para recuperar la contraseña. Puede que el correo llegue a su cuenta de Spam."
         }
@@ -84,7 +84,7 @@ class RecuperarPassController: UIViewController {
         let alertError = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.alert)
         alertError.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
-        if(desLoguear){
+        if desLoguear{
             desLoguear = false
             myTimerLeftMenu.invalidate()
             alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { (action) -> Void in

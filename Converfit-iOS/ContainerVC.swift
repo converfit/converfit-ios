@@ -38,7 +38,7 @@ class ContainerVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == tabBarSegue){
+        if segue.identifier == tabBarSegue{
             let tabBar = segue.destinationViewController as? UITabBarController
             tabBar?.selectedIndex = 0
         }

@@ -27,7 +27,7 @@ class RecoverPassowrdLoginViewController: UIViewController, UITextFieldDelegate 
     }
     @IBAction func recoverPassTap(_ sender: AnyObject) {
         dismissKeyBoard()
-        if(checkFormats()){//formats ok... call the WS
+        if checkFormats(){//formats ok... call the WS
             recoverPassword(emailTxt.text!)
         }else{
             showAlert()
@@ -76,7 +76,7 @@ class RecoverPassowrdLoginViewController: UIViewController, UITextFieldDelegate 
     
     //MARK: - Show Alert
     func showAlert(){
-        if(recoverPassOk){
+        if recoverPassOk{
             alertTitle = "Revise su correco electrónico"
         }
         let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
@@ -111,7 +111,7 @@ class RecoverPassowrdLoginViewController: UIViewController, UITextFieldDelegate 
         if emailTxt.text!.isEmpty{
             (alertTitle, alertMessage) = Utils.returnTitleAndMessageAlert("campos_vacios")
             formatCorrect = false
-        }else if(!Utils.emailIsValid(emailTxt.text!) || emailTxt.text!.characters.count > 155){
+        }else if !Utils.emailIsValid(emailTxt.text!) || emailTxt.text!.characters.count > 155{
             (alertTitle, alertMessage) = Utils.returnTitleAndMessageAlert("formato_email")
             formatCorrect = false
         }

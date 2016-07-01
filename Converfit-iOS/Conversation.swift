@@ -37,13 +37,13 @@ public class Conversation: _Conversation {
         flagNewUserMessage = (aFlagNewMessageUser == "1") ? true : false
         
         let aLastMessage = aDict["last_message"] as? String ?? ""
-        if(aLastMessage == "[::image]"){
+        if aLastMessage == "[::image]"{
             lastMessage = "📷"
-        }else if (aLastMessage == "[::document]"){
+        }else if aLastMessage == "[::document]"{
             lastMessage = "📎"
-        }else if (aLastMessage == "[::poll]"){
+        }else if aLastMessage == "[::poll]"{
             lastMessage = "📋"
-        }else if (aLastMessage == "[::video]"){
+        }else if aLastMessage == "[::video]"{
             lastMessage = "📹"
         }else{
             lastMessage = aLastMessage
@@ -107,7 +107,7 @@ public class Conversation: _Conversation {
                 coreDataStack.context.delete(result as! NSManagedObject)
             }
             coreDataStack.saveContext()
-            if(!update){
+            if !update{
                // Messsage.borrarMensajesConConverstaionKey(conversationKey)
             }
         }
@@ -123,7 +123,7 @@ public class Conversation: _Conversation {
         if conversacion.count > 0 {
             
             for result: Conversation in conversacion{
-                if(result.flagNewUserMessage == true){
+                if result.flagNewUserMessage == true{
                     result.flagNewUserMessage = false
                     PostServidor.updateNewMessageFlag(conversationKey)
                 }else{
@@ -155,7 +155,7 @@ public class Conversation: _Conversation {
         var numero = 0
         let listadoConversaciones = devolverListConversations()
         for conversacion:ConversationsModel in listadoConversaciones{
-            if(conversacion.flagNewMessageUser == true){
+            if conversacion.flagNewMessageUser == true{
                 numero += 1
             }
         }
@@ -170,7 +170,7 @@ public class Conversation: _Conversation {
         request.returnsObjectsAsFaults = false
         
         let listConversaciones = (try! coreDataStack.context.fetch(request)) as! [Conversation]
-        if(listConversaciones.count > 0){
+        if listConversaciones.count > 0{
             existe = true
         }
         
@@ -184,7 +184,7 @@ public class Conversation: _Conversation {
         request.returnsObjectsAsFaults = false
         
         let listConversaciones = (try! coreDataStack.context.fetch(request)) as! [Conversation]
-        if (listConversaciones.count > 0){
+        if listConversaciones.count > 0{
             for conversacion in listConversaciones {
                 conversacion.lastUpdate = aLastUpdate
             }
@@ -199,7 +199,7 @@ public class Conversation: _Conversation {
         request.returnsObjectsAsFaults = false
         
         var listConversaciones = (try! coreDataStack.context.fetch(request)) as! [Conversation]
-        if (listConversaciones.count > 0){
+        if listConversaciones.count > 0{
             lastUpdate = listConversaciones[0].lastUpdate
         }
         
@@ -209,7 +209,7 @@ public class Conversation: _Conversation {
     //Devuelve la hora del ultimo mensaje enviado
     static func devolverHoraUltimaConversacion() ->String {
         var listConversaciones = devolverListConversations()
-        if(listConversaciones.count == 0){
+        if listConversaciones.count == 0{
             //return Utils.fechaActualToString()
             return "0"
         }else{
@@ -226,7 +226,7 @@ public class Conversation: _Conversation {
         request.returnsObjectsAsFaults = false
         
         let listConversaciones = (try! coreDataStack.context.fetch(request)) as! [Conversation]
-        if (listConversaciones.count > 0){
+        if listConversaciones.count > 0{
             existe = true
             conversationKey = listConversaciones[0].conversationKey
         }

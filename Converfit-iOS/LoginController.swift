@@ -35,7 +35,7 @@ class LoginController: UIViewController {
     
     @IBAction func tryLogin(_ sender: AnyObject) {
         dissmisKeyBoard()
-        if(checkFormats()){//formats ok... call the WS
+        if checkFormats(){//formats ok... call the WS
             login()
         }else{
             showAlert()
@@ -100,13 +100,13 @@ class LoginController: UIViewController {
     //MARK: - Check Formats
     func checkFormats() -> Bool{//Check if the email and password are in correct format
         var formatCorrect = true
-        if(emailTxt.text!.isEmpty || passwordTxt.text!.isEmpty){
+        if emailTxt.text!.isEmpty || passwordTxt.text!.isEmpty{
             (alertTitle, alertMessage) = Utils.returnTitleAndMessageAlert("campos_vacios")
             formatCorrect = false
-        }else if(!Utils.emailIsValid(emailTxt.text!) || emailTxt.text!.characters.count > 155){
+        }else if !Utils.emailIsValid(emailTxt.text!) || emailTxt.text!.characters.count > 155{
             (alertTitle, alertMessage) = Utils.returnTitleAndMessageAlert("formato_email")
             formatCorrect = false
-        }else if(passwordTxt.text!.characters.count < 4 || passwordTxt.text!.characters.count > 25){
+        }else if passwordTxt.text!.characters.count < 4 || passwordTxt.text!.characters.count > 25{
             (alertTitle, alertMessage) = Utils.returnTitleAndMessageAlert("formato_contraseña")
             formatCorrect = false
         }
@@ -117,7 +117,7 @@ class LoginController: UIViewController {
     func showAlert(){
         let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         alert.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
-        if(showAppleStore){
+        if showAppleStore{
             alert.addAction(UIAlertAction(title: "IR A APP STORE", style: .default, handler: { (action) -> Void in
                 //Falta implementar el boto para mostrar pero de momento no tenemos id
                 print("IR A APP STORE")/*
@@ -203,7 +203,7 @@ class LoginController: UIViewController {
     
     //MARK: - PrepareForSegue
     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        /*if(segue.identifier == "loginSegue"){
+        /*if segue.identifier == "loginSegue"{
             let tabBar = segue.destinationViewController as? UITabBarController
             tabBar?.selectedIndex = 2
         }*/

@@ -48,13 +48,13 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         Utils.customAppear(self)
         customizeopenManualTextLbl()
         addManualTap()
-        if(irPantallaLogin){
+        if irPantallaLogin{
             irPantallaLogin = false
             self.dismiss(animated: true, completion: { () -> Void in
                 
             })
         }else{
-            if(vieneDeListadoMensajes){
+            if vieneDeListadoMensajes{
                 self.tabBarController?.selectedIndex = 2
                 vieneDeListadoMensajes = false
             }else{
@@ -86,7 +86,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         let numeroMensajesSinLeer = Conversation.numeroMensajesSinLeer()
         DispatchQueue.main.async(execute: { () -> Void in
-            if(numeroMensajesSinLeer > 0){
+            if numeroMensajesSinLeer > 0{
                 tabItem.badgeValue = "\(numeroMensajesSinLeer)"
                 UIApplication.shared().applicationIconBadgeNumber = numeroMensajesSinLeer
             }else{
@@ -103,7 +103,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     
     //MARK: - Enable or disable userInterface in collectionView
     func enableUserInterface(){
-        if(activarCollectionViewUserInterface){
+        if activarCollectionViewUserInterface{
             miCollectionView.isUserInteractionEnabled = false
         }else{
             miCollectionView.isUserInteractionEnabled = true
@@ -235,7 +235,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         let alert = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.alert)
         alert.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
-        if(desLoguear){
+        if desLoguear{
             desLoguear = false
             myTimerLeftMenu.invalidate()
             myTimer.invalidate()
@@ -262,19 +262,19 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
         var fechaFormateada = ""
         if unixTimeString.contains("seg"){
             var cadena = "segundos"
-            if(unixTimeString == "1 seg"){
+            if unixTimeString == "1 seg"{
                 cadena = "segundo"
             }
             fechaFormateada = unixTimeString.replacingOccurrences(of: "seg", with: cadena, options: [], range: nil)
         }else if unixTimeString.contains("min"){
             var cadena = "minutos"
-            if(unixTimeString == "1 min"){
+            if unixTimeString == "1 min"{
                 cadena = "minuto"
             }
             fechaFormateada = unixTimeString.replacingOccurrences(of: "min", with: cadena, options: [], range: nil)
         }else if unixTimeString.contains("h") && unixTimeString != "Ahora"{
             var cadena = "horas"
-            if(unixTimeString == "1 h"){
+            if unixTimeString == "1 h"{
                 cadena = "hora"
             }
             fechaFormateada = unixTimeString.replacingOccurrences(of: "h", with: cadena, options: [], range: nil)
@@ -286,7 +286,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     
     //MARK: - Lanzar enlace del webView en safari
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if(navigationType == UIWebViewNavigationType.linkClicked){
+        if navigationType == UIWebViewNavigationType.linkClicked{
             UIApplication.shared().openURL(request.url!)
             return false
         }
@@ -295,14 +295,14 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     
     //MARK: - PrepareForSegue
     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == detailTimeLineSegue){
+        if segue.identifier == detailTimeLineSegue{
             let detailTimeLineVC = segue.destinationViewController as! DetailTimeLineUser
             detailTimeLineVC.titleUsuario = listadoPost[indiceSeleccionado].userName
             detailTimeLineVC.userKey = listadoPost[indiceSeleccionado].userKey
-        }else if(segue.identifier == segueShowMessagesTimeLine){
+        }else if segue.identifier == segueShowMessagesTimeLine{
             let messagesVC = segue.destinationViewController as! AddConversacionController
             let (userHasConversation, conversationKey) = Conversation.existeConversacionDeUsuario(userKeyMenuSeleccionado)
-            if(userHasConversation){
+            if userHasConversation{
                 messagesVC.conversacionNueva = false
                 messagesVC.conversationKey = conversationKey
                 

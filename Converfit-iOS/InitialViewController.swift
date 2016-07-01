@@ -84,7 +84,7 @@ class InitialViewController: UIViewController {
     }
 
     func mostrarPantallaInicio(_ mostrarPantallaInicio:Bool){
-        if(mostrarPantallaInicio){
+        if mostrarPantallaInicio{
             performSegue(withIdentifier: segueShowTabs, sender: self)
         }else{
             performSegue(withIdentifier: segueShowLogin, sender: self)

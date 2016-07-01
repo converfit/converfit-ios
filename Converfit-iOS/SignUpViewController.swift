@@ -34,7 +34,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
    
     @IBAction func singUpPress(_ sender: AnyObject) {
         dismissKeyBoard()
-        if(checkFormats()){//formats ok... call the WS
+        if checkFormats(){//formats ok... call the WS
             createUser(nameTxt.text!, email: emailTxt.text!, password: passwordTxt.text!)
         }else{
             showAlert()
@@ -180,12 +180,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 
     //MARK: - Show Alert
     func showAlert(){
-        if(userCreatedOk){
+        if userCreatedOk{
             alertTitle = "Revise su correco electrónico"
         }
         let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         alert.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
-        if(showAppleStore){
+        if showAppleStore{
             alert.addAction(UIAlertAction(title: "IR A APP STORE", style: .default, handler: { (action) -> Void in
                 //Falta implementar el boto para mostrar pero de momento no tenemos id
                 print("IR A APP STORE")/*
@@ -195,7 +195,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 }*/
             }))
         }else{
-            if(userCreatedOk){
+            if userCreatedOk{
                 alert.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { (action) -> Void in
                     _=self.navigationController?.popToRootViewController(animated: true)
                 }))
@@ -212,13 +212,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Check Formats
     func checkFormats() -> Bool{//Check if the email and password are in correct format
         var formatCorrect = true
-        if(emailTxt.text!.isEmpty || passwordTxt.text!.isEmpty || nameTxt.text!.isEmpty){
+        if emailTxt.text!.isEmpty || passwordTxt.text!.isEmpty || nameTxt.text!.isEmpty{
             (alertTitle, alertMessage) = Utils.returnTitleAndMessageAlert("campos_vacios")
             formatCorrect = false
-        }else if(!Utils.emailIsValid(emailTxt.text!) || emailTxt.text!.characters.count > 155){
+        }else if !Utils.emailIsValid(emailTxt.text!) || emailTxt.text!.characters.count > 155{
             (alertTitle, alertMessage) = Utils.returnTitleAndMessageAlert("formato_email")
             formatCorrect = false
-        }else if(passwordTxt.text!.characters.count < 4 || passwordTxt.text!.characters.count > 25){
+        }else if passwordTxt.text!.characters.count < 4 || passwordTxt.text!.characters.count > 25{
             (alertTitle, alertMessage) = Utils.returnTitleAndMessageAlert("formato_contraseña")
             formatCorrect = false
         }

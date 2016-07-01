@@ -113,21 +113,21 @@ class DetailTimeLineUser: UIViewController, UICollectionViewDataSource,UICollect
     //Hora Formateada
     func devolverHoraFormateada(_ unixTimeString:String) -> String{
         var fechaFormateada = ""
-        if(unixTimeString.contains("seg")){
+        if unixTimeString.contains("seg"){
             var cadena = "segundos"
-            if(unixTimeString == "1 seg"){
+            if unixTimeString == "1 seg"{
                 cadena = "segundo"
             }
             fechaFormateada = unixTimeString.replacingOccurrences(of: "seg", with: cadena, options: [], range: nil)
-        }else if(unixTimeString.contains("min")){
+        }else if unixTimeString.contains("min"){
             var cadena = "minutos"
-            if(unixTimeString == "1 min"){
+            if unixTimeString == "1 min"{
                 cadena = "minuto"
             }
             fechaFormateada = unixTimeString.replacingOccurrences(of: "min", with: cadena, options: [], range: nil)
-        }else if(unixTimeString.contains("h")){
+        }else if unixTimeString.contains("h"){
             var cadena = "horas"
-            if(unixTimeString == "1 h"){
+            if unixTimeString == "1 h"{
                 cadena = "hora"
             }
             fechaFormateada = unixTimeString.replacingOccurrences(of: "h", with: cadena, options: [], range: nil)
@@ -139,7 +139,7 @@ class DetailTimeLineUser: UIViewController, UICollectionViewDataSource,UICollect
     
     //MARK: - Lanzar enlace del webView en safari
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if(navigationType == UIWebViewNavigationType.linkClicked){
+        if navigationType == UIWebViewNavigationType.linkClicked{
             UIApplication.shared().openURL(request.url!)
             return false
         }
