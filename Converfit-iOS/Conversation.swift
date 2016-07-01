@@ -5,89 +5,53 @@ import CoreData
 public class Conversation: _Conversation {
 
     //Inicializador a partir del diccionario que devuelve el WS
-    convenience init(aDict:NSDictionary, aLastUpdate:String, existe:Bool){
+    convenience init(aDict: Dictionary<String, AnyObject>, aLastUpdate:String, existe:Bool){
         self.init(managedObjectContext:coreDataStack.context)//Llamamos al constructor padre
         
         //Guardamos el conversationKey
-        if let aConversationKey = aDict.objectForKey("conversation_key") as? String{
-            conversationKey = aConversationKey
-        }else{
-            conversationKey = ""
-        }
+        conversationKey = aDict["conversation_key"] as? String ?? ""
         
         //Guardamos el fname
-        if let aFname = aDict.objectForKey("user_fname") as? String{
-            fname = aFname
-        }else{
-            fname = ""
-        }
+        fname = aDict["user_fname"] as? String ?? ""
         
         //Guardamos el lname
-        if let aLname = aDict.objectForKey("user_lname") as? String{
-            lname = aLname
-        }else{
-            lname = ""
-        }
+        lname = aDict["user_lname"] as? String ?? ""
         
         //Guardamos el user_key y el avatar
-        if let aUserDict = aDict.objectForKey("user") as? NSDictionary{
-            if let aUserKey = aUserDict.objectForKey("user_key") as? String{
-                userKey = aUserKey
-            }else{
-                userKey = ""
-            }
+        if let aUserDict = aDict["user"] as? Dictionary<String, AnyObject>{
+            userKey = aUserDict["user_key"] as? String ?? ""
             
             //Tenemos que convertir la imagen que nos descargamos a Data
-            if let  dataImage = aUserDict.objectForKey("avatar") as? String{
-                if let decodedData = NSData(base64EncodedString: dataImage, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters){
+            if let  dataImage = aUserDict["avatar"] as? String{
+                if let decodedData = Data(base64Encoded: dataImage, options: .encodingEndLineWithCarriageReturn){
                     avatar = decodedData
                 }
             }
             
             //Guardamos el conection status
-            if let aConnectionStatus = aUserDict.objectForKey("connection-status") as? String{
-                conectionStatus = aConnectionStatus
-            }
+            conectionStatus = aUserDict["connection-status"] as? String ?? ""
         }
         
         //Guardamos el indicador de mensaje nuevo
-        if let aFlagNewMessageUser = aDict.objectForKey("flag_new_message_brand") as? String{
-            if(aFlagNewMessageUser == "1"){
-                flagNewUserMessage = true
-            }else{
-                flagNewUserMessage = false
-            }
+        let aFlagNewMessageUser = aDict["flag_new_message_brand"] as? String ?? "0"
+        flagNewUserMessage = (aFlagNewMessageUser == "1") ? true : false
+        
+        let aLastMessage = aDict["last_message"] as? String ?? ""
+        if(aLastMessage == "[::image]"){
+            lastMessage = "📷"
+        }else if (aLastMessage == "[::document]"){
+            lastMessage = "📎"
+        }else if (aLastMessage == "[::poll]"){
+            lastMessage = "📋"
+        }else if (aLastMessage == "[::video]"){
+            lastMessage = "📹"
         }else{
-            flagNewUserMessage = false
+            lastMessage = aLastMessage
         }
         
-        if let aLastMessage = aDict.objectForKey("last_message") as? String{
-            if(aLastMessage == "[::image]"){
-                lastMessage = "📷"
-            }else if (aLastMessage == "[::document]"){
-                lastMessage = "📎"
-            }else if (aLastMessage == "[::poll]"){
-                lastMessage = "📋"
-            }else if (aLastMessage == "[::video]"){
-                lastMessage = "📹"
-            }else{
-                lastMessage = aLastMessage
-            }
-        }else{
-            lastMessage = ""
-        }
+        creationLastMessage = aDict["last_update"] as? String ?? ""
         
-        if let aCreationLastMessage = aDict.objectForKey("last_update") as? String{
-            creationLastMessage = aCreationLastMessage
-        }else{
-            creationLastMessage = ""
-        }
-        
-        if(existe){
-            lastUpdate = aLastUpdate
-        }else{
-            lastUpdate = "0"
-        }
+        lastUpdate = (existe) ? aLastUpdate : "0"
         
         coreDataStack.saveContext()
     }
@@ -98,12 +62,12 @@ public class Conversation: _Conversation {
         
         var listadoConversations = [ConversationsModel]()
         
-        let request = NSFetchRequest(entityName: Conversation.entityName())
-        let miShorDescriptor = NSSortDescriptor(key: "creationLastMessage", ascending: false)
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Conversation.entityName())
+        let miShorDescriptor = SortDescriptor(key: "creationLastMessage", ascending: false)
         request.sortDescriptors = [miShorDescriptor]
         request.returnsObjectsAsFaults = false
         
-        let results = (try! coreDataStack.context.executeFetchRequest(request)) as! [Conversation]
+        let results = (try! coreDataStack.context.fetch(request)) as! [Conversation]
         
         for brand in results{
             let aux = ConversationsModel(modelo: brand)
@@ -115,14 +79,14 @@ public class Conversation: _Conversation {
     //Borra todos los Brands
     static func borrarAllConversations() -> Bool{
         var borrado = false
-        let request = NSFetchRequest(entityName: Conversation.entityName())
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Conversation.entityName())
         request.returnsObjectsAsFaults = false
-        let allConversations = try! coreDataStack.context.executeFetchRequest(request)
+        let allConversations = try! coreDataStack.context.fetch(request)
         
         if allConversations.count > 0 {
             
             for result: AnyObject in allConversations{
-                coreDataStack.context.deleteObject(result as! NSManagedObject)
+                coreDataStack.context.delete(result as! NSManagedObject)
             }
             borrado = true
             coreDataStack.saveContext()
@@ -130,17 +94,17 @@ public class Conversation: _Conversation {
         return borrado
     }
     
-    static func borrarConversationConSessionKey(conversationKey:String, update:Bool){
-        let request = NSFetchRequest(entityName: Conversation.entityName())
-        request.predicate = NSPredicate(format: "conversationKey = %@", conversationKey)//Obtenemos solo las favoritas
+    static func borrarConversationConSessionKey(_ conversationKey:String, update:Bool){
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Conversation.entityName())
+        request.predicate = Predicate(format: "conversationKey = %@", conversationKey)//Obtenemos solo las favoritas
         request.returnsObjectsAsFaults = false
         
-        let conversacion = (try! coreDataStack.context.executeFetchRequest(request)) as! [Conversation]
+        let conversacion = (try! coreDataStack.context.fetch(request)) as! [Conversation]
         
         if conversacion.count > 0 {
             
             for result: AnyObject in conversacion{
-                coreDataStack.context.deleteObject(result as! NSManagedObject)
+                coreDataStack.context.delete(result as! NSManagedObject)
             }
             coreDataStack.saveContext()
             if(!update){
@@ -149,12 +113,12 @@ public class Conversation: _Conversation {
         }
     }
     
-    static func cambiarFlagNewMessageUserConversation(conversationKey:String, nuevo:Bool){
-        let request = NSFetchRequest(entityName: Conversation.entityName())
-        request.predicate = NSPredicate(format: "conversationKey = %@", conversationKey)//Obtenemos solo las favoritas
+    static func cambiarFlagNewMessageUserConversation(_ conversationKey:String, nuevo:Bool){
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Conversation.entityName())
+        request.predicate = Predicate(format: "conversationKey = %@", conversationKey)//Obtenemos solo las favoritas
         request.returnsObjectsAsFaults = false
         
-        let conversacion = (try! coreDataStack.context.executeFetchRequest(request)) as! [Conversation]
+        let conversacion = (try! coreDataStack.context.fetch(request)) as! [Conversation]
         
         if conversacion.count > 0 {
             
@@ -170,12 +134,12 @@ public class Conversation: _Conversation {
         }
     }
     
-    static func updateLastMesssageConversation(conversationKey:String, ultimoMensaje:String, fechaCreacion:String){
-        let request = NSFetchRequest(entityName: Conversation.entityName())
-        request.predicate = NSPredicate(format: "conversationKey = %@", conversationKey)//Obtenemos solo las favoritas
+    static func updateLastMesssageConversation(_ conversationKey:String, ultimoMensaje:String, fechaCreacion:String){
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Conversation.entityName())
+        request.predicate = Predicate(format: "conversationKey = %@", conversationKey)//Obtenemos solo las favoritas
         request.returnsObjectsAsFaults = false
         
-        let conversacion = (try! coreDataStack.context.executeFetchRequest(request)) as! [Conversation]
+        let conversacion = (try! coreDataStack.context.fetch(request)) as! [Conversation]
         
         if conversacion.count > 0 {
             
@@ -199,13 +163,13 @@ public class Conversation: _Conversation {
     }
     
     //Metodo para comprobar si ya habia una conversacion con una converstaionKey determinada
-    static func existeConversacion(conversationKey:String) -> Bool{
+    static func existeConversacion(_ conversationKey:String) -> Bool{
         var existe = false
-        let request = NSFetchRequest(entityName: Conversation.entityName())
-        request.predicate = NSPredicate(format: "conversationKey = %@", conversationKey)//Obtenemos solo las favoritas
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Conversation.entityName())
+        request.predicate = Predicate(format: "conversationKey = %@", conversationKey)//Obtenemos solo las favoritas
         request.returnsObjectsAsFaults = false
         
-        let listConversaciones = (try! coreDataStack.context.executeFetchRequest(request)) as! [Conversation]
+        let listConversaciones = (try! coreDataStack.context.fetch(request)) as! [Conversation]
         if(listConversaciones.count > 0){
             existe = true
         }
@@ -214,12 +178,12 @@ public class Conversation: _Conversation {
     }
     
     //Metodo para modificar el lastUpdate propio de una conversacion
-    static func modificarLastUpdate(conversationKey:String, aLastUpdate:String){
-        let request = NSFetchRequest(entityName: Conversation.entityName())
-        request.predicate = NSPredicate(format: "conversationKey = %@", conversationKey)
+    static func modificarLastUpdate(_ conversationKey:String, aLastUpdate:String){
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Conversation.entityName())
+        request.predicate = Predicate(format: "conversationKey = %@", conversationKey)
         request.returnsObjectsAsFaults = false
         
-        let listConversaciones = (try! coreDataStack.context.executeFetchRequest(request)) as! [Conversation]
+        let listConversaciones = (try! coreDataStack.context.fetch(request)) as! [Conversation]
         if (listConversaciones.count > 0){
             for conversacion in listConversaciones {
                 conversacion.lastUpdate = aLastUpdate
@@ -228,13 +192,13 @@ public class Conversation: _Conversation {
         }
     }
     
-    static func obtenerLastUpdate(conversationKey:String) -> String{
+    static func obtenerLastUpdate(_ conversationKey:String) -> String{
         var lastUpdate = "0"
-        let request = NSFetchRequest(entityName: Conversation.entityName())
-        request.predicate = NSPredicate(format: "conversationKey = %@", conversationKey)//Obtenemos solo las favoritas
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Conversation.entityName())
+        request.predicate = Predicate(format: "conversationKey = %@", conversationKey)//Obtenemos solo las favoritas
         request.returnsObjectsAsFaults = false
         
-        var listConversaciones = (try! coreDataStack.context.executeFetchRequest(request)) as! [Conversation]
+        var listConversaciones = (try! coreDataStack.context.fetch(request)) as! [Conversation]
         if (listConversaciones.count > 0){
             lastUpdate = listConversaciones[0].lastUpdate
         }
@@ -254,14 +218,14 @@ public class Conversation: _Conversation {
     }
     
     //Devuelve si un userKey tiene conversacion o no
-    static func existeConversacionDeUsuario(userKey:String) -> (Bool, String){
+    static func existeConversacionDeUsuario(_ userKey:String) -> (Bool, String){
         var existe = false
         var conversationKey = ""
-        let request = NSFetchRequest(entityName: Conversation.entityName())
-        request.predicate = NSPredicate(format: "userKey = %@", userKey)//Obtenemos solo las favoritas
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Conversation.entityName())
+        request.predicate = Predicate(format: "userKey = %@", userKey)//Obtenemos solo las favoritas
         request.returnsObjectsAsFaults = false
         
-        let listConversaciones = (try! coreDataStack.context.executeFetchRequest(request)) as! [Conversation]
+        let listConversaciones = (try! coreDataStack.context.fetch(request)) as! [Conversation]
         if (listConversaciones.count > 0){
             existe = true
             conversationKey = listConversaciones[0].conversationKey

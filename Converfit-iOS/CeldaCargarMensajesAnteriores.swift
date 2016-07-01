@@ -16,10 +16,10 @@ class CeldaCargarMensajesAnteriores: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         btnCargarMensajesAnteriores.layer.cornerRadius = 5
-        btnCargarMensajesAnteriores.tintColor = UIColor.blackColor()
+        btnCargarMensajesAnteriores.tintColor = UIColor.black()
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

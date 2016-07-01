@@ -12,53 +12,50 @@ import CoreData
 class MMGCoreDataStack2: CustomStringConvertible {
     var modelName : String
     var storeName : String
-    var options: NSDictionary?
+    var options: Dictionary<NSObject,AnyObject>?
     
     init(modelName: String) {
         self.modelName = modelName
         self.storeName = modelName
         self.options = [NSMigratePersistentStoresAutomaticallyOption: true,
-            NSInferMappingModelAutomaticallyOption: true]
+                        NSInferMappingModelAutomaticallyOption: true]
     }
     
     var description : String
-        {
-            return "context: \(context)\n" +
-                "modelName: \(modelName)" +
-                //        "model: \(model.entityVersionHashesByName)\n" +
-                //        "coordinator: \(coordinator)\n" +
+    {
+        return "context: \(context)\n" +
+            "modelName: \(modelName)" +
             "storeURL: \(storeURL)\n"
-            //        "store: \(store)"
     }
     
-    var modelURL : NSURL {
-        return NSBundle.mainBundle().URLForResource(self.modelName, withExtension: "momd")!
+    var modelURL : URL {
+        return Bundle.main().urlForResource(self.modelName, withExtension: "momd")!
     }
     
-    var storeURL : NSURL {
-        let storePaths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
+    var storeURL : URL {
+        let storePaths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let storePath = String(storePaths.first!) as NSString
-        let fileManager = NSFileManager.defaultManager()
+        let fileManager = FileManager.default()
         
         do {
-            try fileManager.createDirectoryAtPath(storePath as String, withIntermediateDirectories: true, attributes: nil)
+            try fileManager.createDirectory(atPath: storePath as String, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
             print("Error creating storePath \(storePath): \(error)")
         }
-        let sqliteFilePath = storePath.stringByAppendingPathComponent(storeName + ".sqlite")
-        return NSURL(fileURLWithPath: sqliteFilePath)
+        let sqliteFilePath = storePath.appendingPathComponent(storeName + ".sqlite")
+        return URL(fileURLWithPath: sqliteFilePath)
     }
     
-    lazy var model : NSManagedObjectModel = NSManagedObjectModel(contentsOfURL: self.modelURL)!
+    lazy var model : NSManagedObjectModel = NSManagedObjectModel(contentsOf: self.modelURL)!
     
     var store : NSPersistentStore?
     
     lazy var coordinator : NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.model)
         do {
-            self.store = try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil,
-                URL: self.storeURL,
-                options: nil)
+            self.store = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil,
+                                                            at: self.storeURL,
+                                                            options: self.options)
         } catch var error as NSError {
             print("Store Error: \(error)")
             self.store = nil
@@ -66,13 +63,13 @@ class MMGCoreDataStack2: CustomStringConvertible {
             fatalError()
         }
         return coordinator
-        }()
+    }()
     
     lazy var context : NSManagedObjectContext = {
-        let context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.persistentStoreCoordinator = self.coordinator
         return context
-        }()
+    }()
     
     func saveContext () {
         if self.context.hasChanges

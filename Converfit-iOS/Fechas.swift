@@ -59,13 +59,13 @@ class Fechas {
     static func fechaActualToString() -> (String){
         
         //Extraemos la fecha acutal
-        let fecha = NSDate().timeIntervalSince1970
+        let fecha = Date().timeIntervalSince1970
         
         return "\(fecha)"
     }
     
-    static func devolverTiempo(fechaUnix: String) -> String{
-        let unixTimeActual = NSDate().timeIntervalSince1970
+    static func devolverTiempo(_ fechaUnix: String) -> String{
+        let unixTimeActual = Date().timeIntervalSince1970
         let doubleNSString = NSString(string: fechaUnix)
         let fechaUnixRecibida = doubleNSString.doubleValue
         let fromNow = unixTimeActual - fechaUnixRecibida

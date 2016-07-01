@@ -17,36 +17,31 @@ class PostServidor {
         let lastUpdate = Utils.getLastUpdate()
         let params = "action=check_session&session_key=\(sessionKey)&device_key=\(deviceKey)&last_update=\(lastUpdate)&system=\(sistema)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("access")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let actualizarDeviceTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let actualizarDeviceTask = session.dataTask(with: request) { (data, response, error) -> Void in
            
-            if(data != nil){
-                if(error != nil){
-                    if(error!.code == -1005){
+            if data != nil{
+                if error != nil{
+                    if error!.code == -1005{
                         self.actualizarDeviceKey()
                     }
                 }else{
                     do {
-                        if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                            if let resultCode = json.objectForKey("result") as? Int{
-                                if(resultCode == 1){
-                                    dbErrorContador = 0
-                                    //Guardamos el last update del usuario
-                                    if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                        if let lastUpdate = dataResultado.objectForKey("last_update") as? String{
-                                            Utils.saveLastUpdate(lastUpdate)
-                                        }
-                                    }
-
-                                }else{//resultCode == 0
-                                    if let dataResultado = json.objectForKey("error_code") as? String{
-                                        errorCheckSession = dataResultado
-                                        LogOut.comprobarDesloguear(errorCheckSession)
-                                    }
+                        if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+                            let resultCode = json["result"] as? Int ?? 0
+                            if resultCode == 1{
+                                dbErrorContador = 0
+                                if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                                    let lastUpdate = dataResultado["last_update"] as? String ?? ""
+                                    Utils.saveLastUpdate(lastUpdate)
                                 }
+                            }else{
+                                let errorCode = json["error_code"] as? String ?? ""
+                                errorCheckSession = errorCode
+                                _=LogOut.comprobarDesloguear(errorCheckSession)
                             }
                         }
                     } catch{
@@ -63,29 +58,27 @@ class PostServidor {
         let sessionKey = Utils.getSessionKey()
         let params = "action=brand_webchat_status&session_key=\(sessionKey)"
         let urlServidor = Utils.returnUrlWS("webchat")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let estatusMenuLeftTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let estatusMenuLeftTask = session.dataTask(with: request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
             }
             
             do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                    if let resultCode = json.objectForKey("result") as? Int{
-                        if(resultCode == 1){
-                            dbErrorContador = 0
-                            if let data = json.objectForKey("data") as? NSDictionary{
-                                if let menuLeftStatus = data.objectForKey("brand_webchat_status") as? String{
-                                    Utils.saveStatusLeftMenu(menuLeftStatus)
-                                }
-                            }
-                        }else{
-                            //MostrarAlerta error
+                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        dbErrorContador = 0
+                        if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                            let menuLeftStatus = dataResultado["brand_webchat_status"] as? String ?? "0"
+                            Utils.saveStatusLeftMenu(menuLeftStatus)
                         }
+                    }else{
+                        //No hacemos nada
                     }
                 }
             } catch{
@@ -97,37 +90,33 @@ class PostServidor {
 
     
     //Cambiamos el valor de new_messsage_flag en la BBDD a true
-    static func updateNewMessageFlag(conversationKey:String){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let sessionKey = defaults.stringForKey("session_key")!
+    static func updateNewMessageFlag(_ conversationKey:String){
+        let defaults = UserDefaults.standard()
+        let sessionKey = defaults.string(forKey: "session_key")!
         let urlServidor = Utils.returnUrlWS("conversations")
         let params = "action=update_conversation_flag&session_key=\(sessionKey)&conversation_key=\(conversationKey)&new_message_flag=\(0)&app_version=\(appVersion)&app=\(app)"
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let updateNewMessageFlagTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
-            if(data != nil){
-                if(error != nil){
-                    if(error!.code == -1005){
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let updateNewMessageFlagTask = session.dataTask(with: request) { (data, response, error) -> Void in
+            if data != nil{
+                if error != nil {
+                    if error!.code == -1005{
                         self.updateNewMessageFlag(conversationKey)
                     }
                 }else{
                     do {
-                        if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                if let lastUpdate = dataResultado.objectForKey("last_update") as? String{
-                                    Utils.saveLastUpdate(lastUpdate)
-                                }
+                        if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+                            if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                                let lastUpdate = dataResultado["last_update"] as? String ?? ""
+                                Utils.saveLastUpdate(lastUpdate)
                             }
-                            if let resultCode = json.objectForKey("result") as? Int{
-                                if(resultCode == 1){
-                                    //No hacemos nada
-                                }else{//resultCode == 0
-                                    if let _ = json.objectForKey("error_code") as? String{
-                                        //No hacemos nada
-                                    }
-                                }
+                            let resultCode = json["result"] as? Int ?? 0
+                            if(resultCode == 1){
+                                //No hacemos nada
+                            }else{//resultCode == 0
+                                //let errorCode = json["error_code"] as? String ?? ""
                             }
                         }
                     } catch{
@@ -141,36 +130,35 @@ class PostServidor {
     
     //MARK: - Push Actualizar modelos
     //Metodo que llama al WS GetConversation para obtener los datos de la conversacion cuando llega una push
-    static func getConversacion(conversationKey:String){
+    static func getConversacion(_ conversationKey:String){
         let sessionKey = Utils.getSessionKey()
         let params = "action=get_conversation&session_key=\(sessionKey)&conversation_key=\(conversationKey)&last_update=1&app=\(app)"
         let urlServidor = Utils.returnUrlWS("conversations")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let getConversacionTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let getConversacionTask = session.dataTask(with: request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
             }
             
             do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                    if let resultCode = json.objectForKey("result") as? Int{
-                        if(resultCode == 1){
-                            dbErrorContador = 0
-                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    if let conversacion = dataResultado.objectForKey("conversation") as? NSDictionary{
-                                        let lastUpdateAntiguo = Conversation.obtenerLastUpdate(conversationKey)
-                                        let existe = Conversation.existeConversacion(conversationKey)
-                                        Conversation.borrarConversationConSessionKey(conversationKey, update: true)
-                                        _=Conversation(aDict: conversacion, aLastUpdate: lastUpdateAntiguo, existe: existe)
-                                        self.updateMensaje(conversationKey)
-                                    }
-                                })
-                            }
+                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableLeaves) as? Dictionary<String, AnyObject>{
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        dbErrorContador = 0
+                        if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                            DispatchQueue.main.async(execute: { () -> Void in
+                                if let conversacion = dataResultado["conversation"] as? Dictionary<String, AnyObject>{
+                                    let lastUpdateAntiguo = Conversation.obtenerLastUpdate(conversationKey)
+                                    let existe = Conversation.existeConversacion(conversationKey)
+                                    Conversation.borrarConversationConSessionKey(conversationKey, update: true)
+                                    _=Conversation(aDict: conversacion, aLastUpdate: lastUpdateAntiguo, existe: existe)
+                                    self.updateMensaje(conversationKey)
+                                }
+                            })
                         }
                     }
                 }
@@ -182,46 +170,42 @@ class PostServidor {
     }
     
     //Metodo que se llama para actualizar el modelo cuando nos llega una notificacion nueva
-    static func updateMensaje(conversationKey:String){
+    static func updateMensaje(_ conversationKey:String){
         let sessionKey = Utils.getSessionKey()
         let lastUpdate = Conversation.obtenerLastUpdate(conversationKey)
         let params = "action=list_messages&session_key=\(sessionKey)&conversation_key=\(conversationKey)&last_update=\(lastUpdate)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("conversations")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let updateMensajeTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let updateMensajeTask = session.dataTask(with: request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
             }
             
             do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                    if let resultCode = json.objectForKey("result") as? Int{
-                        if(resultCode == 1){
-                            dbErrorContador = 0
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                    if let lastUp = dataResultado.objectForKey("last_update") as? String{
-                                        Conversation.modificarLastUpdate(conversationKey, aLastUpdate: lastUp)
-                                    }
-                                    if let needToUpdate = dataResultado.objectForKey("need_to_update") as? Bool{
-                                        if (needToUpdate){
-                                            Messsage.borrarMensajesConConverstaionKey(conversationKey)
-                                            if let messagesArray = dataResultado.objectForKey("messages") as? [NSDictionary]{
-                                                //Llamamos por cada elemento del array de empresas al constructor
-                                                for dict in messagesArray{
-                                                    _=Messsage(aDict: dict, aConversationKey: conversationKey)
-                                                }
-                                                NSNotificationCenter.defaultCenter().postNotificationName(notificationChat, object: nil, userInfo:nil)
-                                            }
+                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        dbErrorContador = 0
+                        DispatchQueue.main.async(execute: { () -> Void in
+                            if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                                let lastUp = dataResultado["last_update"] as? String ?? ""
+                                Conversation.modificarLastUpdate(conversationKey, aLastUpdate: lastUp)
+                                let needToUpdate = dataResultado["need_to_update"] as? Bool ?? true
+                                if needToUpdate{
+                                    Messsage.borrarMensajesConConverstaionKey(conversationKey)
+                                    if let messagesArray = dataResultado["messages"] as? [Dictionary<String, AnyObject>]{
+                                        for dict in messagesArray{
+                                            _=Messsage(aDict: dict, aConversationKey: conversationKey)
                                         }
+                                        NotificationCenter.default().post(name: Notification.Name(rawValue: notificationChat), object: nil, userInfo:nil)
                                     }
                                 }
-                            })
-                        }
+                            }
+                        })
                     }
                 }
             } catch{

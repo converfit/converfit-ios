@@ -25,10 +25,10 @@ class ChangePasswordTableController: UITableViewController {
     @IBOutlet var miTablaPersonalizada: UITableView!
     
     //MARK: - Actions
-    @IBAction func btnPassActu(sender: AnyObject) {
+    @IBAction func btnPassActu(_ sender: AnyObject) {
         activarBotonGuardarCambios()
     }
-    @IBAction func btnPassNew(sender: AnyObject) {
+    @IBAction func btnPassNew(_ sender: AnyObject) {
         activarBotonGuardarCambios()
     }
     
@@ -37,29 +37,29 @@ class ChangePasswordTableController: UITableViewController {
         modificarUI()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addTap()
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
+         NotificationCenter.default().addObserver(self, selector: #selector(self.cambiarBadge), name:notificationChat, object: nil)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
+        NotificationCenter.default().removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
     }
     
     //Funcion para cambiar el badge cuando nos llega una notificacion
     func cambiarBadge(){
         let tabArray =  self.tabBarController?.tabBar.items as NSArray!
-        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         let numeroMensajesSinLeer = Conversation.numeroMensajesSinLeer()
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            if(numeroMensajesSinLeer > 0){
+        DispatchQueue.main.async(execute: { () -> Void in
+            if numeroMensajesSinLeer > 0{
                 tabItem.badgeValue = "\(numeroMensajesSinLeer)"
-                UIApplication.sharedApplication().applicationIconBadgeNumber = numeroMensajesSinLeer
+                UIApplication.shared().applicationIconBadgeNumber = numeroMensajesSinLeer
             }else{
                 tabItem.badgeValue = nil
-                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+                UIApplication.shared().applicationIconBadgeNumber = 0
             }
         })
     }
@@ -73,10 +73,10 @@ class ChangePasswordTableController: UITableViewController {
     //Creamos los botones de la barra de navegacion
     func crearBotonesBarraNavegacion(){
         rightButton.title = "Guardar Cambios"
-        rightButton.style = .Plain
+        rightButton.style = .plain
         rightButton.target = self
-        rightButton.enabled = false
-        rightButton.action = "updatePass"
+        rightButton.isEnabled = false
+        rightButton.action = #selector(self.updatePass)
         navigationItem.rightBarButtonItem = rightButton
     }
 
@@ -94,7 +94,7 @@ class ChangePasswordTableController: UITableViewController {
         
         comprobarFormatos()
         
-        if(formatoCamposOk){
+        if formatoCamposOk{
             cambiarPassword()
         }else{
             mostrarAlerta()
@@ -103,9 +103,9 @@ class ChangePasswordTableController: UITableViewController {
     
     func activarBotonGuardarCambios(){
         if(txtPassNew.text!.isEmpty || txtPassActual.text!.isEmpty){
-            rightButton.enabled = false
+            rightButton.isEnabled = false
         }else{
-            rightButton.enabled = true
+            rightButton.isEnabled = true
         }
     }
     
@@ -124,34 +124,34 @@ class ChangePasswordTableController: UITableViewController {
             tituloAlert = "Cambios guardados"
             mensajeAlert = "Su información ha sido almacenada correctamente."
         }
-        let alertError = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.Alert)
+        let alertError = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.alert)
         alertError.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
         if(desLoguear){
             desLoguear = false
             myTimerLeftMenu.invalidate()
-            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
+            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { (action) -> Void in
                 LogOut.desLoguearBorrarDatos()
                 //self.navigationController?.popToRootViewControllerAnimated(false)
-                self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+                self.presentingViewController!.dismiss(animated: true, completion: nil)
             }))
         }else{        //Añadimos un bonton al alert y lo que queramos que haga en la clausura
             if(formatoCamposOk){
-                alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { action in
+                alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { action in
                     self.txtPassActual.text = ""
                     self.txtPassNew.text = ""
-                    self.rightButton.enabled = false
+                    self.rightButton.isEnabled = false
                 }))
             }else{
-                alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { action in
+                alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { action in
                     self.txtPassActual.text = ""
                     self.txtPassNew.text = ""
-                    self.rightButton.enabled = false
+                    self.rightButton.isEnabled = false
                 }))
             }
         }
         //mostramos el alert
-        self.presentViewController(alertError, animated: true) { () -> Void in
+        self.present(alertError, animated: true) { () -> Void in
             self.tituloAlert = ""
             self.mensajeAlert = ""
         }
@@ -159,7 +159,7 @@ class ChangePasswordTableController: UITableViewController {
     
     func addTap(){
         let tapRec = UITapGestureRecognizer()
-        tapRec.addTarget(self, action: "tappedTabla")
+        tapRec.addTarget(self, action: #selector(self.tappedTabla))
         miTablaPersonalizada.addGestureRecognizer(tapRec)
     }
     
@@ -171,35 +171,32 @@ class ChangePasswordTableController: UITableViewController {
         let sessionKey = Utils.getSessionKey()
         let params = "action=update_password&session_key=\(sessionKey)&old_password=\(passActu)&new_password=\(passNew)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("access")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let changePasswordTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let changePasswordTask = session.dataTask(with: request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
             }
             
             do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                    if let resultCode = json.objectForKey("result") as? Int{
-                        if(resultCode == 1){
-                            self.formatoCamposOk = true
-                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                if let lastUpdate = dataResultado.objectForKey("last_update") as? String{
-                                    Utils.saveLastUpdate(lastUpdate)
-                                    self.mostrarAlerta()
-                                }
-                            }
-                        }else{
-                            self.formatoCamposOk = false
-                            if let codigoError = json.objectForKey("error_code") as? String{
-                                self.desLoguear = LogOut.comprobarDesloguear(codigoError)
-                                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                self.mostrarAlerta()
-                            }
+                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+                    let resultCode = json["result"] as? Int ??  0
+                    if resultCode == 1{
+                        self.formatoCamposOk = true
+                        if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                            let lastUpdate = dataResultado["last_update"] as? String ?? ""
+                            Utils.saveLastUpdate(lastUpdate)
+                            self.mostrarAlerta()
                         }
+                    }else{
+                        self.formatoCamposOk = false
+                        let codigoError = json["error_code"] as? String ?? ""
+                        self.desLoguear = LogOut.comprobarDesloguear(codigoError)
+                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                        self.mostrarAlerta()
                     }
                 }
             } catch{
@@ -212,17 +209,17 @@ class ChangePasswordTableController: UITableViewController {
     }
     
     // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
 }
 
 extension ChangePasswordTableController:UITextFieldDelegate{
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }

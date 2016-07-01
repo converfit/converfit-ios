@@ -25,45 +25,45 @@ class PersonalDataTablaController: UITableViewController {
     @IBOutlet var miTablaPersonalizada: UITableView!
     
     //MARK: - Actions
-    @IBAction func btnCambioNombre(sender: AnyObject) {
+    @IBAction func btnCambioNombre(_ sender: AnyObject) {
         activarBotonGuardarCambios()
     }
-    @IBAction func btnCambioApellidos(sender: AnyObject) {
+    @IBAction func btnCambioApellidos(_ sender: AnyObject) {
         activarBotonGuardarCambios()
     }
     
     //MARK: - LifeCycle
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         modificarUI()
         //Nos damos de alta para responder a la notificacion enviada por push
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(self.cambiarBadge), name:notificationChat, object: nil)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
+        NotificationCenter.default().removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
     }
     
     //MARK: - Utils
     //Funcion para cambiar el badge cuando nos llega una notificacion
     func cambiarBadge(){
         let tabArray =  self.tabBarController?.tabBar.items as NSArray!
-        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         let numeroMensajesSinLeer = Conversation.numeroMensajesSinLeer()
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
             if(numeroMensajesSinLeer > 0){
                 tabItem.badgeValue = "\(numeroMensajesSinLeer)"
-                UIApplication.sharedApplication().applicationIconBadgeNumber = numeroMensajesSinLeer
+                UIApplication.shared().applicationIconBadgeNumber = numeroMensajesSinLeer
             }else{
                 tabItem.badgeValue = nil
-                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+                UIApplication.shared().applicationIconBadgeNumber = 0
             }
         })
     }
     
     func modificarUI(){
-        self.tabBarController?.tabBar.hidden = true
+        self.tabBarController?.tabBar.isHidden = true
         //Creamos un footer con un UIView para eliminar los separator extras
         miTablaPersonalizada.tableFooterView = UIView()
         crearBotonesBarraNavegacion()
@@ -73,10 +73,10 @@ class PersonalDataTablaController: UITableViewController {
     //Creamos los botones de la barra de navegacion
     func crearBotonesBarraNavegacion(){
         rightButton.title = "Guardar Cambios"
-        rightButton.style = .Plain
+        rightButton.style = .plain
         rightButton.target = self
-        rightButton.enabled = false
-        rightButton.action = "updatePersonalData"
+        rightButton.isEnabled = false
+        rightButton.action = #selector(self.updatePersonalData)
         navigationItem.rightBarButtonItem = rightButton
     }
 
@@ -100,9 +100,9 @@ class PersonalDataTablaController: UITableViewController {
 
     func activarBotonGuardarCambios(){
         if(nombre.text!.isEmpty || apellidos.text!.isEmpty){
-            rightButton.enabled = false
+            rightButton.isEnabled = false
         }else{
-            rightButton.enabled = true
+            rightButton.isEnabled = true
         }
     }
     
@@ -121,30 +121,30 @@ class PersonalDataTablaController: UITableViewController {
             tituloAlert = "Cambios guardados"
             mensajeAlert = "Su información ha sido almacenada correctamente."
         }
-        let alertError = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.Alert)
+        let alertError = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.alert)
         alertError.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
         if(desLoguear){
             desLoguear = false
             myTimerLeftMenu.invalidate()
-            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
+            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { (action) -> Void in
                 LogOut.desLoguearBorrarDatos()
                 //self.navigationController?.popToRootViewControllerAnimated(false)
-                self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+                self.presentingViewController!.dismiss(animated: true, completion: nil)
             }))
         }else{
-            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler:{ action in
+            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler:{ action in
                     
             }))
         }
-        self.presentViewController(alertError, animated: true, completion: nil)
+        self.present(alertError, animated: true, completion: nil)
         
     }
     
     //Añadir un UITapGestureRecognizer para ocultar el teclado al pulsar sobre la tabla
     func addTap(){
         let tapRec = UITapGestureRecognizer()
-        tapRec.addTarget(self, action: "tappedTabla")
+        tapRec.addTarget(self, action: #selector(self.tappedTabla))
         miTablaPersonalizada.addGestureRecognizer(tapRec)
     }
     
@@ -156,33 +156,30 @@ class PersonalDataTablaController: UITableViewController {
         let sessionKey = Utils.getSessionKey()
         let params = "action=update_personal_data&session_key=\(sessionKey)&fname=\(nombreTexto)&lname=\(apellidosTexto)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("access")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let updateTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let updateTask = session.dataTask(with: request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
             }
             
             do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                    if let resultCode = json.objectForKey("result") as? Int{
-                        if(resultCode == 1){
-                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                if let lastUpdate = dataResultado.objectForKey("last_update") as? String{
-                                    Utils.saveLastUpdate(lastUpdate)
-                                    self.mostrarAlerta()
-                                }
-                            }
-                        }else{
-                            self.formatoCamposOk = false
-                            if let codigoError = json.objectForKey("error_code") as? String{
-                                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                self.mostrarAlerta()
-                            }
+                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                            let lastUpdate = dataResultado["last_update"] as? String ?? ""
+                            Utils.saveLastUpdate(lastUpdate)
+                            self.mostrarAlerta()
                         }
+                    }else{
+                        self.formatoCamposOk = false
+                        let codigoError = json["error_code"] as? String ?? ""
+                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                        self.mostrarAlerta()
                     }
                 }
             } catch{
@@ -196,11 +193,11 @@ class PersonalDataTablaController: UITableViewController {
     }
     
     // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
@@ -209,7 +206,7 @@ class PersonalDataTablaController: UITableViewController {
 
 //MARK: - UITextFieldDelegate
 extension PersonalDataTablaController: UITextFieldDelegate{
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }

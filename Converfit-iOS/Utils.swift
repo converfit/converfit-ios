@@ -11,7 +11,7 @@ import UIKit
 class Utils {
     
     //MARK: - ULR WebServices
-    static func returnUrlWS(modelo:String) -> String{
+    static func returnUrlWS(_ modelo:String) -> String{
         var resultado = ""
         let accesoServidor = "produccion" // "produccion" o "pruebas"
         
@@ -53,7 +53,7 @@ class Utils {
     }
     
     //MARK: - Title and Message erros
-    static func returnTitleAndMessageAlert(errorCode:String) ->(String,String){
+    static func returnTitleAndMessageAlert(_ errorCode:String) ->(String,String){
         var title = ""
         var message = ""
         
@@ -201,100 +201,100 @@ class Utils {
     }
     
     //MARK: Email is valid
-    static func emailIsValid(email:String) ->Bool{
+    static func emailIsValid(_ email:String) ->Bool{
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
-        let range = email.rangeOfString(emailRegEx, options:.RegularExpressionSearch)
+        let range = email.range(of: emailRegEx, options:.regularExpressionSearch)
         let result = range != nil ? true : false
         return result
     }
     
     //MARK: - Save last Update
-    static func saveLastUpdate(lasUpdate:String){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(lasUpdate, forKey: "last_update")
+    static func saveLastUpdate(_ lasUpdate:String){
+        let defaults = UserDefaults.standard()
+        defaults.set(lasUpdate, forKey: "last_update")
     }
     
     static func getLastUpdate() -> String{
         var lastUpdate = "0"
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let lastUp = defaults.stringForKey("last_update"){
+        let defaults = UserDefaults.standard()
+        if let lastUp = defaults.string(forKey: "last_update"){
             lastUpdate = lastUp
         }
         return lastUpdate
     }
     
     //MARK: - Save conversations_last_update
-    static func saveConversationsLastUpdate(lasUpdate:String){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(lasUpdate, forKey: "conversations_last_update")
+    static func saveConversationsLastUpdate(_ lasUpdate:String){
+        let defaults = UserDefaults.standard()
+        defaults.set(lasUpdate, forKey: "conversations_last_update")
     }
     
     static func getConversationsLastUpdate() -> String{
         var lastUpdate = "0"
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let lastUp = defaults.stringForKey("conversations_last_update"){
+        let defaults = UserDefaults.standard()
+        if let lastUp = defaults.string(forKey: "conversations_last_update"){
             lastUpdate = lastUp
         }
         return lastUpdate
     }
     
     //MARK: - Save follower last update
-    static func saveLastUpdateFollower(lasUpdate:String){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(lasUpdate, forKey: "last_update_follower")
+    static func saveLastUpdateFollower(_ lasUpdate:String){
+        let defaults = UserDefaults.standard()
+        defaults.set(lasUpdate, forKey: "last_update_follower")
     }
     
     //Funcion para optener el last_update
     static func getLastUpdateFollower() -> String{
         var lastUpFavoritos = "0"
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let lastUp = defaults.stringForKey("last_update_follower"){
+        let defaults = UserDefaults.standard()
+        if let lastUp = defaults.string(forKey: "last_update_follower"){
             lastUpFavoritos = lastUp
         }
         return lastUpFavoritos
     }
     
     //MARK: - Save brandsNotifications last update
-    static func saveLastUpdateBrandsNotifications(lasUpdate:String){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(lasUpdate, forKey: "last_update_brands_notifications")
+    static func saveLastUpdateBrandsNotifications(_ lasUpdate:String){
+        let defaults = UserDefaults.standard()
+        defaults.set(lasUpdate, forKey: "last_update_brands_notifications")
     }
     
     //Funcion para optener el brandsNotifications last_update
     static func getLastUpdateBrandsNotifications() -> String{
         var lastUpBrandsNotifications = "0"
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let lastUp = defaults.stringForKey("last_update_brands_notifications"){
+        let defaults = UserDefaults.standard()
+        if let lastUp = defaults.string(forKey: "last_update_brands_notifications"){
             lastUpBrandsNotifications = lastUp
         }
         return lastUpBrandsNotifications
     }
 
     //MARK: - Save session_key
-    static func saveSessionKey(sessionKey:String){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(sessionKey, forKey: "session_key")
+    static func saveSessionKey(_ sessionKey:String){
+        let defaults = UserDefaults.standard()
+        defaults.set(sessionKey, forKey: "session_key")
     }
     
     static func getSessionKey() -> String{
         var lastUpFavoritos = "0"
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let lastUp = defaults.stringForKey("session_key"){
+        let defaults = UserDefaults.standard()
+        if let lastUp = defaults.string(forKey: "session_key"){
             lastUpFavoritos = lastUp
         }
         return lastUpFavoritos
     }
     
     //MARK: - Save session_key
-    static func saveDeviceKey(deviceKey:String){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(deviceKey, forKey: "devide_key")
+    static func saveDeviceKey(_ deviceKey:String){
+        let defaults = UserDefaults.standard()
+        defaults.set(deviceKey, forKey: "devide_key")
     }
     
     static func getDeviceKey() -> String{
         var deviceKey = "dont_allow"
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let device = defaults.stringForKey("devide_key"){
+        let defaults = UserDefaults.standard()
+        if let device = defaults.string(forKey: "devide_key"){
             deviceKey = device
         }
         return deviceKey
@@ -302,104 +302,104 @@ class Utils {
     
     
     //MARK: - Save status left menu
-    static func saveStatusLeftMenu(saveStatusLeftMenu:String){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(saveStatusLeftMenu, forKey: "statusLeftMenu")
+    static func saveStatusLeftMenu(_ saveStatusLeftMenu:String){
+        let defaults = UserDefaults.standard()
+        defaults.set(saveStatusLeftMenu, forKey: "statusLeftMenu")
     }
     
     static func getStatusLeftMenu() -> String{
         var statusLeftMenu = "0"
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let status = defaults.stringForKey("statusLeftMenu"){
+        let defaults = UserDefaults.standard()
+        if let status = defaults.string(forKey: "statusLeftMenu"){
             statusLeftMenu = status
         }
         return statusLeftMenu
     }
     
     //MARK: - Strings
-    static func removerEspaciosBlanco(textoConEspacios:String) ->String{
+    static func removerEspaciosBlanco(_ textoConEspacios:String) ->String{
         var cadena = textoConEspacios
-        cadena = textoConEspacios.stringByReplacingOccurrencesOfString(" ", withString: "+", options: [], range: nil)
+        cadena = textoConEspacios.replacingOccurrences(of: " ", with: "+", options: [], range: nil)
         return cadena
     }
     
-    static func quitarEspacios(textoConEspacios:String) ->String{
+    static func quitarEspacios(_ textoConEspacios:String) ->String{
         var cadena = textoConEspacios
-        cadena = textoConEspacios.stringByReplacingOccurrencesOfString(" ", withString: "", options: [], range: nil)
+        cadena = textoConEspacios.replacingOccurrences(of: " ", with: "", options: [], range: nil)
         return cadena
     }
     
-    static func quitarSaltosdeLinea(textoConEspacios:String) ->String{
+    static func quitarSaltosdeLinea(_ textoConEspacios:String) ->String{
         var cadena = textoConEspacios
-        cadena = textoConEspacios.stringByReplacingOccurrencesOfString("\n", withString: "", options: [], range: nil)
+        cadena = textoConEspacios.replacingOccurrences(of: "\n", with: "", options: [], range: nil)
         return cadena
     }
     
     //Funcion que devuelve una acitivity indicator
-    static func crearActivityLoading(width:Double, heigth:Double) -> UIActivityIndicatorView{
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+    static func crearActivityLoading(_ width:Double, heigth:Double) -> UIActivityIndicatorView{
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
         activityIndicator.frame = CGRect(x: 0, y: 0, width: width, height: heigth)
-        activityIndicator.color = UIColor.darkGrayColor()
+        activityIndicator.color = UIColor.darkGray()
         
         return activityIndicator
     }
     
-    static func guardarIdLogin(id:String){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(id, forKey: "id_login")
+    static func guardarIdLogin(_ id:String){
+        let defaults = UserDefaults.standard()
+        defaults.set(id, forKey: "id_login")
     }
     
     //Funcion para obtener el id del usuario logado
     static func obtenerIdLogin() -> String{
         var id = "0"
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let aID = defaults.stringForKey("id_login"){
+        let defaults = UserDefaults.standard()
+        if let aID = defaults.string(forKey: "id_login"){
             id = aID
         }
         return id
     }
     
     //Funcion para guardar el fname del usuario logado
-    static func guardarFname(fname:String){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(fname, forKey: "fname")
+    static func guardarFname(_ fname:String){
+        let defaults = UserDefaults.standard()
+        defaults.set(fname, forKey: "fname")
     }
     
     //Funcion para obtener el fname del usuario logado
     static func obtenerFname() -> String{
         var fname = ""
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let aFname = defaults.stringForKey("fname"){
+        let defaults = UserDefaults.standard()
+        if let aFname = defaults.string(forKey: "fname"){
             fname = aFname
         }
         return fname
     }
     
     //Funcion para guardar el lname del usuario logado
-    static func guardarLname(lname:String){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(lname, forKey: "lname")
+    static func guardarLname(_ lname:String){
+        let defaults = UserDefaults.standard()
+        defaults.set(lname, forKey: "lname")
     }
     
     //Funcion para obtener el fname del usuario logado
     static func obtenerLname() -> String{
         var lname = ""
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let aLname = defaults.stringForKey("lname"){
+        let defaults = UserDefaults.standard()
+        if let aLname = defaults.string(forKey: "lname"){
             lname = aLname
         }
         return lname
     }
     
     //Funcion para decodificar el video a un NSData
-    static func decodificarVideo(videoBase64:String) -> NSData?{
-        return NSData(base64EncodedString: videoBase64, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+    static func decodificarVideo(_ videoBase64:String) -> Data?{
+        return Data(base64Encoded: videoBase64, options: .encodingEndLineWithCarriageReturn)
     }
     
     //Metodo para modificar la apariencia
-    static func customAppear(vc:UIViewController){
+    static func customAppear(_ vc:UIViewController){
         vc.navigationController?.navigationBar.barTintColor = Colors.returnRedConverfit()
-        vc.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        vc.navigationController?.navigationBar.tintColor = UIColor.white()
         vc.view.backgroundColor = Colors.returnGrisFondo()
     }
 }

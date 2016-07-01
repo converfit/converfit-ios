@@ -13,7 +13,7 @@ class visorPdfController: UIViewController,UIWebViewDelegate, UIDocumentInteract
     @IBOutlet weak var web: UIWebView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
-    var pdfData:NSData?
+    var pdfData:Data?
     var urlString = ""
     var titulo = ""
     var docContr:UIDocumentInteractionController?
@@ -24,25 +24,26 @@ class visorPdfController: UIViewController,UIWebViewDelegate, UIDocumentInteract
         web.delegate = self
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        dispatch_async(dispatch_get_global_queue(
-            Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)) {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.pdfData = NSData(contentsOfURL: NSURL(string: self.urlString)!)
-                    self.web.loadData(self.pdfData!, MIMEType: "application/pdf", textEncodingName: "utf-8", baseURL: NSURL())
+        DispatchQueue.global(
+            attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(Int(DispatchQueueAttributes.qosUserInteractive.rawValue)))).async {
+                DispatchQueue.main.async(execute: { () -> Void in
+                    self.pdfData = try? Data(contentsOf: URL(string: self.urlString)!)
+                    //self.web.load(self.pdfData!, mimeType: "application/pdf", textEncodingName: "utf-8", baseURL: URL())
+                    self.web.load(self.pdfData!, mimeType: "application/pdf", textEncodingName: "utf-8", baseURL: URL(string: "")!)
                     self.automaticallyAdjustsScrollViewInsets = false
                 })
         }
 
         let rightButton = UIBarButtonItem()
         rightButton.title = "Guardar"
-        rightButton.style = .Plain
+        rightButton.style = .plain
         rightButton.target = self
-        rightButton.action = "saveIbooks"
+        rightButton.action = #selector(self.saveIbooks)
         
         navigationItem.rightBarButtonItem = rightButton
-        self.tabBarController?.tabBar.hidden = true
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,22 +53,24 @@ class visorPdfController: UIViewController,UIWebViewDelegate, UIDocumentInteract
 
     //MARK:- Utils
     func applicationDocumentsDirectory() -> NSString {//En esta funcion obtenemos la ruta temporal donde guardar nuestro archivo
-        return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
     }
     
     func saveIbooks(){
-        let urlPDF = NSURL(string: urlString)
-        //let filePath = applicationDocumentsDirectory().stringByAppendingPathComponent(urlString.lastPathComponent)
-        let filePath = applicationDocumentsDirectory().stringByAppendingPathComponent((urlPDF?.lastPathComponent)!)
-        pdfData?.writeToFile(filePath, atomically: true)
+        let urlPDF = URL(string: urlString)
+        let filePath = applicationDocumentsDirectory().appendingPathComponent((urlPDF?.lastPathComponent)!)
+        //pdfData?.write(to: filePath, options: true)
+        if let pathURL = URL(string: filePath){
+            try! pdfData?.write(to: pathURL)
+        }
         
-        docContr = UIDocumentInteractionController(URL: NSURL(fileURLWithPath: filePath))
+        docContr = UIDocumentInteractionController(url: URL(fileURLWithPath: filePath))
         docContr?.delegate = self
-        docContr?.presentOpenInMenuFromRect(self.view.bounds, inView: self.view, animated: true)
+        docContr?.presentOpenInMenu(from: self.view.bounds, in: self.view, animated: true)
     }
     
     //MARK:- WebViewDelegate
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         indicator.stopAnimating()
     }
     

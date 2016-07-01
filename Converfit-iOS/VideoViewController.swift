@@ -10,7 +10,7 @@ import UIKit
 
 class VideoViewController: UIViewController, UIWebViewDelegate {
     
-    var dataVideo: NSData?
+    var dataVideo: Data?
     var messageKey = ""
     @IBOutlet weak var webView: UIWebView!
 
@@ -19,7 +19,7 @@ class VideoViewController: UIViewController, UIWebViewDelegate {
         // Do any additional setup after loading the view.
         webView.delegate = self
         mostrarVideo()
-        self.tabBarController?.tabBar.hidden = true
+        self.tabBarController?.tabBar.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,16 +28,18 @@ class VideoViewController: UIViewController, UIWebViewDelegate {
     }
 
     func applicationDocumentsDirectory() -> NSString {//En esta funcion obtenemos la ruta temporal donde guardar nuestro archivo
-        return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
     }
     
     func mostrarVideo(){
-        let filePath = applicationDocumentsDirectory().stringByAppendingPathComponent("\(messageKey).mp4")
-        dataVideo?.writeToFile(filePath, atomically: true)
+        let filePath = applicationDocumentsDirectory().appendingPathComponent("\(messageKey).mp4")
+        if let pathURL = URL(string: filePath){
+            try! dataVideo?.write(to: pathURL)
+        }
         
-        let url = NSURL(fileURLWithPath: filePath)
-        let request = NSMutableURLRequest(URL: url)
-        self.webView.loadRequest(request)
+        let url = URL(fileURLWithPath: filePath)
+        let request = NSMutableURLRequest(url: url)
+        self.webView.loadRequest(request as URLRequest)
     }
     
 }

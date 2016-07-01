@@ -22,12 +22,12 @@ class ContainerVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Tab bar controller's child pages have a top-left button toggles the menu
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "toggleMenu", name: notificationToggleMenu, object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(self.toggleMenu), name: notificationToggleMenu, object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
            // self.toggleMenu()
         }
     }
@@ -37,7 +37,7 @@ class ContainerVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == tabBarSegue){
             let tabBar = segue.destinationViewController as? UITabBarController
             tabBar?.selectedIndex = 0
@@ -45,7 +45,7 @@ class ContainerVC: UIViewController {
     }
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+        return .lightContent
     }
     
     //MARK: - Mostrar u ocultar el menu
@@ -61,6 +61,6 @@ class ContainerVC: UIViewController {
     // Open is the natural state of the menu because of how the storyboard is setup.
     func openMenu(){
         miScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        NSNotificationCenter.defaultCenter().postNotificationName(notificationsOpenDrawerMenu, object: nil)
+        NotificationCenter.default().post(name: Notification.Name(rawValue: notificationsOpenDrawerMenu), object: nil)
     }
 }

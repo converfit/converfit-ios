@@ -15,22 +15,21 @@ class LogOut {
         let sessionKey = Utils.getSessionKey()
         let params = "action=logout&session_key=\(sessionKey)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("access")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let logOutTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let logOutTask = session.dataTask(with: request) { (data, response, error) -> Void in
                 guard data != nil else {
                     print("no data found: \(error)")
                     return
                 }
                 
                 do {
-                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                        if let resultCode = json.objectForKey("result") as? Int{
-                            if(resultCode == 1){
+                    if let json = try JSONSerialization.jsonObject(with: data!, options: [JSONSerialization.ReadingOptions.mutableContainers]) as? Dictionary<String, AnyObject> {
+                        let resultCode = json["result"] as? Int ?? 0
+                        if(resultCode == 1){
                             //LogOutCorrecto
-                            }
                         }
                     }
                 } catch{
@@ -43,14 +42,14 @@ class LogOut {
     //Funcion para cuando la sessionKey no es valida te desloguea
     static func desLoguearBorrarDatos(){
         //Borramos el badgeIcon de la App
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        UIApplication.shared().applicationIconBadgeNumber = 0
         //Borramos el sessionkey que teniamos guardado
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.removeObjectForKey("session_key")
-        defaults.removeObjectForKey("last_update")
-        defaults.removeObjectForKey("last_update_follower")
-        defaults.removeObjectForKey("conversations_last_update")
-        defaults.removeObjectForKey("last_update_brands_notifications")
+        let defaults = UserDefaults.standard()
+        defaults.removeObject(forKey: "session_key")
+        defaults.removeObject(forKey: "last_update")
+        defaults.removeObject(forKey: "last_update_follower")
+        defaults.removeObject(forKey: "conversations_last_update")
+        defaults.removeObject(forKey: "last_update_brands_notifications")
         borrarAllCoreData()
         irPantallaLogin = false
         myTimerLeftMenu.invalidate()
@@ -58,14 +57,14 @@ class LogOut {
     
     //Funcion para borarr los datos de CoreData
     static func borrarAllCoreData(){
-        Conversation.borrarAllConversations()
-        User.borrarAllUsers()
-        Messsage.borrarAllMessages()
-        TimeLine.borrarAllPost()
+        _=Conversation.borrarAllConversations()
+        _=User.borrarAllUsers()
+        _=Messsage.borrarAllMessages()
+        _=TimeLine.borrarAllPost()
     }
 
     //Funcion para comprobar si nos deslogueamos segun el errorCode
-    static func comprobarDesloguear(errorCode:String) -> Bool{
+    static func comprobarDesloguear(_ errorCode:String) -> Bool{
         var desloguear = false
         
         switch errorCode{

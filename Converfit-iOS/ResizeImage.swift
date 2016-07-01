@@ -12,7 +12,7 @@ class ResizeImage {
     
     //Funciones para redimensionar la foto
     
-    func RedimensionarImagen(image: UIImage) -> UIImage? {
+    func RedimensionarImagen(_ image: UIImage) -> UIImage? {
         let originalWidth  = image.size.width
         let originalHeight = image.size.height
         
@@ -24,20 +24,20 @@ class ResizeImage {
         let posX = (originalWidth  - edgeX) / 2.0
         let posY = (originalHeight - edgeY) / 2.0
         
-        let cropSquare = CGRectMake(posX, posY, edgeX, edgeY)
+        let cropSquare = CGRect(x: posX, y: posY, width: edgeX, height: edgeY)
         
-        let imageRef = CGImageCreateWithImageInRect(image.CGImage, cropSquare);
+        let imageRef = image.cgImage?.cropping(to: cropSquare);
         
         
         //Comprimimos la imagen para bajar el peso
-        let imagenAux = UIImage(CGImage: imageRef!, scale: image.scale, orientation: image.imageOrientation)
+        let imagenAux = UIImage(cgImage: imageRef!, scale: image.scale, orientation: image.imageOrientation)
         let dataImage = UIImageJPEGRepresentation(imagenAux, 0.5)//Usamos un 0.5 de compresion
         let imagenFinal = UIImage(data: dataImage!)
         
         return imagenFinal
     }
     
-    func RedimensionarImagenContamaño(image: UIImage?, targetSize: CGSize) -> UIImage? {
+    func RedimensionarImagenContamaño(_ image: UIImage?, targetSize: CGSize) -> UIImage? {
         if let image = image {
             let size = image.size
             
@@ -47,22 +47,22 @@ class ResizeImage {
             // Comprobamos si es mas alto que ancho para el recuadro que usaremos
             var newSize: CGSize
             if(widthRatio > heightRatio) {
-                newSize = CGSizeMake(size.width * heightRatio, size.height * heightRatio)
+                newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
             } else {
-                newSize = CGSizeMake(size.width * widthRatio,  size.height * widthRatio)
+                newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
             }
             
             // Creamos el CGRect con los valores que obtuvimos antes
-            let rect = CGRectMake(0, 0, newSize.width, newSize.height)
+            let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
             
             // Actually do the resizing to the rect using the ImageContext stuff
             UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-            image.drawInRect(rect)
+            image.draw(in: rect)
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             
             //Comprimimos la imagen para bajar el peso
-            let imagenAux = UIImage(CGImage: newImage.CGImage!, scale: image.scale, orientation: image.imageOrientation)
+            let imagenAux = UIImage(cgImage: (newImage?.cgImage!)!, scale: image.scale, orientation: image.imageOrientation)
             let dataImage = UIImageJPEGRepresentation(imagenAux, 1)//Usamos un 0.5 de compresion
             let imagenFinal = UIImage(data: dataImage!)
             
@@ -72,12 +72,12 @@ class ResizeImage {
         }
     }
     
-    func devolverTamaño(miImagen:UIImage) -> (Bool,CGSize?){
+    func devolverTamaño(_ miImagen:UIImage) -> (Bool,CGSize?){
         var tamaño:CGSize?
         var reducir: Bool = false
         
-        let anchoPantalla = UIScreen.mainScreen().bounds.size.width
-        let largoPantalla = UIScreen.mainScreen().bounds.size.height
+        let anchoPantalla = UIScreen.main().bounds.size.width
+        let largoPantalla = UIScreen.main().bounds.size.height
         
         let originalWidth  = miImagen.size.width
         let originalHeight = miImagen.size.height
@@ -85,21 +85,21 @@ class ResizeImage {
         if originalWidth > originalHeight {
             if(originalWidth > anchoPantalla){
                 reducir = true
-                tamaño = CGSizeMake(largoPantalla * 2, anchoPantalla * 2)
+                tamaño = CGSize(width: largoPantalla * 2, height: anchoPantalla * 2)
             }
         }else{
             if(originalHeight > largoPantalla){
                 reducir = true
-                tamaño = CGSizeMake(anchoPantalla * 2, largoPantalla * 2)
+                tamaño = CGSize(width: anchoPantalla * 2, height: largoPantalla * 2)
             }
         }
         return (reducir ,tamaño)
     }
     
     //Funcion para decodificar una imagen a partir de un String
-    static func decodificarImagen (dataImage:String) -> UIImage{
-        if let decodedData = NSData(base64EncodedString: dataImage, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters){
-            if(decodedData.length > 0){
+    static func decodificarImagen (_ dataImage:String) -> UIImage{
+        if let decodedData = Data(base64Encoded: dataImage, options: .encodingEndLineWithCarriageReturn){
+            if(decodedData.count > 0){
                 return UIImage(data: decodedData)!
             }
             else{

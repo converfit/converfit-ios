@@ -29,11 +29,11 @@ class LoginController: UIViewController {
     @IBOutlet weak var verticalCenterYconstrait: NSLayoutConstraint!
     
     //MARK: - Actions
-    @IBAction func viewContainerTap(sender: AnyObject) {
+    @IBAction func viewContainerTap(_ sender: AnyObject) {
         dissmisKeyBoard()
     }
     
-    @IBAction func tryLogin(sender: AnyObject) {
+    @IBAction func tryLogin(_ sender: AnyObject) {
         dissmisKeyBoard()
         if(checkFormats()){//formats ok... call the WS
             login()
@@ -48,23 +48,23 @@ class LoginController: UIViewController {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         irPantallaLogin = false
         roundViews()
         addTapActions()
         startObservingKeyBoard()
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopObservingKeyBoard()
         verticalCenterYconstrait.constant = 0
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+        return .lightContent
     }
     
     //MARK: - KeyBoard
@@ -81,20 +81,20 @@ class LoginController: UIViewController {
     //MARK: - Add Tap Actions
     func addTapActions(){
         let tapSingUpLabel =  UITapGestureRecognizer()
-        tapSingUpLabel.addTarget(self, action: "tappedSignUp")
+        tapSingUpLabel.addTarget(self, action: #selector(self.tappedSignUp))
         singUpLabel.addGestureRecognizer(tapSingUpLabel)
         
         let tapLostPasswordLabel = UITapGestureRecognizer()
-        tapLostPasswordLabel.addTarget(self, action: "tappedLostPassword")
+        tapLostPasswordLabel.addTarget(self, action: #selector(self.tappedLostPassword))
         lostPasswordLabel.addGestureRecognizer(tapLostPasswordLabel)
     }
     
     func tappedSignUp(){//Show singUp converfit web
-        performSegueWithIdentifier(createUserSegue, sender: self)
+        performSegue(withIdentifier: createUserSegue, sender: self)
     }
     
     func tappedLostPassword(){//Show recover_password converfit web
-        performSegueWithIdentifier(recoverPasswordSegue, sender: self)
+        performSegue(withIdentifier: recoverPasswordSegue, sender: self)
     }
     
     //MARK: - Check Formats
@@ -115,10 +115,10 @@ class LoginController: UIViewController {
     
     //MARK: - Show Alert
     func showAlert(){
-        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         alert.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
         if(showAppleStore){
-            alert.addAction(UIAlertAction(title: "IR A APP STORE", style: .Default, handler: { (action) -> Void in
+            alert.addAction(UIAlertAction(title: "IR A APP STORE", style: .default, handler: { (action) -> Void in
                 //Falta implementar el boto para mostrar pero de momento no tenemos id
                 print("IR A APP STORE")/*
                 let url  = NSURL(string: "itms-apps://itunes.apple.com/app/id1024941703")
@@ -127,9 +127,9 @@ class LoginController: UIViewController {
                 }*/
             }))
         }else{
-            alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler:nil))
+            alert.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler:nil))
         }
-        self.presentViewController(alert, animated: true) { () -> Void in
+        self.present(alert, animated: true) { () -> Void in
             self.alertTitle = ""
             self.alertMessage = ""
         }
@@ -141,73 +141,59 @@ class LoginController: UIViewController {
         let params = "action=login&email=\(emailTxt.text!)&password=\(passwordTxt.text!)&device_key=\(deviceKey)&system=\(sistema)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("access")
         
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
         
-        let loginTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        let loginTask = session.dataTask(with: request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
             }
             
             do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                    if let resultCode = json.objectForKey("result") as? Int{
-                        if(resultCode == 1){
-                            if let dataJSON = json.objectForKey("data") as? NSDictionary{
-                                if let sessionKey = dataJSON.objectForKey("session_key") as? String{
-                                    Utils.saveSessionKey(sessionKey)
-                                }
-                                if let lastUpdate = dataJSON.objectForKey("last_update") as? String{
-                                    Utils.saveLastUpdate(lastUpdate)
-                                }
-                                //Obtenemos los datos del admin para el lname y fname
-                                if let admin = dataJSON.objectForKey("admin") as? NSDictionary{
-                                    //Obtenemos el id del admin logado
-                                    if let id = admin.objectForKey("id_admin") as? String{
-                                        Utils.guardarIdLogin(id)
-                                    }
-                                    
-                                    //Obtenemos el fname
-                                    if let fname = admin.objectForKey("fname") as? String{
-                                        Utils.guardarFname(fname)
-                                    }
-                                    //Obtenemos el lame
-                                    if let lname = admin.objectForKey("lname") as? String{
-                                        Utils.guardarLname(lname)
-                                    }
-                                }
-
-                    
+                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                            let sessionKey = dataResultado["session_key"] as? String ?? ""
+                            Utils.saveSessionKey(sessionKey)
+                            let lastUpdate = dataResultado["last_update"] as? String ?? ""
+                            Utils.saveLastUpdate(lastUpdate)
+                            if let admin = dataResultado["admin"] as? Dictionary<String, AnyObject>{
+                                let id = admin["id_admin"] as? String ?? "0"
+                                Utils.guardarIdLogin(id)
+                                let fname = admin["fname"] as? String ?? ""
+                                Utils.guardarFname(fname)
+                                let lname = admin["lname"] as? String ?? ""
+                                Utils.guardarLname(lname)
                                 //Show the tabBar
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                DispatchQueue.main.async(execute: { () -> Void in
                                     //Borramos los datos que tuvieramos introducimos
                                     self.emailTxt.text = ""
                                     self.passwordTxt.text = ""
-                                    self.performSegueWithIdentifier("loginSegue", sender: self)
+                                    self.performSegue(withIdentifier: "loginSegue", sender: self)
                                     PostServidor.getStatusChat()
                                 })
                             }
-                        }else{
-                            if let errorCode = json.objectForKey("error_code") as? String{
-                                (self.alertTitle, self.alertMessage) = Utils.returnTitleAndMessageAlert(errorCode)
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    self.showAlert()
-                                })
-                            }
                         }
+                    }else{
+                        let errorCode = json["error_code"] as? String ?? ""
+                        (self.alertTitle, self.alertMessage) = Utils.returnTitleAndMessageAlert(errorCode)
+                        DispatchQueue.main.async(execute: { () -> Void in
+                            self.showAlert()
+                        })
                     }
                 } else {
                     (self.alertTitle, self.alertMessage) = Utils.returnTitleAndMessageAlert("default")
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DispatchQueue.main.async(execute: { () -> Void in
                         self.showAlert()
                     })
                 }
             } catch{
                 (self.alertTitle, self.alertMessage) = Utils.returnTitleAndMessageAlert("default")
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     self.showAlert()
                 })
             }
@@ -216,7 +202,7 @@ class LoginController: UIViewController {
     }
     
     //MARK: - PrepareForSegue
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         /*if(segue.identifier == "loginSegue"){
             let tabBar = segue.destinationViewController as? UITabBarController
             tabBar?.selectedIndex = 2
@@ -226,29 +212,29 @@ class LoginController: UIViewController {
     //MARK: - Ocultar teclado
     func startObservingKeyBoard(){
         //Funcion para darnos de alta como observador en las notificaciones de teclado
-        let nc:NSNotificationCenter = NSNotificationCenter.defaultCenter()
-        nc.addObserver(self, selector: "notifyThatKeyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
-        nc.addObserver(self, selector: "notifyThatKeyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)
+        let nc:NotificationCenter = NotificationCenter.default()
+        nc.addObserver(self, selector: #selector(self.notifyThatKeyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        nc.addObserver(self, selector: #selector(self.notifyThatKeyboardWillDisappear(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     //Funcion para darnos de alta como observador en las notificaciones de teclado
     func stopObservingKeyBoard(){
-        let nc:NSNotificationCenter = NSNotificationCenter.defaultCenter()
+        let nc:NotificationCenter = NotificationCenter.default()
         nc.removeObserver(self)
     }
     
     //Funcion que se ejecuta cuando aparece el teclado
-    func notifyThatKeyboardWillAppear(notification:NSNotification){
+    func notifyThatKeyboardWillAppear(_ notification:Notification){
         verticalCenterYconstrait.constant = -100
-        UIView.animateWithDuration(0.25, animations:  {
+        UIView.animate(withDuration: 0.25, animations:  {
             self.view.layoutIfNeeded()
         })
     }
     
     //Funcion que se ejecuta cuando desaparece el teclado
-    func notifyThatKeyboardWillDisappear(notification:NSNotification){
+    func notifyThatKeyboardWillDisappear(_ notification:Notification){
         verticalCenterYconstrait.constant = 0
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
     }

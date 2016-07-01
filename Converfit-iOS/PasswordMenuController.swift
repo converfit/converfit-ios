@@ -18,54 +18,54 @@ class PasswordMenuController: UIViewController {
     
     
     //MARK: - LifeCycle
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         modificarUI()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(self.cambiarBadge), name:notificationChat, object: nil)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
+        NotificationCenter.default().removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
     }
     
     //Funcion para cambiar el badge cuando nos llega una notificacion
     func cambiarBadge(){
         let tabArray =  self.tabBarController?.tabBar.items as NSArray!
-        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         let numeroMensajesSinLeer = Conversation.numeroMensajesSinLeer()
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
             if(numeroMensajesSinLeer > 0){
                 tabItem.badgeValue = "\(numeroMensajesSinLeer)"
-                UIApplication.sharedApplication().applicationIconBadgeNumber = numeroMensajesSinLeer
+                UIApplication.shared().applicationIconBadgeNumber = numeroMensajesSinLeer
             }else{
                 tabItem.badgeValue = nil
-                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+                UIApplication.shared().applicationIconBadgeNumber = 0
             }
         })
     }
     
     func modificarUI(){
-        self.tabBarController?.tabBar.hidden = true
-        miTablaPersonalizada.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.tabBar.isHidden = true
+        miTablaPersonalizada.backgroundColor = UIColor.clear()
         //Creamos un footer con un UIView para eliminar los separator extras
         miTablaPersonalizada.tableFooterView = UIView()
     }
     
     //UITableView Methods
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
-    internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    internal func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
         var textoCelda = ""
-        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath)
-        if (cell == nil){
+        var cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        if cell == nil{
             //No teniamos ninguna celda y tenemos que crearla
-            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: cellId)
+            cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: cellId)
         }
         //Como solo tendremos dos filas ponemos a cada uno el titulo que le corresponda
-        if(indexPath.row == 0){
+        if indexPath.row == 0{
             textoCelda = "Cambiar contraseña"
         }else{
             textoCelda = "Recuperar contraseña"
@@ -74,11 +74,11 @@ class PasswordMenuController: UIViewController {
         return cell!
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(indexPath.row == 0){
-            performSegueWithIdentifier("changePasswordSegue", sender: self)
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+        if indexPath.row == 0{
+            performSegue(withIdentifier: "changePasswordSegue", sender: self)
         }else{
-            performSegueWithIdentifier("recuPassSegue", sender: self)
+            performSegue(withIdentifier: "recuPassSegue", sender: self)
         }
     }
 }

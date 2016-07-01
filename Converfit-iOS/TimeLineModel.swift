@@ -21,7 +21,7 @@ class TimeLineModel {
         self.init()
         userKey = modelo.userKey
         //Tenemos que convertir la imagen que nos descargamos a UImage
-        if let foto = UIImage(data: modelo.userAvatar) {
+        if let foto = UIImage(data: modelo.userAvatar as Data) {
             avatar = foto
         }
         userName = modelo.userName

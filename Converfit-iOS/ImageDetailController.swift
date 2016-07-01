@@ -23,11 +23,11 @@ class ImageDetailController: UIViewController,UIScrollViewDelegate {
         imagenGrande.image = imagenMostrada
         self.automaticallyAdjustsScrollViewInsets = false
         
-        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "scrollViewDoubleTapped:")
+        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewDoubleTapped(_:)))
         doubleTapRecognizer.numberOfTapsRequired = 2
         doubleTapRecognizer.numberOfTouchesRequired = 1
         miScroll.addGestureRecognizer(doubleTapRecognizer)
-        self.tabBarController?.tabBar.hidden = true
+        self.tabBarController?.tabBar.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,14 +35,14 @@ class ImageDetailController: UIViewController,UIScrollViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imagenGrande
     }
     
     //Con un dobleTap volvemos al tamaño original de la foto
-    func scrollViewDoubleTapped(recognizer: UITapGestureRecognizer) {
+    func scrollViewDoubleTapped(_ recognizer: UITapGestureRecognizer) {
         // 1
-        let pointInView = recognizer.locationInView(imagenGrande)
+        let pointInView = recognizer.location(in: imagenGrande)
         
         // 2
         var newZoomScale = miScroll.zoomScale * 1.5
@@ -55,9 +55,9 @@ class ImageDetailController: UIViewController,UIScrollViewDelegate {
         let x = pointInView.x - (w / 2.0)
         let y = pointInView.y - (h / 2.0)
         
-        let rectToZoomTo = CGRectMake(x, y, w, h);
+        let rectToZoomTo = CGRect(x: x, y: y, width: w, height: h);
         
         // 4
-        miScroll.zoomToRect(rectToZoomTo, animated: true)
+        miScroll.zoom(to: rectToZoomTo, animated: true)
     }
 }

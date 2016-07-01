@@ -33,9 +33,8 @@ class ConversationsModel {
         connectionStatus = modelo.conectionStatus
         
         //Tenemos que convertir la imagen que nos descargamos a UImage
-        if let foto = UIImage(data: modelo.avatar) {
+        if let foto = UIImage(data: modelo.avatar as Data) {
             avatar = foto
         }
-    
     }
 }

@@ -25,29 +25,29 @@ class RecuperarPassController: UIViewController {
         super.viewDidLoad()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         modificarUI()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "cambiarBadge", name:notificationChat, object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(self.cambiarBadge), name:notificationChat, object: nil)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationChat, object: nil)
+        NotificationCenter.default().removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
     }
     
     //Funcion para cambiar el badge cuando nos llega una notificacion
     func cambiarBadge(){
         let tabArray =  self.tabBarController?.tabBar.items as NSArray!
-        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         let numeroMensajesSinLeer = Conversation.numeroMensajesSinLeer()
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
             if(numeroMensajesSinLeer > 0){
                 tabItem.badgeValue = "\(numeroMensajesSinLeer)"
-                UIApplication.sharedApplication().applicationIconBadgeNumber = numeroMensajesSinLeer
+                UIApplication.shared().applicationIconBadgeNumber = numeroMensajesSinLeer
             }else{
                 tabItem.badgeValue = nil
-                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+                UIApplication.shared().applicationIconBadgeNumber = 0
             }
         })
     }
@@ -60,10 +60,10 @@ class RecuperarPassController: UIViewController {
     //Creamos los botones de la barra de navegacion
     func crearBotonesBarraNavegacion(){
         rightButton.title = "Recuperar Contraseña"
-        rightButton.style = .Plain
+        rightButton.style = .plain
         rightButton.target = self
-        rightButton.enabled = true
-        rightButton.action = "recuPass"
+        rightButton.isEnabled = true
+        rightButton.action = #selector(self.recuPass)
         navigationItem.rightBarButtonItem = rightButton
     }
     
@@ -81,24 +81,24 @@ class RecuperarPassController: UIViewController {
             mensajeAlert = "Siga las instrucciones que se indican en el correo para recuperar la contraseña. Puede que el correo llegue a su cuenta de Spam."
         }
         
-        let alertError = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.Alert)
+        let alertError = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.alert)
         alertError.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
         if(desLoguear){
             desLoguear = false
             myTimerLeftMenu.invalidate()
-            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
+            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { (action) -> Void in
                 LogOut.desLoguearBorrarDatos()
                 //self.navigationController?.popToRootViewControllerAnimated(false)
-                self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+                self.presentingViewController!.dismiss(animated: true, completion: nil)
             }))
         }else{
-            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { action in
+            alertError.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { action in
                 
             }))
         }
         //mostramos el alert
-        self.presentViewController(alertError, animated: true) { () -> Void in
+        self.present(alertError, animated: true) { () -> Void in
             self.tituloAlert = ""
             self.mensajeAlert = ""
         }
@@ -108,33 +108,30 @@ class RecuperarPassController: UIViewController {
         let sessionKey = Utils.getSessionKey()
         let params = "action=recover_password&session_key=\(sessionKey)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("access")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let recuperarPasswordTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let recuperarPasswordTask = session.dataTask(with: request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
             }
             
             do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                    if let resultCode = json.objectForKey("result") as? Int{
-                        if(resultCode == 1){
-                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                if let lastUpdate = dataResultado.objectForKey("last_update") as? String{
-                                    Utils.saveLastUpdate(lastUpdate)
-                                }
-                            }
-                        }else{
-                            self.formatoCamposOk = false
-                            if let codigoError = json.objectForKey("error_code") as? String{
-                                self.desLoguear = LogOut.comprobarDesloguear(codigoError)
-                                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                self.mostrarAlerta()
-                            }
+                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                            let lastUpdate = dataResultado["last_update"] as? String ?? ""
+                            Utils.saveLastUpdate(lastUpdate)
                         }
+                    }else{
+                        self.formatoCamposOk = false
+                        let codigoError = json["error_code"] as? String ?? ""
+                        self.desLoguear = LogOut.comprobarDesloguear(codigoError)
+                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                        self.mostrarAlerta()
                     }
                 }
             } catch{

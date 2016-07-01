@@ -18,17 +18,17 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
     var listadoUsersConectados = [UserModel]()
     var listadoUsersAPP = [UserModel]()
     var datosRecibidosServidor = false
-    var alertCargando = UIAlertController(title: "", message: "Cargando...", preferredStyle: .Alert)
-    var spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+    var alertCargando = UIAlertController(title: "", message: "Cargando...", preferredStyle: .alert)
+    var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     var tamañoLista = 0
     var desLoguear = false
     var mostrarAlert = true
     var isSubBrand = false
     let segueShowMessageUserChat = "showMessageUserChat"
-    var indexSeleccionado:NSIndexPath?
+    var indexSeleccionado:IndexPath?
     var numeroUsuarioConectados = 0
     var numeroUsuariosAPP = 0
-    var myTimer = NSTimer.init()
+    var myTimer = Timer.init()
     
     //MARK: - Outlets
     @IBOutlet weak var miTablaPersonalizada: UITableView!
@@ -39,9 +39,9 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        myTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recuperarUserServidorTimer", userInfo: nil, repeats: true)
+        myTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.recuperarUserServidorTimer), userInfo: nil, repeats: true)
         self.editButtonItem().title = "Editar"
         if(vieneDeListadoMensajes){
             self.tabBarController?.selectedIndex = 2
@@ -63,7 +63,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         //}
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         miSearchBar.showsCancelButton = false
         resetContexto()
@@ -92,43 +92,43 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
     //Funcion para cambiar el badge cuando nos llega una notificacion
     func cambiarBadge(){
         let tabArray =  self.tabBarController?.tabBar.items as NSArray!
-        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         let numeroMensajesSinLeer = Conversation.numeroMensajesSinLeer()
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
             if(numeroMensajesSinLeer > 0){
                 tabItem.badgeValue = "\(numeroMensajesSinLeer)"
-                UIApplication.sharedApplication().applicationIconBadgeNumber = numeroMensajesSinLeer
+                UIApplication.shared().applicationIconBadgeNumber = numeroMensajesSinLeer
             }else{
                 tabItem.badgeValue = nil
-                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+                UIApplication.shared().applicationIconBadgeNumber = 0
             }
         })
     }
     
     func modificarUI(){
         miTablaPersonalizada.tableFooterView = UIView()
-        miTablaPersonalizada.backgroundColor = UIColor.clearColor()
+        miTablaPersonalizada.backgroundColor = UIColor.clear()
     }
     
     func mostrarAlerta(){
         self.view.endEditing(true)
-        let alert = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: tituloAlert, message: mensajeAlert, preferredStyle: UIAlertControllerStyle.alert)
         alert.view.tintColor = UIColor(red: 193/255, green: 24/255, blue: 20/255, alpha: 1)
         //Añadimos un bonton al alert y lo que queramos que haga en la clausur
         if(desLoguear){
             desLoguear = false
             myTimerLeftMenu.invalidate()
-            alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler: { (action) -> Void in
+            alert.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler: { (action) -> Void in
                 LogOut.desLoguearBorrarDatos()
                 //self.navigationController?.popToRootViewControllerAnimated(false)
-                self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+                self.presentingViewController!.dismiss(animated: true, completion: nil)
             }))
         }else{
             //Añadimos un bonton al alert y lo que queramos que haga en la clausur
-            alert.addAction(UIAlertAction(title: "ACEPTAR", style: .Default, handler:nil))
+            alert.addAction(UIAlertAction(title: "ACEPTAR", style: .default, handler:nil))
         }
         //mostramos el alert
-        self.navigationController?.presentViewController(alert, animated: true) { () -> Void in
+        self.navigationController?.present(alert, animated: true) { () -> Void in
             self.tituloAlert = ""
             self.mensajeAlert = ""
         }
@@ -140,70 +140,55 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         let usersLastUpdate = Utils.getLastUpdateFollower()
         let params = "action=list_users&session_key=\(sessionKey)&users_last_update=\(usersLastUpdate)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("brands")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let recuperarUsersTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let recuperarUsersTask = session.dataTask(with: request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
             }
             
             do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                    if let resultCode = json.objectForKey("result") as? Int{
-                        if(resultCode == 1){
-                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                //Guardamos el last update de favoritos
-                                if let lastUpdate = dataResultado.objectForKey("users_last_update") as? String{
-                                    Utils.saveLastUpdateFollower(lastUpdate)
-                                }
-                                //Obtenemos el need_to_update para ver si hay que actualizar la lista o no
-                                if let needUpdate = dataResultado.objectForKey("need_to_update") as? Bool{
-                                    if(needUpdate){
-                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            if let listaUsuarios = dataResultado.objectForKey("users") as? NSArray{
-                                                User.borrarAllUsers()
-                                                //Llamamos por cada elemento del array de empresas al constructor
-                                                for dict in listaUsuarios{
-                                                    _=User(aDict: dict as! NSDictionary)
-                                                }
-                                            }
-                                            self.datosRecibidosServidor = true
-                                            //self.listadoUsers = User.devolverListaUsers()
-                                            self.listadoUsersConectados = User.devolverUsuariosConectados()
-                                            self.numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
-                                            self.numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
-                                            self.listadoUsersAPP = User.devolverUsuariosAPP()
-                                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                                self.miTablaPersonalizada.reloadData()
-                                            })
-                                        })
+                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                            let lastUpdate = dataResultado["users_last_update"] as? String ?? ""
+                            Utils.saveLastUpdateFollower(lastUpdate)
+                            let needUpdate = dataResultado["need_to_update"] as? Bool ?? true
+                            if needUpdate{
+                                DispatchQueue.main.async(execute: { () -> Void in
+                                    if let listaUsuarios = dataResultado["users"] as? [Dictionary<String, AnyObject>]{
+                                        _=User.borrarAllUsers()
+                                        //Llamamos por cada elemento del array de empresas al constructor
+                                        for dict in listaUsuarios{
+                                            _=User(aDict: dict)
+                                        }
                                     }
-                                }
-                            }
-                        }
-                        else{
-                            if let codigoError = json.objectForKey("error_code") as? String{
-                                self.datosRecibidosServidor = true
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    /*self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
-                                        
-                                    })*/
-                                    if(codigoError != "list_users_empty"){
-                                        self.desLoguear = LogOut.comprobarDesloguear(codigoError)
-                                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            self.mostrarAlerta()
-                                        })
-                                    }else{
-                                        self.mostrarAlert = false
-                                    }
+                                    self.datosRecibidosServidor = true
+                                    //self.listadoUsers = User.devolverListaUsers()
+                                    self.listadoUsersConectados = User.devolverUsuariosConectados()
+                                    self.numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
+                                    self.numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
+                                    self.listadoUsersAPP = User.devolverUsuariosAPP()
+                                    self.miTablaPersonalizada.reloadData()
                                 })
-                                
                             }
                         }
+                    }else{
+                        let codigoError = json["error_code"] as? String ?? ""
+                        self.datosRecibidosServidor = true
+                        DispatchQueue.main.async(execute: { () -> Void in
+                            if(codigoError != "list_users_empty"){
+                                self.desLoguear = LogOut.comprobarDesloguear(codigoError)
+                                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                                self.mostrarAlerta()
+                            }else{
+                                self.mostrarAlert = false
+                            }
+                        })
                     }
                 }
             } catch{
@@ -212,7 +197,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
                     
                 })*/
                 (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     self.mostrarAlerta()
                 })
             }
@@ -221,11 +206,11 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
     }
         
     //MARK: - Table
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if (section == 0){
             return "CONECTADOS"
         }else{
@@ -233,15 +218,15 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         }
     }
     
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
         let headerView = view as! UITableViewHeaderFooterView
         headerView.textLabel?.textColor = UIColor(red: 187/255, green: 187/255, blue: 187/255, alpha: 1)
-        headerView.textLabel?.font = UIFont.systemFontOfSize(16)
+        headerView.textLabel?.font = UIFont.systemFont(ofSize: 16)
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if(numeroUsuarioConectados == 0 && section == 0){
             return 0.0
         }else if(numeroUsuariosAPP == 0 && section == 1){
@@ -251,7 +236,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         }
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){
             return numeroUsuarioConectados
         }else{
@@ -259,10 +244,10 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellId) as! CeldaListadoFavoritos
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! CeldaListadoFavoritos
         var user:UserModel
-        if(indexPath.section == 0){
+        if indexPath.section == 0{
             user = listadoUsersConectados[indexPath.row]
         }else{
             user = listadoUsersAPP[indexPath.row]
@@ -272,11 +257,11 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         cell.lastPage.text = user.lastPageTitle
         cell.hora.text = Fechas.devolverTiempo(user.horaConectado)
         let conectionStatus = user.connectionStatus
-        if(conectionStatus == "online"){
+        if conectionStatus == "online"{
             cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Online")
-        }else if(conectionStatus == "offline"){
+        }else if conectionStatus == "offline"{
             cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Offline")
-        }else if(conectionStatus == "inactive"){
+        }else if conectionStatus == "inactive"{
             cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Inactive")
         }else{
             cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Mobile")
@@ -285,7 +270,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Limpiamos el texto que haya en el seachBar
         self.view.endEditing(true)
         miSearchBar.text = "";
@@ -294,13 +279,13 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         
         indexSeleccionado = indexPath
         
-        performSegueWithIdentifier(segueShowMessageUserChat, sender: self)
+        performSegue(withIdentifier: segueShowMessageUserChat, sender: self)
         
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         //Usamos este metodo para ver si el indexPath es igual a la ultima celda
-        if(indexPath.isEqual(tableView.indexPathsForVisibleRows?.last) && datosRecibidosServidor){
+        if((indexPath == tableView.indexPathsForVisibleRows?.last) && datosRecibidosServidor){
             datosRecibidosServidor = false
             spinner.stopAnimating()
             /*alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
@@ -309,7 +294,7 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == segueShowMessageUserChat){
             let indice = indexSeleccionado?.row
             var user:UserModel
@@ -341,13 +326,13 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
 //Extension para la gestion del SearcBar
 extension UsersChatControllerViewController: UISearchBarDelegate{
     //Funcion que se ejecuta cada vez que se cambia el texto de busqueda
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         var textoBuscado = searchBar.text!
         if(!Utils.quitarEspacios(textoBuscado).isEmpty){
             //listadoUsersConectados.removeAll(keepCapacity: false)
             //listadoUsersAPP.removeAll(keepCapacity: false)
             //Eliminamos los espacios al final del texto
-            textoBuscado = textoBuscado.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            textoBuscado = textoBuscado.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             listadoUsersConectados = User.buscarUserConectado(textoBuscado)
             listadoUsersAPP = User.buscarUserAPP(textoBuscado)
             numeroUsuarioConectados = listadoUsersConectados.count
@@ -368,17 +353,17 @@ extension UsersChatControllerViewController: UISearchBarDelegate{
     }
     
     //Funcion que se ejecuta cuando pulsamos en el boton Search
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.view.endEditing(true)
     }
     
-    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.showsCancelButton = true
         return true
     }
     
     //Funcion que se ejecuta cuando pulsamos en cancelar
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
         self.view.endEditing(true)
         if(!searchBar.text!.isEmpty){

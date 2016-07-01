@@ -36,17 +36,17 @@ class MessageModel {
         
         if(type == "jpeg_base64"){
             let imagenGrande = ResizeImage.decodificarImagen(content)
-            let tamaño = CGSizeMake(400, 400)
+            let tamaño = CGSize(width: 400, height: 400)
             miniImagen = ResizeImage().RedimensionarImagenContamaño(imagenGrande, targetSize: tamaño)
         }else if(type == "mp4_base64"){
             if(!content.isEmpty){
                 if let videoData = decodificarVideoBase64(content){
-                    if(videoData.length > 0){
-                        let filePath = applicationDocumentsDirectory().stringByAppendingPathComponent("\(messageKey).mp4")
-                        videoData.writeToFile(filePath, atomically: true)
-                        let url = NSURL(fileURLWithPath: filePath)
+                    if(videoData.count > 0){
+                        let filePath = applicationDocumentsDirectory().appendingPathComponent("\(messageKey).mp4")
+                        _=try? videoData.write(to: URL(fileURLWithPath: filePath), options: [.dataWritingAtomic])
+                        let url = URL(fileURLWithPath: filePath)
                         let imagenThumnail = generateThumnail(url)
-                        let tamaño = CGSizeMake(400, 400)
+                        let tamaño = CGSize(width: 400, height: 400)
                         miniImagen = ResizeImage().RedimensionarImagenContamaño(imagenThumnail, targetSize: tamaño)
                     }
                 }
@@ -55,36 +55,32 @@ class MessageModel {
     }
     
    //Inicializador con los datos que obtenemos de CoreData
-    convenience init(aDict:NSDictionary){
+    convenience init(aDict:Dictionary<String, AnyObject>){
         self.init()
-        messageKey =  aDict.objectForKey("message_key") as! String
-        conversationKey = aDict.objectForKey("converstation_key") as! String
-        sender = aDict.objectForKey("sender") as! String
-        created = aDict.objectForKey("created") as! String
-        content = aDict.objectForKey("content") as! String
-        type = aDict.objectForKey("type") as! String
-        let anEnviado = aDict.objectForKey("enviado") as! String
-        var enviadoString = "false"
-        if(anEnviado == "true"){
-            enviadoString = "true"
-        }
-        enviado = enviadoString
-        fname = aDict.objectForKey("fname") as! String
-        lname = aDict.objectForKey("lname") as! String
+        messageKey =  aDict["message_key"] as? String ?? ""
+        conversationKey = aDict["converstation_key"] as? String ?? ""
+        sender = aDict["sender"] as? String ?? ""
+        created = aDict["created"] as? String ?? ""
+        content = aDict["content"] as? String ?? ""
+        type = aDict["type"] as? String ?? ""
+        let anEnviado = aDict["enviado"] as? String ?? ""
+        enviado = (anEnviado == "true") ? "true" : "false"
+        fname = aDict["fname"] as? String ?? ""
+        lname = aDict["lname"] as? String ?? ""
         
-        if(type == "jpeg_base64"){
+        if type == "jpeg_base64"{
             let imagenGrande = ResizeImage.decodificarImagen(content)
-            let tamaño = CGSizeMake(400, 400)
+            let tamaño = CGSize(width: 400, height: 400)
             miniImagen = ResizeImage().RedimensionarImagenContamaño(imagenGrande, targetSize: tamaño)
-        }else if(type == "mp4_base64"){
-            if(!content.isEmpty){
+        }else if type == "mp4_base64"{
+            if !content.isEmpty{
                 if let videoData = decodificarVideoBase64(content){
-                    if(videoData.length > 0){
-                        let filePath = applicationDocumentsDirectory().stringByAppendingPathComponent("\(messageKey).mp4")
-                        videoData.writeToFile(filePath, atomically: true)
-                        let url = NSURL(fileURLWithPath: filePath)
+                    if videoData.count > 0{
+                        let filePath = applicationDocumentsDirectory().appendingPathComponent("\(messageKey).mp4")
+                        _=try? videoData.write(to: URL(fileURLWithPath: filePath), options: [.dataWritingAtomic])
+                        let url = URL(fileURLWithPath: filePath)
                         let imagenThumnail = generateThumnail(url)
-                        let tamaño = CGSizeMake(400, 400)
+                        let tamaño = CGSize(width: 400, height: 400)
                         miniImagen = ResizeImage().RedimensionarImagenContamaño(imagenThumnail, targetSize: tamaño)
                     }
                 }
@@ -92,16 +88,16 @@ class MessageModel {
         }
     }
     
-    func generateThumnail(url : NSURL) -> UIImage?{
+    func generateThumnail(_ url : URL) -> UIImage?{
         //let asset : AVAsset = AVAsset.assetWithURL(url)
-        let asset: AVAsset = AVAsset(URL: url)
+        let asset: AVAsset = AVAsset(url: url)
         let assetImgGenerate : AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)
         assetImgGenerate.appliesPreferredTrackTransform = true
         let time        : CMTime = CMTimeMake(1, 30)
-        let img         : CGImageRef
+        let img         : CGImage
         do {
-            try img = assetImgGenerate.copyCGImageAtTime(time, actualTime: nil)
-            let frameImg: UIImage = UIImage(CGImage: img)
+            try img = assetImgGenerate.copyCGImage(at: time, actualTime: nil)
+            let frameImg: UIImage = UIImage(cgImage: img)
             return frameImg
         } catch {
             
@@ -110,10 +106,10 @@ class MessageModel {
     }
     
     func applicationDocumentsDirectory() -> NSString {//En esta funcion obtenemos la ruta temporal donde guardar nuestro archivo
-        return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
     }
     
-    func decodificarVideoBase64(videoString:String) -> NSData?{
-        return NSData(base64EncodedString: videoString, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+    func decodificarVideoBase64(_ videoString:String) -> Data?{
+        return Data(base64Encoded: videoString, options: .encodingEndLineWithCarriageReturn)
     }
 }

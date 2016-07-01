@@ -8,7 +8,7 @@
 
 import UIKit
 var userKeyMenuSeleccionado = ""
-var myTimerLeftMenu = NSTimer.init()
+var myTimerLeftMenu = Timer.init()
 
 class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
     
@@ -17,7 +17,7 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     @IBOutlet weak var lblEstadoChat: UILabel!
     
     //MARK: - Actions
-    @IBAction func tapQuickOptions(sender: AnyObject) {
+    @IBAction func tapQuickOptions(_ sender: AnyObject) {
         let status = Utils.getStatusLeftMenu()
         if(status == "0"){
             showAlertSheet("Activar chat")
@@ -34,7 +34,7 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     var numeroUsuariosAPP = 0
     
     //MARK: - LifeCycle
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         modificarUI()
         checkStatusleftMenu()
@@ -44,14 +44,14 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
         miTablaPersonalizada.reloadData()
         recuperarUserServidor()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "openMenu", name:notificationsOpenDrawerMenu , object: nil)
-        myTimerLeftMenu = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recuperarUserServidorTimer", userInfo: nil, repeats: true)
+        NotificationCenter.default().addObserver(self, selector: #selector(self.openMenu), name:notificationsOpenDrawerMenu , object: nil)
+        myTimerLeftMenu = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.recuperarUserServidorTimer), userInfo: nil, repeats: true)
     }
     
     //MARK: - Utils
     func modificarUI(){
         miTablaPersonalizada.tableFooterView = UIView()
-        miTablaPersonalizada.backgroundColor = UIColor.clearColor()
+        miTablaPersonalizada.backgroundColor = UIColor.clear()
     }
     
     //MARK: - Check status left menu
@@ -81,49 +81,48 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     
     
     //MARK: - Show alertSheet
-    func showAlertSheet(titleAction:String){
-        let alertSheetMenu = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        alertSheetMenu.addAction(UIAlertAction(title: titleAction, style: .Default, handler: { (action) -> Void in
-            if(titleAction == "Activar chat"){
+    func showAlertSheet(_ titleAction:String){
+        let alertSheetMenu = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        alertSheetMenu.addAction(UIAlertAction(title: titleAction, style: .default, handler: { (action) -> Void in
+            if titleAction == "Activar chat"{
                 self.enableOrDisableChat("1")
             }else{
                 self.enableOrDisableChat("0")
             }
         }))
         
-        alertSheetMenu.addAction(UIAlertAction(title: "Cancelar", style: .Cancel, handler: { (action) -> Void in
+        alertSheetMenu.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: { (action) -> Void in
             
         }))
-        self.presentViewController(alertSheetMenu, animated: true, completion: nil)
+        self.present(alertSheetMenu, animated: true, completion: nil)
     }
     
     //MARK: - Enable or disable Chat
-    func enableOrDisableChat(enableString:String){
+    func enableOrDisableChat(_ enableString:String){
         let sessionKey = Utils.getSessionKey()
         let params = "action=update_brand_webchat_status&session_key=\(sessionKey)&webchat_status=\(enableString)"
         let urlServidor = Utils.returnUrlWS("webchat")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let enableTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let enableTask = session.dataTask(with: request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
             }
             
             do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                    if let resultCode = json.objectForKey("result") as? Int{
-                        if(resultCode == 1){
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                dbErrorContador = 0
-                                Utils.saveStatusLeftMenu(enableString)
-                                self.checkStatusleftMenu()
-                            })
-                        }else{
-                            //MostrarAlerta error
-                        }
+                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        DispatchQueue.main.async(execute: { () -> Void in
+                            dbErrorContador = 0
+                            Utils.saveStatusLeftMenu(enableString)
+                            self.checkStatusleftMenu()
+                        })
+                    }else{
+                        //No hacemos nada
                     }
                 }
             } catch{
@@ -134,11 +133,11 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     }
     
     //MARK: - Table
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if (section == 0){
             return "CONECTADOS"
         }else{
@@ -146,16 +145,16 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         }
     }
     
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
         let headerView = view as! UITableViewHeaderFooterView
         headerView.textLabel?.textColor = Colors.returnColorTextHeaderLeftMEnu()
         headerView.contentView.backgroundColor = Colors.returnColorHeaderLeftMEnu()
-        headerView.textLabel?.font = UIFont.systemFontOfSize(12)
+        headerView.textLabel?.font = UIFont.systemFont(ofSize: 12)
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if(numeroUsuarioConectados == 0 && section == 0){
             return 0.0
         }else if(numeroUsuariosAPP == 0 && section == 1){
@@ -165,7 +164,7 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         }
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){
             return numeroUsuarioConectados
         }else{
@@ -173,10 +172,10 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellId) as! CeldaLeftMenu
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! CeldaLeftMenu
         var user:UserModel
-        if(indexPath.section == 0){
+        if indexPath.section == 0{
             user = listadoUsersConectados[indexPath.row]
         }else{
             user = listadoUsersAPP[indexPath.row]
@@ -185,11 +184,11 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         cell.name.text = user.userName
         cell.hora.text = Fechas.devolverTiempo(user.horaConectado)
         let conectionStatus = user.connectionStatus
-        if(conectionStatus == "online"){
+        if conectionStatus == "online"{
             cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Online")
-        }else if(conectionStatus == "offline"){
+        }else if conectionStatus == "offline"{
             cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Offline")
-        }else if(conectionStatus == "inactive"){
+        }else if conectionStatus == "inactive"{
             cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Inactive")
         }else{
             cell.imagenConnectionStatus.image = UIImage(named: "ConnectionStatus_Mobile_Quick")
@@ -198,14 +197,14 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(indexPath.section == 0){
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0{
             userKeyMenuSeleccionado = listadoUsersConectados[indexPath.row].userKey
         }else{
             userKeyMenuSeleccionado = listadoUsersAPP[indexPath.row].userKey
         }
-        NSNotificationCenter.defaultCenter().postNotificationName(notificationToggleMenu, object: nil)
-        NSNotificationCenter.defaultCenter().postNotificationName(notificationItemMenuSelected, object: nil)
+        NotificationCenter.default().post(name: Notification.Name(rawValue: notificationToggleMenu), object: nil)
+        NotificationCenter.default().post(name: Notification.Name(rawValue: notificationItemMenuSelected), object: nil)
     }
     
     func recuperarUserServidor(){
@@ -213,53 +212,43 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         let usersLastUpdate = Utils.getLastUpdateFollower()
         let params = "action=list_users&session_key=\(sessionKey)&users_last_update=\(usersLastUpdate)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("brands")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let recuperarUsersTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let recuperarUsersTask = session.dataTask(with: request) { (data, response, error) -> Void in
             guard data != nil else {
                 print("no data found: \(error)")
                 return
             }
             
             do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                    if let resultCode = json.objectForKey("result") as? Int{
-                        if(resultCode == 1){
-                            if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                //Guardamos el last update de favoritos
-                                if let lastUpdate = dataResultado.objectForKey("users_last_update") as? String{
-                                    Utils.saveLastUpdateFollower(lastUpdate)
-                                }
-                                //Obtenemos el need_to_update para ver si hay que actualizar la lista o no
-                                if let needUpdate = dataResultado.objectForKey("need_to_update") as? Bool{
-                                    if(needUpdate){
-                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            if let listaUsuarios = dataResultado.objectForKey("users") as? NSArray{
-                                                User.borrarAllUsers()
-                                                //Llamamos por cada elemento del array de empresas al constructor
-                                                for dict in listaUsuarios{
-                                                    _=User(aDict: dict as! NSDictionary)
-                                                }
-                                            }
-                                            self.listadoUsersConectados = User.devolverUsuariosConectados()
-                                            self.numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
-                                            self.numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
-                                            self.listadoUsersAPP = User.devolverUsuariosAPP()
-                                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                                self.miTablaPersonalizada.reloadData()
-                                            })
-                                        })
+                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                            let lastUpdate = dataResultado["users_last_update"] as? String ?? ""
+                            Utils.saveLastUpdateFollower(lastUpdate)
+                            let needUpdate = dataResultado["need_to_update"] as? Bool ?? true
+                            if needUpdate{
+                                DispatchQueue.main.async(execute: { () -> Void in
+                                    if let listaUsuarios = dataResultado["users"] as? [Dictionary<String, AnyObject>]{
+                                        _=User.borrarAllUsers()
+                                        //Llamamos por cada elemento del array de empresas al constructor
+                                        for dict in listaUsuarios{
+                                            _=User(aDict: dict)
+                                        }
                                     }
-                                }
+                                    self.listadoUsersConectados = User.devolverUsuariosConectados()
+                                    self.numeroUsuarioConectados = User.devolverNumeroUsuariosConectados()
+                                    self.numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
+                                    self.listadoUsersAPP = User.devolverUsuariosAPP()
+                                    self.miTablaPersonalizada.reloadData()
+                                })
                             }
                         }
-                        else{
-                            /*if let codigoError = json.objectForKey("error_code") as? String{
-                                
-                            }*/
-                        }
+                    }else{
+                        //let codigoError = json["error_code"] as?  String ?? ""
                     }
                 }
             } catch{

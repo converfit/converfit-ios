@@ -23,7 +23,7 @@ class UserModel {
     convenience init(modelo:User){
         self.init()
         if let avatarString = modelo.avatar{
-            if let foto = UIImage(data: avatarString){
+            if let foto = UIImage(data: avatarString as Data){
                 avatar = foto
             }
         }
@@ -47,38 +47,27 @@ class UserModel {
     }
     
     //Inicializador a partir del diccionario que devuelve el WS
-    convenience init(aDict:NSDictionary){
+    convenience init(aDict: Dictionary<String, AnyObject>){
         self.init()
         //Guardamos el avatar
-        if let dataImage = aDict.objectForKey("user_avatar") as? String{
-            if let decodedData = NSData(base64EncodedString: dataImage, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters){
+        if let dataImage = aDict["user_avatar"] as? String{
+            if let decodedData = Data(base64Encoded: dataImage, options: .encodingEndLineWithCarriageReturn){
                 if let foto = UIImage(data: decodedData) {
                     avatar = foto
                 }
             }
         }
         
-        if let aConnectionStatus = aDict.objectForKey("connection-status") as? String{
-            connectionStatus = aConnectionStatus
-        }
+        connectionStatus = aDict["connection-status"] as? String ?? ""
         
-        if let anHoraConectado = aDict.objectForKey("last_connection") as? String{
-            horaConectado = anHoraConectado
-        }
+        horaConectado = aDict["last_connection"] as? String ?? ""
         
-        if let aLastPageTitle = aDict.objectForKey("last_page_title") as? String{
-            lastPageTitle = aLastPageTitle
-        }
+        lastPageTitle = aDict["last_page_title"] as? String ?? ""
         
-        if let anUserKey = aDict.objectForKey("user_key") as? String{
-            userKey = anUserKey
-        }
+        userKey = aDict["user_key"] as? String ?? ""
         
-        if let anUserName = aDict.objectForKey("user_name") as? String{
-            userName = anUserName
-        }
+        userName = aDict["user_name"] as? String ?? ""
         
         coreDataStack.saveContext()
     }
-
 }

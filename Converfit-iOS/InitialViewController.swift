@@ -15,11 +15,11 @@ class InitialViewController: UIViewController {
     let segueShowTabs = "segueShowTabs"
     let segueShowLogin = "segueShowLogin"
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = UserDefaults.standard()
         
-        if let _ = defaults.stringForKey("session_key")
+        if let _ = defaults.string(forKey: "session_key")
         {
             enviarDatosServidor()
         }else{
@@ -37,54 +37,44 @@ class InitialViewController: UIViewController {
         let deviceKey = Utils.getDeviceKey()
         let params = "action=check_session&session_key=\(sessionKey)&device_key=\(deviceKey)&last_update=\(lastUpdate)&system=\(sistema)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("access")
-        let request = NSMutableURLRequest(URL: NSURL(string: urlServidor)!)
-        let session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
-        let checkSessionTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        var request = URLRequest(url: URL(string: urlServidor)!)
+        let session = URLSession.shared()
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        let checkSessionTask = session.dataTask(with: request) { (data, response, error) -> Void in
             /*guard data != nil else {
             print("no data found: \(error)")
             return
             }
             */
-            if(data != nil){
+            if data != nil{
                 do {
-                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [NSJSONReadingOptions.MutableContainers]) as? NSDictionary {
-                        if let resultCode = json.objectForKey("result") as? Int{
-                            if(resultCode == 1){
-                                if let dataResultado = json.objectForKey("data") as? NSDictionary{
-                                    if let lastUpdate = dataResultado.objectForKey("last_update") as? String{
-                                        Utils.saveLastUpdate(lastUpdate)
-                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            self.mostrarPantallaInicio(true)
-                                        })
-                                    }else{
-                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            self.mostrarPantallaInicio(false)
-                                        })
-                                    }
-                                }else{
-                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        self.mostrarPantallaInicio(false)
-                                    })
-                                }
+                    if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+                        let resultCode = json["result"] as? Int ?? 0
+                        if resultCode == 1{
+                            if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                                let lastUpdate = dataResultado["last_update"] as? String ?? ""
+                                Utils.saveLastUpdate(lastUpdate)
+                                DispatchQueue.main.async(execute: { () -> Void in
+                                    self.mostrarPantallaInicio(true)
+                                })
                             }else{
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                DispatchQueue.main.async(execute: { () -> Void in
                                     self.mostrarPantallaInicio(false)
                                 })
                             }
                         }else{
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            DispatchQueue.main.async(execute: { () -> Void in
                                 self.mostrarPantallaInicio(false)
                             })
                         }
                     }else{
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        DispatchQueue.main.async(execute: { () -> Void in
                             self.mostrarPantallaInicio(false)
                         })
                     }
                 } catch{
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DispatchQueue.main.async(execute: { () -> Void in
                         self.mostrarPantallaInicio(false)
                     })
                 }
@@ -93,15 +83,15 @@ class InitialViewController: UIViewController {
         checkSessionTask.resume()
     }
 
-    func mostrarPantallaInicio(mostrarPantallaInicio:Bool){
+    func mostrarPantallaInicio(_ mostrarPantallaInicio:Bool){
         if(mostrarPantallaInicio){
-            performSegueWithIdentifier(segueShowTabs, sender: self)
+            performSegue(withIdentifier: segueShowTabs, sender: self)
         }else{
-            performSegueWithIdentifier(segueShowLogin, sender: self)
+            performSegue(withIdentifier: segueShowLogin, sender: self)
         }
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+        return .lightContent
     }
 }
