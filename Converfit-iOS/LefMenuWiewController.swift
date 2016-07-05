@@ -101,19 +101,13 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
     func enableOrDisableChat(_ enableString:String){
         let sessionKey = Utils.getSessionKey()
         let params = "action=update_brand_webchat_status&session_key=\(sessionKey)&webchat_status=\(enableString)"
-        let urlServidor = Utils.returnUrlWS("webchat")
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let enableTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+        let serverString = Utils.returnUrlWS("webchat")
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                if error != TypeOfError.NOERROR.rawValue {
+                    //(self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert(error)
+                    //self.mostrarAlerta()
+                }else{
                     let resultCode = json["result"] as? Int ?? 0
                     if resultCode == 1{
                         DispatchQueue.main.async(execute: { () -> Void in
@@ -125,11 +119,8 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
                         //No hacemos nada
                     }
                 }
-            } catch{
-                
-            }
+            })
         }
-        enableTask.resume()
     }
     
     //MARK: - Table

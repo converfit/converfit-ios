@@ -139,21 +139,13 @@ class LoginController: UIViewController {
     func login(){
         let deviceKey = Utils.getDeviceKey()
         let params = "action=login&email=\(emailTxt.text!)&password=\(passwordTxt.text!)&device_key=\(deviceKey)&system=\(sistema)&app_version=\(appVersion)&app=\(app)"
-        let urlServidor = Utils.returnUrlWS("access")
-        
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        
-        let loginTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+        let serverString = Utils.returnUrlWS("access")
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                if error != TypeOfError.NOERROR.rawValue{
+                    (self.alertTitle, self.alertMessage) = Utils.returnTitleAndMessageAlert(error)
+                    self.showAlert()
+                }else{
                     let resultCode = json["result"] as? Int ?? 0
                     if resultCode == 1{
                         if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
@@ -185,20 +177,14 @@ class LoginController: UIViewController {
                             self.showAlert()
                         })
                     }
-                } else {
-                    (self.alertTitle, self.alertMessage) = Utils.returnTitleAndMessageAlert("default")
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        self.showAlert()
-                    })
                 }
-            } catch{
-                (self.alertTitle, self.alertMessage) = Utils.returnTitleAndMessageAlert("default")
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self.showAlert()
-                })
-            }
+            })
+        }else{
+            (self.alertTitle, self.alertMessage) = Utils.returnTitleAndMessageAlert(TypeOfError.DEFAUTL.rawValue)
+            DispatchQueue.main.async(execute: { () -> Void in
+                self.showAlert()
+            })
         }
-        loginTask.resume()
     }
     
     //MARK: - PrepareForSegue
@@ -238,6 +224,4 @@ class LoginController: UIViewController {
             self.view.layoutIfNeeded()
         })
     }
-
 }
-

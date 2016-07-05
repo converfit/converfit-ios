@@ -467,19 +467,13 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         let sessionKey = Utils.getSessionKey()
         let lastUpdate = Conversation.obtenerLastUpdate(conversationKey)
         let params = "action=list_messages&session_key=\(sessionKey)&conversation_key=\(conversationKey)&last_update=\(lastUpdate)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
-        let urlServidor = Utils.returnUrlWS("conversations")
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let recuperarListadoMensajesTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+        let serverString = Utils.returnUrlWS("conversations")
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                if error != TypeOfError.NOERROR.rawValue {
+                    (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(error)
+                    self.mostrarAlerta()
+                }else{
                     let resultCode = json["result"] as? Int ?? 0
                     if resultCode == 1{
                         DispatchQueue.main.async(execute: { () -> Void in
@@ -509,14 +503,13 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                         })
                     }
                 }
-            } catch{
-                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self.mostrarAlerta()
-                })
-            }
+            })
+        }else{
+            (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(TypeOfError.DEFAUTL.rawValue)
+            DispatchQueue.main.async(execute: { () -> Void in
+                self.mostrarAlerta()
+            })
         }
-        recuperarListadoMensajesTask.resume()
     }
     
     func crearConversacion(){
@@ -568,115 +561,93 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func addMessage(_ params:String, messageKey:String, contenido:String, tipo:String){
-        let urlServidor = Utils.returnUrlWS("conversations")
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let addMensajeTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            
-            do {
-                if error != nil{
-                    if error!.code == -1005{
-                        self.addMessage(params, messageKey: messageKey, contenido: contenido, tipo: tipo)
-                    }
+        let serverString = Utils.returnUrlWS("conversations")
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                /*if error!.code == -1005{
+                    self.addMessage(params, messageKey: messageKey, contenido: contenido, tipo: tipo)
+                }*/
+                if error != TypeOfError.NOERROR.rawValue {
+                    (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(error)
+                    self.mostrarAlerta()
                 }else{
-                    if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
-                        let resultCode = json["result"] as? Int ?? 0
-                        if resultCode == 1{
-                            if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
-                                DispatchQueue.main.async(execute: { () -> Void in
-                                    let lastUpd = dataResultado["last_update"] as? String ?? ""
-                                    var hora = NSString(string: Messsage.devolverHoraUltimoMensaje(self.conversationKey)).doubleValue
-                                    if NSString(string: lastUpd).doubleValue < hora{
-                                        hora = hora + 3
-                                    }
-                                    Messsage.actualizarFechaMensaje(self.conversationKey, messageKey: messageKey, fecha: "\(hora)")
-                                    let messageKeyServidor = dataResultado["message_key"] as? String ?? "-1"
-                                    Messsage.updateMessageKeyTemporal(self.conversationKey, messageKey: messageKey, messageKeyServidor: messageKeyServidor)
-                                    self.updateMessage(messageKeyServidor, content: contenido,tipo: tipo)
-                                })
-                            }
-                        }else{
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
                             DispatchQueue.main.async(execute: { () -> Void in
-                                Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: "false")
-                                let anUltimoMensajeEnviado = Messsage.devolverUltimoMensajeEnviadoOk(self.conversationKey)
-                                if let ultimoMensajeEnviado = anUltimoMensajeEnviado{
-                                    Conversation.updateLastMesssageConversation(ultimoMensajeEnviado.conversationKey, ultimoMensaje: ultimoMensajeEnviado.content, fechaCreacion: ultimoMensajeEnviado.created)
+                                let lastUpd = dataResultado["last_update"] as? String ?? ""
+                                var hora = NSString(string: Messsage.devolverHoraUltimoMensaje(self.conversationKey)).doubleValue
+                                if NSString(string: lastUpd).doubleValue < hora{
+                                    hora = hora + 3
                                 }
-                                self.rellenarListaMensajes()
-                                let codigoError = json["error_code"] as? String ?? ""
-                                self.desLoguear = LogOut.comprobarDesloguear(codigoError)
-                                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                self.mostrarAlerta()
-                                
+                                Messsage.actualizarFechaMensaje(self.conversationKey, messageKey: messageKey, fecha: "\(hora)")
+                                let messageKeyServidor = dataResultado["message_key"] as? String ?? "-1"
+                                Messsage.updateMessageKeyTemporal(self.conversationKey, messageKey: messageKey, messageKeyServidor: messageKeyServidor)
+                                self.updateMessage(messageKeyServidor, content: contenido,tipo: tipo)
                             })
                         }
+                    }else{
+                        DispatchQueue.main.async(execute: { () -> Void in
+                            Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: "false")
+                            let anUltimoMensajeEnviado = Messsage.devolverUltimoMensajeEnviadoOk(self.conversationKey)
+                            if let ultimoMensajeEnviado = anUltimoMensajeEnviado{
+                                Conversation.updateLastMesssageConversation(ultimoMensajeEnviado.conversationKey, ultimoMensaje: ultimoMensajeEnviado.content, fechaCreacion: ultimoMensajeEnviado.created)
+                            }
+                            self.rellenarListaMensajes()
+                            let codigoError = json["error_code"] as? String ?? ""
+                            self.desLoguear = LogOut.comprobarDesloguear(codigoError)
+                            (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                            self.mostrarAlerta()
+                            
+                        })
                     }
                 }
-            } catch{
-                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self.mostrarAlerta()
-                })
-            }
+            })
+        }else{
+            (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(TypeOfError.DEFAUTL.rawValue)
+            self.mostrarAlerta()
         }
-        addMensajeTask.resume()
     }
     
     func updateMessage(_ messageKey:String, content:String, tipo:String){
         let sessionKey = Utils.getSessionKey()
         let params = "action=update_message&session_key=\(sessionKey)&conversation_key=\(conversationKey)&message_key=\(messageKey)&content=\(content)&type=\(tipo)&app=\(app)"
-        let urlServidor = Utils.returnUrlWS("conversations")
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let udpateMensajeTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            
-            do {
-                if error != nil{
-                    if error!.code == -1005{
-                        self.updateMessage(messageKey, content: content,tipo: tipo)
-                    }
+        let serverString = Utils.returnUrlWS("conversations")
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                /*if error!.code == -1005{
+                    self.updateMessage(messageKey, content: content,tipo: tipo)
+                }*/
+                if error != TypeOfError.NOERROR.rawValue {
+                    (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(error)
+                    self.mostrarAlerta()
                 }else{
-                    if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
-                        let resultCode = json["result"] as? Int ?? 0
-                        if resultCode == 1{
-                            //LogOut ok
-                        }else{
-                            DispatchQueue.main.async(execute: { () -> Void in
-                                self.listaMessagesKeyFallidos.append(messageKey)
-                                Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: "false")
-                                let anUltimoMensajeEnviado = Messsage.devolverUltimoMensajeEnviadoOk(self.conversationKey)
-                                if let ultimoMensajeEnviado = anUltimoMensajeEnviado{
-                                    Conversation.updateLastMesssageConversation(ultimoMensajeEnviado.conversationKey, ultimoMensaje: ultimoMensajeEnviado.content, fechaCreacion: ultimoMensajeEnviado.created)
-                                }
-                                self.rellenarListaMensajes()
-                                let codigoError = json["error_code"] as? String ?? ""
-                                self.desLoguear = LogOut.comprobarDesloguear(codigoError)
-                                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                self.mostrarAlerta()
-                            })
-                        }
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        //LogOut ok
+                    }else{
+                        DispatchQueue.main.async(execute: { () -> Void in
+                            self.listaMessagesKeyFallidos.append(messageKey)
+                            Messsage.cambiarEstadoEnviadoMensaje(self.conversationKey, messageKey: messageKey, enviado: "false")
+                            let anUltimoMensajeEnviado = Messsage.devolverUltimoMensajeEnviadoOk(self.conversationKey)
+                            if let ultimoMensajeEnviado = anUltimoMensajeEnviado{
+                                Conversation.updateLastMesssageConversation(ultimoMensajeEnviado.conversationKey, ultimoMensaje: ultimoMensajeEnviado.content, fechaCreacion: ultimoMensajeEnviado.created)
+                            }
+                            self.rellenarListaMensajes()
+                            let codigoError = json["error_code"] as? String ?? ""
+                            self.desLoguear = LogOut.comprobarDesloguear(codigoError)
+                            (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                            self.mostrarAlerta()
+                        })
                     }
                 }
-            } catch{
-                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self.mostrarAlerta()
-                })
-            }
+            })
+        }else{
+            (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(TypeOfError.DEFAUTL.rawValue)
+            DispatchQueue.main.async(execute: { () -> Void in
+                self.mostrarAlerta()
+            })
         }
-        udpateMensajeTask.resume()
     }
     
     //MARK: - Teclado

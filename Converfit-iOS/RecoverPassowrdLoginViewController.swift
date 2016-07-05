@@ -121,19 +121,13 @@ class RecoverPassowrdLoginViewController: UIViewController, UITextFieldDelegate 
     //MARK: - RecoverPassword Server
     func recoverPassword(_ email: String){
         let params = "action=create_lost_password_code&email=\(email)&lang=es&app=\(app)"
-        let urlServidor = "http://www.converfit.com/server/app/1.0.0/models/access/model.php"
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let recoverPasswordTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+        let serverString = "http://www.converfit.com/server/app/1.0.0/models/access/model.php"
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                if error != TypeOfError.NOERROR.rawValue{
+                    (self.alertTitle,self.alertMessage) = Utils.returnTitleAndMessageAlert(error)
+                    self.showAlert()
+                }else{
                     let resultCode = json["result"] as? Int ?? 0
                     if resultCode == 1{
                         self.recoverPassOk = true
@@ -143,16 +137,12 @@ class RecoverPassowrdLoginViewController: UIViewController, UITextFieldDelegate 
                         (self.alertTitle,self.alertMessage) = Utils.returnTitleAndMessageAlert(codigoError)
                     }
                 }
-            } catch{
-                (self.alertTitle,self.alertMessage) = Utils.returnTitleAndMessageAlert("error")
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self.showAlert()
-                })
-            }
+            })
+        }else{
+            (self.alertTitle,self.alertMessage) = Utils.returnTitleAndMessageAlert(TypeOfError.DEFAUTL.rawValue)
             DispatchQueue.main.async(execute: { () -> Void in
                 self.showAlert()
             })
         }
-        recoverPasswordTask.resume()
     }
 }

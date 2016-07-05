@@ -142,19 +142,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Create User Server
     func createUser(_ brandName:String, email: String, password:String){
         let params = "action=signup&brand_name=\(brandName)&email=\(email)&password=\(password)&app=\(app)"
-        let urlServidor = "http://www.converfit.com/server/app/1.0.0/models/access/model.php"
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let createUserTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+        let serverString = "http://www.converfit.com/server/app/1.0.0/models/access/model.php"
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                if error != TypeOfError.NOERROR.rawValue{
+                    (self.alertTitle,self.alertMessage) = Utils.returnTitleAndMessageAlert(error)
+                    self.showAlert()
+                }else{
                     let resultCode = json["result"] as? Int ?? 0
                     if resultCode == 1{
                         self.userCreatedOk = true
@@ -165,17 +159,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                         (self.alertTitle,self.alertMessage) = Utils.returnTitleAndMessageAlert(codigoError)
                     }
                 }
-            } catch{
-                (self.alertTitle,self.alertMessage) = Utils.returnTitleAndMessageAlert("error")
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self.showAlert()
-                })
-            }
+            })
+        }else{
+            (self.alertTitle,self.alertMessage) = Utils.returnTitleAndMessageAlert(TypeOfError.DEFAUTL.rawValue)
             DispatchQueue.main.async(execute: { () -> Void in
                 self.showAlert()
             })
         }
-        createUserTask.resume()
     }
 
     //MARK: - Show Alert

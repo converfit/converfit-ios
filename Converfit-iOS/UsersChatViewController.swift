@@ -139,19 +139,14 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
         let sessionKey = Utils.getSessionKey()
         let usersLastUpdate = Utils.getLastUpdateFollower()
         let params = "action=list_users&session_key=\(sessionKey)&users_last_update=\(usersLastUpdate)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
-        let urlServidor = Utils.returnUrlWS("brands")
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let recuperarUsersTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+        let serverString = Utils.returnUrlWS("brands")
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                if error != TypeOfError.NOERROR.rawValue {
+                    self.spinner.stopAnimating()
+                    (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(error)
+                    self.mostrarAlerta()
+                }else{
                     let resultCode = json["result"] as? Int ?? 0
                     if resultCode == 1{
                         if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
@@ -191,18 +186,14 @@ class UsersChatControllerViewController: UIViewController,UITableViewDataSource,
                         })
                     }
                 }
-            } catch{
-                self.spinner.stopAnimating()
-                /*self.alertCargando.dismissViewControllerAnimated(true, completion: { () -> Void in
-                    
-                })*/
-                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self.mostrarAlerta()
-                })
-            }
+            })
+        }else{
+            self.spinner.stopAnimating()
+            (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(TypeOfError.DEFAUTL.rawValue)
+            DispatchQueue.main.async(execute: { () -> Void in
+                self.mostrarAlerta()
+            })
         }
-        recuperarUsersTask.resume()
     }
         
     //MARK: - Table

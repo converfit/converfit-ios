@@ -108,19 +108,13 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         let sessionKey = Utils.getSessionKey()
         let conversationLasUp = Utils.getConversationsLastUpdate()
         let params = "action=list_conversations&session_key=\(sessionKey)&conversations_last_update=\(conversationLasUp)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
-        let urlServidor = Utils.returnUrlWS("conversations")
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let recuperarConversacionesTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+        let serverString = Utils.returnUrlWS("conversations")
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                if error != TypeOfError.NOERROR.rawValue {
+                    (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(error)
+                    self.mostrarAlerta()
+                }else{
                     let resultCode = json["result"] as? Int ?? 0
                     if resultCode == 1{
                         if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
@@ -176,68 +170,54 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
                         })
                     }
                 }
-            } catch{
-                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
+            })
+        }else{
+            (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(TypeOfError.DEFAUTL.rawValue)
+            DispatchQueue.main.async(execute: { () -> Void in
                 DispatchQueue.main.async(execute: { () -> Void in
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        self.mostrarAlerta()
-                    })
+                    self.mostrarAlerta()
                 })
-            }
+            })
         }
-        recuperarConversacionesTask.resume()
     }
 
     func borrarConversacion(_ conversationKey:String){
         let sessionKey = Utils.getSessionKey()
         let params = "action=delete_conversation&session_key=\(sessionKey)&conversation_key=\(conversationKey)&app_version=\(appVersion)&app=\(app)"
-        let urlServidor = Utils.returnUrlWS("conversations")
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let borrarConversacionTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            
-            do {
-                if error != nil{
-                    if error!.code == -1005{
-                        self.borrarConversacion(conversationKey)
-                    }else{
-                        (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                        self.mostrarAlerta()
-                    }
+        let serverString = Utils.returnUrlWS("conversations")
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                /*if error!.code == -1005{
+                    self.borrarConversacion(conversationKey)
+                 }*/
+                if error != TypeOfError.DEFAUTL.rawValue {
+                    (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(error)
+                    self.mostrarAlerta()
                 }else{
-                    if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
-                        let resultCode = json["reuslt"] as? Int ?? 0
-                        if resultCode == 1{
-                            if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
-                                let lastUpdate = dataResultado["conversations_last_update"] as? String ?? ""
-                                Utils.saveConversationsLastUpdate(lastUpdate)
-                            }
-                        }else{
-                            let codigoError = json["error_code"] as? String ?? ""
-                            if codigoError != "list_conversations_empty"{
-                                self.desLoguear = LogOut.comprobarDesloguear(codigoError)
-                                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
-                                DispatchQueue.main.async(execute: { () -> Void in
-                                    self.mostrarAlerta()
-                                })
-                            }
+                    let resultCode = json["reuslt"] as? Int ?? 0
+                    if resultCode == 1{
+                        if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                            let lastUpdate = dataResultado["conversations_last_update"] as? String ?? ""
+                            Utils.saveConversationsLastUpdate(lastUpdate)
+                        }
+                    }else{
+                        let codigoError = json["error_code"] as? String ?? ""
+                        if codigoError != "list_conversations_empty"{
+                            self.desLoguear = LogOut.comprobarDesloguear(codigoError)
+                            (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(codigoError)
+                            DispatchQueue.main.async(execute: { () -> Void in
+                                self.mostrarAlerta()
+                            })
                         }
                     }
                 }
-            }catch{
-                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self.mostrarAlerta()
-                })
-            }
+            })
+        }else{
+            (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(TypeOfError.DEFAUTL.rawValue)
+            DispatchQueue.main.async(execute: { () -> Void in
+                self.mostrarAlerta()
+            })
         }
-        borrarConversacionTask.resume()
     }
     
     //MARK: - Utils

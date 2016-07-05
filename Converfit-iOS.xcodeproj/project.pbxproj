@@ -56,6 +56,8 @@
 		9B779E6A1BCFBC360062F9D7 /* PostServidor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E691BCFBC360062F9D7 /* PostServidor.swift */; };
 		9B779E6E1BCFD9D00062F9D7 /* NavBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */; };
 		9B779E711BCFEA030062F9D7 /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E701BCFEA030062F9D7 /* ContainerVC.swift */; };
+		9BBB59AD1D2BA2CE00C5A47B /* ServerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB59AB1D2BA2CE00C5A47B /* ServerUtils.swift */; };
+		9BBB59AE1D2BA2CE00C5A47B /* TypeOfError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB59AC1D2BA2CE00C5A47B /* TypeOfError.swift */; };
 		9BDE4A211BF9C2120096EBE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */; };
 		9BDE4A231BF9D1420096EBE1 /* MyCustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A221BF9D1420096EBE1 /* MyCustomNavigationController.swift */; };
 		9BDE4A251BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A241BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift */; };
@@ -117,6 +119,8 @@
 		9B779E691BCFBC360062F9D7 /* PostServidor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostServidor.swift; sourceTree = "<group>"; };
 		9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarViewController.swift; sourceTree = "<group>"; };
 		9B779E701BCFEA030062F9D7 /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
+		9BBB59AB1D2BA2CE00C5A47B /* ServerUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerUtils.swift; sourceTree = "<group>"; };
+		9BBB59AC1D2BA2CE00C5A47B /* TypeOfError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeOfError.swift; sourceTree = "<group>"; };
 		9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		9BDE4A221BF9D1420096EBE1 /* MyCustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCustomNavigationController.swift; sourceTree = "<group>"; };
 		9BDE4A241BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoverPassowrdLoginViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +157,8 @@
 		646736301BC67130001627C7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9BBB59AB1D2BA2CE00C5A47B /* ServerUtils.swift */,
+				9BBB59AC1D2BA2CE00C5A47B /* TypeOfError.swift */,
 				64B41ED01BC9320A008D932B /* ResizeImage.swift */,
 				6467362E1BC67121001627C7 /* Utils.swift */,
 				648921F31BC6ABF500D91EA0 /* LogOut.swift */,
@@ -430,6 +436,7 @@
 				9B3660151BD516BE00C4B666 /* InitialViewController.swift in Sources */,
 				6487DBDE1BCCEEE900DC9C12 /* FavoritosViewController.swift in Sources */,
 				9B779E6A1BCFBC360062F9D7 /* PostServidor.swift in Sources */,
+				9BBB59AE1D2BA2CE00C5A47B /* TypeOfError.swift in Sources */,
 				648921FC1BC6D10900D91EA0 /* PasswordMenuController.swift in Sources */,
 				647D68521BC7A94C0086A3A7 /* TimeLine.swift in Sources */,
 				647D684B1BC7A8D90086A3A7 /* _User.swift in Sources */,
@@ -467,6 +474,7 @@
 				64B41ECF1BC931D6008D932B /* MessageModel.swift in Sources */,
 				64B41EC91BC930F3008D932B /* CeldaPdfEncuesta.swift in Sources */,
 				9BDE4A251BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift in Sources */,
+				9BBB59AD1D2BA2CE00C5A47B /* ServerUtils.swift in Sources */,
 				647D68491BC7A8D90086A3A7 /* _Messsage.swift in Sources */,
 				647D685C1BC7D3D20086A3A7 /* ListadoChat.swift in Sources */,
 				647D68571BC7D0DC0086A3A7 /* ConversationsModel.swift in Sources */,

@@ -36,33 +36,20 @@ class InitialViewController: UIViewController {
         let lastUpdate = Utils.getLastUpdate()
         let deviceKey = Utils.getDeviceKey()
         let params = "action=check_session&session_key=\(sessionKey)&device_key=\(deviceKey)&last_update=\(lastUpdate)&system=\(sistema)&app_version=\(appVersion)&app=\(app)"
-        let urlServidor = Utils.returnUrlWS("access")
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let checkSessionTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            /*guard data != nil else {
-            print("no data found: \(error)")
-            return
-            }
-            */
-            if data != nil{
-                do {
-                    if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
-                        let resultCode = json["result"] as? Int ?? 0
-                        if resultCode == 1{
-                            if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
-                                let lastUpdate = dataResultado["last_update"] as? String ?? ""
-                                Utils.saveLastUpdate(lastUpdate)
-                                DispatchQueue.main.async(execute: { () -> Void in
-                                    self.mostrarPantallaInicio(true)
-                                })
-                            }else{
-                                DispatchQueue.main.async(execute: { () -> Void in
-                                    self.mostrarPantallaInicio(false)
-                                })
-                            }
+        let serverString = Utils.returnUrlWS("access")
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                if error != TypeOfError.NOERROR.rawValue{
+                    self.mostrarPantallaInicio(false)
+                }else{
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
+                            let lastUpdate = dataResultado["last_update"] as? String ?? ""
+                            Utils.saveLastUpdate(lastUpdate)
+                            DispatchQueue.main.async(execute: { () -> Void in
+                                self.mostrarPantallaInicio(true)
+                            })
                         }else{
                             DispatchQueue.main.async(execute: { () -> Void in
                                 self.mostrarPantallaInicio(false)
@@ -73,14 +60,13 @@ class InitialViewController: UIViewController {
                             self.mostrarPantallaInicio(false)
                         })
                     }
-                } catch{
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        self.mostrarPantallaInicio(false)
-                    })
                 }
-            }
+            })
+        }else{
+            DispatchQueue.main.async(execute: { () -> Void in
+                self.mostrarPantallaInicio(false)
+            })
         }
-        checkSessionTask.resume()
     }
 
     func mostrarPantallaInicio(_ mostrarPantallaInicio:Bool){

@@ -107,19 +107,13 @@ class RecuperarPassController: UIViewController {
     func recuperarPassword(){
         let sessionKey = Utils.getSessionKey()
         let params = "action=recover_password&session_key=\(sessionKey)&app_version=\(appVersion)&app=\(app)"
-        let urlServidor = Utils.returnUrlWS("access")
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let recuperarPasswordTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+        let serverString = Utils.returnUrlWS("access")
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                if error != TypeOfError.NOERROR.rawValue{
+                    (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(error)
+                    self.mostrarAlerta()
+                }else{
                     let resultCode = json["result"] as? Int ?? 0
                     if resultCode == 1{
                         if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
@@ -134,12 +128,10 @@ class RecuperarPassController: UIViewController {
                         self.mostrarAlerta()
                     }
                 }
-            } catch{
-                (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert("error")
-                self.mostrarAlerta()
-                
-            }
+            })
+        }else{
+            (self.tituloAlert,self.mensajeAlert) = Utils.returnTitleAndMessageAlert(TypeOfError.DEFAUTL.rawValue)
+            self.mostrarAlerta()
         }
-        recuperarPasswordTask.resume()
     }
 }
