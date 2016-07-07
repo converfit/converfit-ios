@@ -13,7 +13,7 @@ struct ServerUtils {
     static func getAsyncResponse(method: String, url: URL, params: String, completionBlock: (error: String, json: Dictionary<String, AnyObject>) -> Void){
         
         var request = URLRequest(url: url)
-        let session = URLSession.shared()
+        let session = URLSession.shared
         request.httpMethod = method
         if method != HTTPMethods.GET.rawValue{
             request.httpBody = params.data(using: String.Encoding.utf8)

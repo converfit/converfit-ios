@@ -51,7 +51,7 @@ class UserModel {
         self.init()
         //Guardamos el avatar
         if let dataImage = aDict["user_avatar"] as? String{
-            if let decodedData = Data(base64Encoded: dataImage, options: .encodingEndLineWithCarriageReturn){
+            if let decodedData = Data(base64Encoded: dataImage, options: .endLineWithCarriageReturn){
                 if let foto = UIImage(data: decodedData) {
                     avatar = foto
                 }

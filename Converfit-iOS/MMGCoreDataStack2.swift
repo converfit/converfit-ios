@@ -18,24 +18,24 @@ class MMGCoreDataStack2: CustomStringConvertible {
         self.modelName = modelName
         self.storeName = modelName
         self.options = [NSMigratePersistentStoresAutomaticallyOption: true,
-                        NSInferMappingModelAutomaticallyOption: true]
+            NSInferMappingModelAutomaticallyOption: true]
     }
     
     var description : String
-    {
-        return "context: \(context)\n" +
-            "modelName: \(modelName)" +
+        {
+            return "context: \(context)\n" +
+                "modelName: \(modelName)" +
             "storeURL: \(storeURL)\n"
     }
     
     var modelURL : URL {
-        return Bundle.main().urlForResource(self.modelName, withExtension: "momd")!
+        return Bundle.main.urlForResource(self.modelName, withExtension: "momd")!
     }
     
     var storeURL : URL {
         let storePaths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let storePath = String(storePaths.first!) as NSString
-        let fileManager = FileManager.default()
+        let fileManager = FileManager.default
         
         do {
             try fileManager.createDirectory(atPath: storePath as String, withIntermediateDirectories: true, attributes: nil)
@@ -54,8 +54,8 @@ class MMGCoreDataStack2: CustomStringConvertible {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.model)
         do {
             self.store = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil,
-                                                            at: self.storeURL,
-                                                            options: self.options)
+                at: self.storeURL,
+                options: self.options)
         } catch var error as NSError {
             print("Store Error: \(error)")
             self.store = nil
@@ -63,13 +63,13 @@ class MMGCoreDataStack2: CustomStringConvertible {
             fatalError()
         }
         return coordinator
-    }()
+        }()
     
     lazy var context : NSManagedObjectContext = {
         let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.persistentStoreCoordinator = self.coordinator
         return context
-    }()
+        }()
     
     func saveContext () {
         if self.context.hasChanges

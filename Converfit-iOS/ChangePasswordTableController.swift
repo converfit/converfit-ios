@@ -40,12 +40,12 @@ class ChangePasswordTableController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addTap()
-         NotificationCenter.default().addObserver(self, selector: #selector(self.cambiarBadge), name:notificationChat, object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(self.cambiarBadge), name:NSNotification.Name(rawValue: notificationChat), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default().removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
     }
     
     //Funcion para cambiar el badge cuando nos llega una notificacion

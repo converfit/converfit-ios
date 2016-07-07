@@ -17,7 +17,7 @@ class InitialViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         
         if let _ = defaults.string(forKey: "session_key")
         {

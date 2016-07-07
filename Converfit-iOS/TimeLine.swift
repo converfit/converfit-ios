@@ -13,7 +13,7 @@ public class TimeLine: _TimeLine {
         
         //Guardamos el user_avatar
         if let  dataImage = aDict["user_avatar"] as? String{
-            if let decodedData = Data(base64Encoded: dataImage, options: .encodingEndLineWithCarriageReturn){
+            if let decodedData = Data(base64Encoded: dataImage, options: .endLineWithCarriageReturn){
                  userAvatar = decodedData
             }
         }

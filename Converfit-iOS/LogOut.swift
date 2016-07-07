@@ -14,29 +14,20 @@ class LogOut {
     static func desLoguear(){
         let sessionKey = Utils.getSessionKey()
         let params = "action=logout&session_key=\(sessionKey)&app=\(app)"
-        let urlServidor = Utils.returnUrlWS("access")
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let logOutTask = session.dataTask(with: request) { (data, response, error) -> Void in
-                guard data != nil else {
-                    print("no data found: \(error)")
-                    return
-                }
-                
-                do {
-                    if let json = try JSONSerialization.jsonObject(with: data!, options: [JSONSerialization.ReadingOptions.mutableContainers]) as? Dictionary<String, AnyObject> {
-                        let resultCode = json["result"] as? Int ?? 0
-                        if resultCode == 1{
-                            //LogOutCorrecto
-                        }
+        let serverString = Utils.returnUrlWS("access")
+        if let url = URL(string: serverString){
+            ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                if error != TypeOfError.NOERROR.rawValue {
+                    //(self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert(error)
+                    //self.mostrarAlerta()
+                }else{
+                    let resultCode = json["result"] as? Int ?? 0
+                    if resultCode == 1{
+                        //LogOutCorrecto
                     }
-                } catch{
-                    
                 }
+            })
         }
-        logOutTask.resume()
     }
     
     //Funcion para cuando la sessionKey no es valida te desloguea
@@ -44,7 +35,7 @@ class LogOut {
         //Borramos el badgeIcon de la App
         UIApplication.shared().applicationIconBadgeNumber = 0
         //Borramos el sessionkey que teniamos guardado
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.removeObject(forKey: "session_key")
         defaults.removeObject(forKey: "last_update")
         defaults.removeObject(forKey: "last_update_follower")

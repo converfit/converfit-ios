@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6457ECD41BCAAE93009F2A50 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6457ECD31BCAAE93009F2A50 /* UserModel.swift */; };
-		6467362A1BC6600C001627C7 /* MMGCoreDataStack2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646736291BC6600C001627C7 /* MMGCoreDataStack2.swift */; };
 		6467362C1BC66A65001627C7 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6467362B1BC66A65001627C7 /* LoginController.swift */; };
 		6467362F1BC67121001627C7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6467362E1BC67121001627C7 /* Utils.swift */; };
 		647D68431BC7A3F80086A3A7 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 647D68411BC7A3F80086A3A7 /* Model.xcdatamodeld */; };
@@ -52,12 +51,13 @@
 		64ED08791BCE4AFD00578646 /* TimeLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED08781BCE4AFD00578646 /* TimeLineViewController.swift */; };
 		64ED087C1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED087B1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift */; };
 		64ED087E1BCE5F4400578646 /* TimeLineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED087D1BCE5F4400578646 /* TimeLineModel.swift */; };
+		9B2A486C1D2E39FA00738C19 /* ServerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2A486A1D2E39FA00738C19 /* ServerUtils.swift */; };
+		9B2A486D1D2E39FA00738C19 /* TypeOfError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2A486B1D2E39FA00738C19 /* TypeOfError.swift */; };
+		9B2A486F1D2E3A1100738C19 /* MMGCoreDataStack2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2A486E1D2E3A1100738C19 /* MMGCoreDataStack2.swift */; };
 		9B3660151BD516BE00C4B666 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3660141BD516BE00C4B666 /* InitialViewController.swift */; };
 		9B779E6A1BCFBC360062F9D7 /* PostServidor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E691BCFBC360062F9D7 /* PostServidor.swift */; };
 		9B779E6E1BCFD9D00062F9D7 /* NavBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */; };
 		9B779E711BCFEA030062F9D7 /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B779E701BCFEA030062F9D7 /* ContainerVC.swift */; };
-		9BBB59AD1D2BA2CE00C5A47B /* ServerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB59AB1D2BA2CE00C5A47B /* ServerUtils.swift */; };
-		9BBB59AE1D2BA2CE00C5A47B /* TypeOfError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB59AC1D2BA2CE00C5A47B /* TypeOfError.swift */; };
 		9BDE4A211BF9C2120096EBE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */; };
 		9BDE4A231BF9D1420096EBE1 /* MyCustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A221BF9D1420096EBE1 /* MyCustomNavigationController.swift */; };
 		9BDE4A251BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE4A241BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift */; };
@@ -69,7 +69,6 @@
 
 /* Begin PBXFileReference section */
 		6457ECD31BCAAE93009F2A50 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		646736291BC6600C001627C7 /* MMGCoreDataStack2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMGCoreDataStack2.swift; sourceTree = "<group>"; };
 		6467362B1BC66A65001627C7 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		6467362E1BC67121001627C7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		647D68421BC7A3F80086A3A7 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -115,12 +114,13 @@
 		64ED08781BCE4AFD00578646 /* TimeLineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineViewController.swift; sourceTree = "<group>"; };
 		64ED087B1BCE4E3A00578646 /* TimeLineCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineCollectionViewCell.swift; sourceTree = "<group>"; };
 		64ED087D1BCE5F4400578646 /* TimeLineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineModel.swift; sourceTree = "<group>"; };
+		9B2A486A1D2E39FA00738C19 /* ServerUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerUtils.swift; sourceTree = "<group>"; };
+		9B2A486B1D2E39FA00738C19 /* TypeOfError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeOfError.swift; sourceTree = "<group>"; };
+		9B2A486E1D2E3A1100738C19 /* MMGCoreDataStack2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMGCoreDataStack2.swift; sourceTree = "<group>"; };
 		9B3660141BD516BE00C4B666 /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		9B779E691BCFBC360062F9D7 /* PostServidor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostServidor.swift; sourceTree = "<group>"; };
 		9B779E6D1BCFD9D00062F9D7 /* NavBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarViewController.swift; sourceTree = "<group>"; };
 		9B779E701BCFEA030062F9D7 /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
-		9BBB59AB1D2BA2CE00C5A47B /* ServerUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerUtils.swift; sourceTree = "<group>"; };
-		9BBB59AC1D2BA2CE00C5A47B /* TypeOfError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeOfError.swift; sourceTree = "<group>"; };
 		9BDE4A201BF9C2120096EBE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		9BDE4A221BF9D1420096EBE1 /* MyCustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCustomNavigationController.swift; sourceTree = "<group>"; };
 		9BDE4A241BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoverPassowrdLoginViewController.swift; sourceTree = "<group>"; };
@@ -157,8 +157,8 @@
 		646736301BC67130001627C7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				9BBB59AB1D2BA2CE00C5A47B /* ServerUtils.swift */,
-				9BBB59AC1D2BA2CE00C5A47B /* TypeOfError.swift */,
+				9B2A486A1D2E39FA00738C19 /* ServerUtils.swift */,
+				9B2A486B1D2E39FA00738C19 /* TypeOfError.swift */,
 				64B41ED01BC9320A008D932B /* ResizeImage.swift */,
 				6467362E1BC67121001627C7 /* Utils.swift */,
 				648921F31BC6ABF500D91EA0 /* LogOut.swift */,
@@ -222,7 +222,7 @@
 				647D684E1BC7A94C0086A3A7 /* TimeLine.swift */,
 				647D684F1BC7A94C0086A3A7 /* User.swift */,
 				647D68411BC7A3F80086A3A7 /* Model.xcdatamodeld */,
-				646736291BC6600C001627C7 /* MMGCoreDataStack2.swift */,
+				9B2A486E1D2E3A1100738C19 /* MMGCoreDataStack2.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -424,11 +424,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				64ED08771BCE3CBE00578646 /* UsersChatViewController.swift in Sources */,
+				9B2A486F1D2E3A1100738C19 /* MMGCoreDataStack2.swift in Sources */,
 				647D684A1BC7A8D90086A3A7 /* _TimeLine.swift in Sources */,
 				64B41ECB1BC930F3008D932B /* CeldaCargarMensajesAnteriores.swift in Sources */,
 				6487DBE61BCD0F9C00DC9C12 /* VideoViewController.swift in Sources */,
 				9BDE4A211BF9C2120096EBE1 /* SignUpViewController.swift in Sources */,
-				6467362A1BC6600C001627C7 /* MMGCoreDataStack2.swift in Sources */,
 				648921F21BC6A78F00D91EA0 /* AjustesViewController.swift in Sources */,
 				9BDE4A271BF9E7A70096EBE1 /* PaddingTextField.swift in Sources */,
 				64B41ECA1BC930F3008D932B /* CeldaImagenMensajes.swift in Sources */,
@@ -436,7 +436,7 @@
 				9B3660151BD516BE00C4B666 /* InitialViewController.swift in Sources */,
 				6487DBDE1BCCEEE900DC9C12 /* FavoritosViewController.swift in Sources */,
 				9B779E6A1BCFBC360062F9D7 /* PostServidor.swift in Sources */,
-				9BBB59AE1D2BA2CE00C5A47B /* TypeOfError.swift in Sources */,
+				9B2A486D1D2E39FA00738C19 /* TypeOfError.swift in Sources */,
 				648921FC1BC6D10900D91EA0 /* PasswordMenuController.swift in Sources */,
 				647D68521BC7A94C0086A3A7 /* TimeLine.swift in Sources */,
 				647D684B1BC7A8D90086A3A7 /* _User.swift in Sources */,
@@ -474,7 +474,7 @@
 				64B41ECF1BC931D6008D932B /* MessageModel.swift in Sources */,
 				64B41EC91BC930F3008D932B /* CeldaPdfEncuesta.swift in Sources */,
 				9BDE4A251BF9E28D0096EBE1 /* RecoverPassowrdLoginViewController.swift in Sources */,
-				9BBB59AD1D2BA2CE00C5A47B /* ServerUtils.swift in Sources */,
+				9B2A486C1D2E39FA00738C19 /* ServerUtils.swift in Sources */,
 				647D68491BC7A8D90086A3A7 /* _Messsage.swift in Sources */,
 				647D685C1BC7D3D20086A3A7 /* ListadoChat.swift in Sources */,
 				647D68571BC7D0DC0086A3A7 /* ConversationsModel.swift in Sources */,

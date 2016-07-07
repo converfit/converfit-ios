@@ -22,7 +22,7 @@ class ContainerVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Tab bar controller's child pages have a top-left button toggles the menu
-        NotificationCenter.default().addObserver(self, selector: #selector(self.toggleMenu), name: notificationToggleMenu, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.toggleMenu), name: NSNotification.Name(rawValue: notificationToggleMenu), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +61,6 @@ class ContainerVC: UIViewController {
     // Open is the natural state of the menu because of how the storyboard is setup.
     func openMenu(){
         miScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        NotificationCenter.default().post(name: Notification.Name(rawValue: notificationsOpenDrawerMenu), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: notificationsOpenDrawerMenu), object: nil)
     }
 }

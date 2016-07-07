@@ -44,7 +44,7 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         numeroUsuariosAPP = User.devolverNumeroUsuariosAPP()
         miTablaPersonalizada.reloadData()
         recuperarUserServidor()
-        NotificationCenter.default().addObserver(self, selector: #selector(self.openMenu), name:notificationsOpenDrawerMenu , object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.openMenu), name:NSNotification.Name(rawValue: notificationsOpenDrawerMenu) , object: nil)
         myTimerLeftMenu = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.recuperarUserServidorTimer), userInfo: nil, repeats: true)
     }
     
@@ -194,27 +194,21 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
         }else{
             userKeyMenuSeleccionado = listadoUsersAPP[indexPath.row].userKey
         }
-        NotificationCenter.default().post(name: Notification.Name(rawValue: notificationToggleMenu), object: nil)
-        NotificationCenter.default().post(name: Notification.Name(rawValue: notificationItemMenuSelected), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: notificationToggleMenu), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: notificationItemMenuSelected), object: nil)
     }
     
     func recuperarUserServidor(){
         let sessionKey = Utils.getSessionKey()
         let usersLastUpdate = Utils.getLastUpdateFollower()
         let params = "action=list_users&session_key=\(sessionKey)&users_last_update=\(usersLastUpdate)&offset=\(0)&limit=\(1000)&app_version=\(appVersion)&app=\(app)"
-        let urlServidor = Utils.returnUrlWS("brands")
-        var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
-        request.httpMethod = "POST"
-        request.httpBody = params.data(using: String.Encoding.utf8)
-        let recuperarUsersTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            guard data != nil else {
-                print("no data found: \(error)")
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? Dictionary<String, AnyObject>{
+        let serverString = Utils.returnUrlWS("brands")
+        if let url = URL(string: serverString){
+           ServerUtils.getAsyncResponse(method: HTTPMethods.POST.rawValue, url: url, params: params, completionBlock: { (error, json) in
+                if error != TypeOfError.NOERROR.rawValue {
+                    //(self.tituloAlert,self.mensajeAlert) = Utils().establecerTituloMensajeAlert(error)
+                    //self.mostrarAlerta()
+                }else{
                     let resultCode = json["result"] as? Int ?? 0
                     if resultCode == 1{
                         if let dataResultado = json["data"] as? Dictionary<String, AnyObject>{
@@ -242,9 +236,7 @@ class LefMenuWiewController: UIViewController,UITableViewDataSource, UITableView
                         //let codigoError = json["error_code"] as?  String ?? ""
                     }
                 }
-            } catch{
-            }
+           })
         }
-        recuperarUsersTask.resume()
     }
 }

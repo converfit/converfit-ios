@@ -98,7 +98,7 @@ class ResizeImage {
     
     //Funcion para decodificar una imagen a partir de un String
     static func decodificarImagen (_ dataImage:String) -> UIImage{
-        if let decodedData = Data(base64Encoded: dataImage, options: .encodingEndLineWithCarriageReturn){
+        if let decodedData = Data(base64Encoded: dataImage, options: .endLineWithCarriageReturn){
             if decodedData.count > 0{
                 return UIImage(data: decodedData)!
             }

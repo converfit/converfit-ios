@@ -66,14 +66,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     func startObservingKeyBoard(){
         //Funcion para darnos de alta como observador en las notificaciones de teclado
-        let nc:NotificationCenter = NotificationCenter.default()
+        let nc:NotificationCenter = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.notifyThatKeyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         nc.addObserver(self, selector: #selector(self.notifyThatKeyboardWillDisappear(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     //Funcion para darnos de alta como observador en las notificaciones de teclado
     func stopObservingKeyBoard(){
-        let nc:NotificationCenter = NotificationCenter.default()
+        let nc:NotificationCenter = NotificationCenter.default
         nc.removeObserver(self)
     }
     

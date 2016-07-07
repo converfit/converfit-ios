@@ -43,7 +43,7 @@ class MessageModel {
                 if let videoData = decodificarVideoBase64(content){
                     if videoData.count > 0{
                         let filePath = applicationDocumentsDirectory().appendingPathComponent("\(messageKey).mp4")
-                        _=try? videoData.write(to: URL(fileURLWithPath: filePath), options: [.dataWritingAtomic])
+                        _=try? videoData.write(to: URL(fileURLWithPath: filePath), options: [.atomicWrite])
                         let url = URL(fileURLWithPath: filePath)
                         let imagenThumnail = generateThumnail(url)
                         let tamaño = CGSize(width: 400, height: 400)
@@ -77,7 +77,7 @@ class MessageModel {
                 if let videoData = decodificarVideoBase64(content){
                     if videoData.count > 0{
                         let filePath = applicationDocumentsDirectory().appendingPathComponent("\(messageKey).mp4")
-                        _=try? videoData.write(to: URL(fileURLWithPath: filePath), options: [.dataWritingAtomic])
+                        _=try? videoData.write(to: URL(fileURLWithPath: filePath), options: [.atomicWrite])
                         let url = URL(fileURLWithPath: filePath)
                         let imagenThumnail = generateThumnail(url)
                         let tamaño = CGSize(width: 400, height: 400)
@@ -110,6 +110,6 @@ class MessageModel {
     }
     
     func decodificarVideoBase64(_ videoString:String) -> Data?{
-        return Data(base64Encoded: videoString, options: .encodingEndLineWithCarriageReturn)
+        return Data(base64Encoded: videoString, options: .endLineWithCarriageReturn)
     }
 }

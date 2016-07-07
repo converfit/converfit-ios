@@ -23,7 +23,7 @@ public class Conversation: _Conversation {
             
             //Tenemos que convertir la imagen que nos descargamos a Data
             if let  dataImage = aUserDict["avatar"] as? String{
-                if let decodedData = Data(base64Encoded: dataImage, options: .encodingEndLineWithCarriageReturn){
+                if let decodedData = Data(base64Encoded: dataImage, options: .endLineWithCarriageReturn){
                     avatar = decodedData
                 }
             }

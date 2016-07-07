@@ -69,7 +69,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
             self.setEditing(false, animated: true)
             addBadgeCount()
             //Nos damos de alta para responder a la notificacion enviada por push
-            NotificationCenter.default().addObserver(self, selector: #selector(self.recargarPantalla), name:notificationChat, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.recargarPantalla), name:NSNotification.Name(rawValue: notificationChat), object: nil)
             miTabla.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
         }
     }
@@ -80,7 +80,7 @@ class ListadoChat: UIViewController, UITableViewDataSource, UITableViewDelegate{
         resetContexto()
         miTabla.reloadData()
         //Nos damos de baja de la notificacion
-        NotificationCenter.default().removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
         myTimer.invalidate()
     }
     

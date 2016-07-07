@@ -65,7 +65,7 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
                 miTablaPersonalizada.reloadData()
             }
             //Nos damos de alta para responder a la notificacion enviada por push
-            NotificationCenter.default().addObserver(self, selector: #selector(self.cambiarBadge), name:notificationChat, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.cambiarBadge), name:NSNotification.Name(rawValue: notificationChat), object: nil)
             miTablaPersonalizada.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
         }
     }
@@ -75,7 +75,7 @@ class FavoritosViewController: UIViewController,UITableViewDataSource, UITableVi
         miSearchBar.showsCancelButton = false
         resetContexto()
         //Nos damos de baja de la notificacion
-        NotificationCenter.default().removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
         myTimer.invalidate()
     }
     

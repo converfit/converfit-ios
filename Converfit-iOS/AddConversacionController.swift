@@ -82,7 +82,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         alert.addAction(UIAlertAction(title: "Album", style: .default, handler: { action -> Void in
             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary){
                 photoPicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-                photoPicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: UIImagePickerControllerSourceType.camera)!
+                //photoPicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: UIImagePickerControllerSourceType.camera)!
                 //Lo mostramos
                 DispatchQueue.main.async {
                     self.present(photoPicker, animated: true, completion: { () -> Void in
@@ -92,7 +92,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
             }
         }))
         
-        ////Añdimos un boton para coger una foto de la galeria
+        /*////Añdimos un boton para coger una foto de la galeria
         alert.addAction(UIAlertAction(title: "Video", style: .default, handler: { action -> Void in
             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera){
                 photoPicker.sourceType = UIImagePickerControllerSourceType.camera
@@ -106,7 +106,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
                     })
                 }
             }
-        }))
+        }))*/
 
         
         //Añdimos un boton para cancelar las opciones
@@ -144,7 +144,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
             hacerFoto = false
         }
         addTap()
-        NotificationCenter.default().addObserver(self, selector: #selector(self.recargarPantalla), name:notificationChat, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.recargarPantalla), name:NSNotification.Name(rawValue: notificationChat), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -162,7 +162,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         bottomConstratitVistaTeclado.constant = 0
         vieneDeListadoMensajes = true
         //Nos damos de baja de la notificacion
-        NotificationCenter.default().removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
         myTimer.invalidate()
     }
     
@@ -409,7 +409,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
         if let user = User.obtenerUser(userKey){
             let imageData = UIImagePNGRepresentation((user.avatar)!)
             var avatar = ""
-            if let avatarImage = imageData?.base64EncodedString([]){
+            if let avatarImage = imageData?.base64EncodedString(options: []){
                 avatar = avatarImage
             }
         
@@ -517,7 +517,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
          let params = "action=open_conversation&session_key=\(sessionKey)&user_key=\(userKey)&app_version=\(appVersion)&app=\(app)"
         let urlServidor = Utils.returnUrlWS("conversations")
         var request = URLRequest(url: URL(string: urlServidor)!)
-        let session = URLSession.shared()
+        let session = URLSession.shared
         request.httpMethod = "POST"
         request.httpBody = params.data(using: String.Encoding.utf8)
         let semaphore = DispatchSemaphore(value: 0)
@@ -657,14 +657,14 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     
     func startObservingKeyBoard(){
         //Funcion para darnos de alta como observador en las notificaciones de teclado
-        let nc:NotificationCenter = NotificationCenter.default()
+        let nc:NotificationCenter = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.notifyThatKeyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         nc.addObserver(self, selector: #selector(self.notifyThatKeyboardWillDisappear(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     //Funcion para darnos de alta como observador en las notificaciones de teclado
     func stopObservingKeyBoard(){
-        let nc:NotificationCenter = NotificationCenter.default()
+        let nc:NotificationCenter = NotificationCenter.default
         nc.removeObserver(self)
     }
 
@@ -728,7 +728,7 @@ class AddConversacionController: UIViewController, UITableViewDataSource, UITabl
     
     //Funcion para decodificar una imagen a partir de un String
     func decodificarImagen (_ dataImage:String) -> UIImage{
-        if let decodedData = Data(base64Encoded: dataImage, options: .encodingEndLineWithCarriageReturn){
+        if let decodedData = Data(base64Encoded: dataImage, options: .endLineWithCarriageReturn){
             if decodedData.count > 0{
                 return UIImage(data: decodedData)!
             }
@@ -1130,12 +1130,12 @@ extension AddConversacionController: UINavigationControllerDelegate, UIImagePick
     // Funcion que codifica la imagen
     func codificarImagen(_ dataImage:UIImage) -> String{
         let imageData = UIImagePNGRepresentation(dataImage)
-        return imageData!.base64EncodedString([])
+        return imageData!.base64EncodedString(options: [])
     }
     
     //Funcion que codifica el video
     func codificarVideo(_ dataVideo:Data) -> String{
-        return dataVideo.base64EncodedString([])
+        return dataVideo.base64EncodedString(options: [])
     }
     
     //Funcion para convertir de .mov a .mp4

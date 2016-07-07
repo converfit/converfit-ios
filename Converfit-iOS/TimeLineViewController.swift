@@ -33,7 +33,7 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     
     @IBAction func tapButon(_ sender: AnyObject) {
         enableUserInterface()
-        NotificationCenter.default().post(name: Notification.Name(rawValue: notificationToggleMenu), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: notificationToggleMenu), object: nil)
     }
     
     //MARK: - LifeCycle
@@ -60,8 +60,8 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
             }else{
                 listadoPost = TimeLine.devolverListTimeLine()
                 miCollectionView.reloadData()
-                NotificationCenter.default().addObserver(self, selector: #selector(self.cambiarBadge), name:notificationChat, object: nil)
-                NotificationCenter.default().addObserver(self, selector: #selector(self.itemMenuSelected), name:notificationItemMenuSelected , object: nil)
+                NotificationCenter.default.addObserver(self, selector: #selector(self.cambiarBadge), name:NSNotification.Name(rawValue: notificationChat), object: nil)
+                NotificationCenter.default.addObserver(self, selector: #selector(self.itemMenuSelected), name:NSNotification.Name(rawValue: notificationItemMenuSelected) , object: nil)
                 miCollectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
             }
         }
@@ -70,8 +70,8 @@ class TimeLineViewController: UIViewController, UICollectionViewDataSource,UICol
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default().removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
-        NotificationCenter.default().removeObserver(self, name: NSNotification.Name(rawValue: notificationItemMenuSelected), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: notificationItemMenuSelected), object: nil)
         myTimer.invalidate()
     }
 

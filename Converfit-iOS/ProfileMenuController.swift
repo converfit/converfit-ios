@@ -20,14 +20,14 @@ class ProfileMenuController: UIViewController,UITableViewDataSource, UITableView
         super.viewWillAppear(animated)
         modificarUI()
         //Nos damos de alta para responder a la notificacion enviada por push
-        NotificationCenter.default().addObserver(self, selector: #selector(self.cambiarBadge), name:notificationChat, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.cambiarBadge), name:NSNotification.Name(rawValue: notificationChat), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
         //Nos damos de baja de la notificacion
-        NotificationCenter.default().removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: notificationChat), object: nil)
     }
     
     //MARK: - Utils

@@ -13,7 +13,7 @@ public class User: _User {
         
         //Guardamos el avatar
         if let dataImage = aDict["user_avatar"] as? String{
-            if let decodedData = Data(base64Encoded: dataImage, options: .encodingEndLineWithCarriageReturn){
+            if let decodedData = Data(base64Encoded: dataImage, options: .endLineWithCarriageReturn){
                 avatar = decodedData
             }
         }

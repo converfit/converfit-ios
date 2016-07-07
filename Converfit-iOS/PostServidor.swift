@@ -71,7 +71,7 @@ class PostServidor {
     
     //Cambiamos el valor de new_messsage_flag en la BBDD a true
     static func updateNewMessageFlag(_ conversationKey:String){
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         let serverString = Utils.returnUrlWS("conversations")
         if let sessionKey = defaults.string(forKey: "session_key"), url = URL(string: serverString){
            let params = "action=update_conversation_flag&session_key=\(sessionKey)&conversation_key=\(conversationKey)&new_message_flag=\(0)&app_version=\(appVersion)&app=\(app)"
@@ -157,7 +157,7 @@ class PostServidor {
                                         for dict in messagesArray{
                                             _=Messsage(aDict: dict, aConversationKey: conversationKey)
                                         }
-                                        NotificationCenter.default().post(name: Notification.Name(rawValue: notificationChat), object: nil, userInfo:nil)
+                                        NotificationCenter.default.post(name: Notification.Name(rawValue: notificationChat), object: nil, userInfo:nil)
                                     }
                                 }
                             }

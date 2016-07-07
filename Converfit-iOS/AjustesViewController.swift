@@ -32,7 +32,7 @@ class AjustesViewController: UIViewController, UITableViewDataSource, UITableVie
         }else{
             Utils.customAppear(self)
             //Nos damos de alta para responder a la notificacion enviada por push
-            NotificationCenter.default().addObserver(self, selector: #selector(self.cambiarBadge), name:notificationChat, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.cambiarBadge), name:NSNotification.Name(rawValue: notificationChat), object: nil)
         }
     }
     

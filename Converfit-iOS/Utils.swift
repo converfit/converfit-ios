@@ -203,20 +203,20 @@ class Utils {
     //MARK: Email is valid
     static func emailIsValid(_ email:String) ->Bool{
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
-        let range = email.range(of: emailRegEx, options:.regularExpressionSearch)
+        let range = email.range(of: emailRegEx, options: .regularExpression)
         let result = range != nil ? true : false
         return result
     }
     
     //MARK: - Save last Update
     static func saveLastUpdate(_ lasUpdate:String){
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.set(lasUpdate, forKey: "last_update")
     }
     
     static func getLastUpdate() -> String{
         var lastUpdate = "0"
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         if let lastUp = defaults.string(forKey: "last_update"){
             lastUpdate = lastUp
         }
@@ -225,13 +225,13 @@ class Utils {
     
     //MARK: - Save conversations_last_update
     static func saveConversationsLastUpdate(_ lasUpdate:String){
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.set(lasUpdate, forKey: "conversations_last_update")
     }
     
     static func getConversationsLastUpdate() -> String{
         var lastUpdate = "0"
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         if let lastUp = defaults.string(forKey: "conversations_last_update"){
             lastUpdate = lastUp
         }
@@ -240,14 +240,14 @@ class Utils {
     
     //MARK: - Save follower last update
     static func saveLastUpdateFollower(_ lasUpdate:String){
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.set(lasUpdate, forKey: "last_update_follower")
     }
     
     //Funcion para optener el last_update
     static func getLastUpdateFollower() -> String{
         var lastUpFavoritos = "0"
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         if let lastUp = defaults.string(forKey: "last_update_follower"){
             lastUpFavoritos = lastUp
         }
@@ -256,14 +256,14 @@ class Utils {
     
     //MARK: - Save brandsNotifications last update
     static func saveLastUpdateBrandsNotifications(_ lasUpdate:String){
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.set(lasUpdate, forKey: "last_update_brands_notifications")
     }
     
     //Funcion para optener el brandsNotifications last_update
     static func getLastUpdateBrandsNotifications() -> String{
         var lastUpBrandsNotifications = "0"
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         if let lastUp = defaults.string(forKey: "last_update_brands_notifications"){
             lastUpBrandsNotifications = lastUp
         }
@@ -272,13 +272,13 @@ class Utils {
 
     //MARK: - Save session_key
     static func saveSessionKey(_ sessionKey:String){
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.set(sessionKey, forKey: "session_key")
     }
     
     static func getSessionKey() -> String{
         var lastUpFavoritos = "0"
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         if let lastUp = defaults.string(forKey: "session_key"){
             lastUpFavoritos = lastUp
         }
@@ -287,13 +287,13 @@ class Utils {
     
     //MARK: - Save session_key
     static func saveDeviceKey(_ deviceKey:String){
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.set(deviceKey, forKey: "devide_key")
     }
     
     static func getDeviceKey() -> String{
         var deviceKey = "dont_allow"
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         if let device = defaults.string(forKey: "devide_key"){
             deviceKey = device
         }
@@ -303,13 +303,13 @@ class Utils {
     
     //MARK: - Save status left menu
     static func saveStatusLeftMenu(_ saveStatusLeftMenu:String){
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.set(saveStatusLeftMenu, forKey: "statusLeftMenu")
     }
     
     static func getStatusLeftMenu() -> String{
         var statusLeftMenu = "0"
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         if let status = defaults.string(forKey: "statusLeftMenu"){
             statusLeftMenu = status
         }
@@ -345,14 +345,14 @@ class Utils {
     }
     
     static func guardarIdLogin(_ id:String){
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.set(id, forKey: "id_login")
     }
     
     //Funcion para obtener el id del usuario logado
     static func obtenerIdLogin() -> String{
         var id = "0"
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         if let aID = defaults.string(forKey: "id_login"){
             id = aID
         }
@@ -361,14 +361,14 @@ class Utils {
     
     //Funcion para guardar el fname del usuario logado
     static func guardarFname(_ fname:String){
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.set(fname, forKey: "fname")
     }
     
     //Funcion para obtener el fname del usuario logado
     static func obtenerFname() -> String{
         var fname = ""
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         if let aFname = defaults.string(forKey: "fname"){
             fname = aFname
         }
@@ -377,14 +377,14 @@ class Utils {
     
     //Funcion para guardar el lname del usuario logado
     static func guardarLname(_ lname:String){
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.set(lname, forKey: "lname")
     }
     
     //Funcion para obtener el fname del usuario logado
     static func obtenerLname() -> String{
         var lname = ""
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         if let aLname = defaults.string(forKey: "lname"){
             lname = aLname
         }
@@ -393,7 +393,7 @@ class Utils {
     
     //Funcion para decodificar el video a un NSData
     static func decodificarVideo(_ videoBase64:String) -> Data?{
-        return Data(base64Encoded: videoBase64, options: .encodingEndLineWithCarriageReturn)
+        return Data(base64Encoded: videoBase64, options: .endLineWithCarriageReturn)
     }
     
     //Metodo para modificar la apariencia
