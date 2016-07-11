@@ -59,14 +59,25 @@ class visorPdfController: UIViewController,UIWebViewDelegate, UIDocumentInteract
     func saveIbooks(){
         let urlPDF = URL(string: urlString)
         let filePath = applicationDocumentsDirectory().appendingPathComponent((urlPDF?.lastPathComponent)!)
-        //pdfData?.write(to: filePath, options: true)
-        if let pathURL = URL(string: filePath){
-            try! pdfData?.write(to: pathURL)
+        do{
+            try pdfData?.write(to: URL(fileURLWithPath: filePath), options: .atomicWrite)
+            docContr = UIDocumentInteractionController(url: URL(fileURLWithPath: filePath))
+            docContr?.delegate = self
+            docContr?.presentOpenInMenu(from: self.view.bounds, in: self.view, animated: true)
+        }catch let error as NSError{
+            mostrarAlerta(mensajeAlert: error.localizedDescription)
         }
-        
-        docContr = UIDocumentInteractionController(url: URL(fileURLWithPath: filePath))
-        docContr?.delegate = self
-        docContr?.presentOpenInMenu(from: self.view.bounds, in: self.view, animated: true)
+    }
+    
+    //MARK: - Show alert
+    func mostrarAlerta(mensajeAlert: String){
+        self.view.endEditing(true)
+        let alert = UIAlertController(title: "No se ha podido guardar en iBooks", message: mensajeAlert, preferredStyle: UIAlertControllerStyle.alert)
+        //Añadimos un bonton al alert y lo que queramos que haga en la clausura
+        alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: { action in
+        }))
+        //mostramos el alert
+        self.present(alert, animated: true, completion: nil)
     }
     
     //MARK:- WebViewDelegate
